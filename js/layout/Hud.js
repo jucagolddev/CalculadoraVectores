@@ -22,18 +22,30 @@ export class Hud {
    * @param {HTMLButtonElement} [elementosHUD.btnExportar]
    * @param {PlanoCartesiano} plano
    * @param {EstadoApp} estadoApp
+   * @param {MotorGrafico3D} [motor3D]
    */
-  constructor(elementosHUD, plano, estadoApp) {
+  constructor(elementosHUD, plano, estadoApp, motor3D = null) {
     this._elementos = elementosHUD;
     this._plano = plano;
     this._estadoApp = estadoApp;
+    this._motor3D = motor3D;
 
     this._inicializar();
   }
 
+  _es3D() {
+    return this._estadoApp.obtener().entornoActivo === 'espacio-3d';
+  }
+
+  actualizarCoordenadas3D(info) {
+    if (this._elementos.textoCoords && this._es3D()) {
+      this._elementos.textoCoords.textContent = `Yaw: ${info.yaw}°, Pitch: ${info.pitch}° | Zoom: ${info.escala}px/u`;
+    }
+  }
+
   _inicializar() {
     this._plano.alMoverCursor((x, y) => {
-      if (this._elementos.textoCoords) {
+      if (this._elementos.textoCoords && !this._es3D()) {
         this._elementos.textoCoords.textContent = `X: ${FormateadorMatematico.formatearNumero(x)}, Y: ${FormateadorMatematico.formatearNumero(y)}`;
       }
     });
@@ -42,6 +54,15 @@ export class Hud {
     if (this._elementos.btnToggleTodo) {
       this._elementos.btnToggleTodo.addEventListener('click', () => {
         const nuevoEstado = this._plano.alternarTodoElGrafo();
+        if (this._motor3D) {
+          this._motor3D.establecerCapas({
+            vectores: nuevoEstado,
+            puntos: nuevoEstado,
+            etiquetas: nuevoEstado,
+            construcciones: nuevoEstado,
+            proyecciones: nuevoEstado
+          });
+        }
         this._sincronizarBotonesCapas(nuevoEstado);
       });
     }
@@ -51,6 +72,7 @@ export class Hud {
       this._elementos.btnVectores.addEventListener('click', () => {
         const activo = this._elementos.btnVectores.classList.toggle('activo');
         this._plano.establecerVectoresVisibles(activo);
+        if (this._motor3D) this._motor3D.establecerCapas({ vectores: activo });
         this._actualizarEstadoBotonMaestro();
       });
     }
@@ -59,6 +81,7 @@ export class Hud {
       this._elementos.btnPuntos.addEventListener('click', () => {
         const activo = this._elementos.btnPuntos.classList.toggle('activo');
         this._plano.establecerPuntosVisibles(activo);
+        if (this._motor3D) this._motor3D.establecerCapas({ puntos: activo });
         this._actualizarEstadoBotonMaestro();
       });
     }
@@ -67,6 +90,7 @@ export class Hud {
       this._elementos.btnEtiquetas.addEventListener('click', () => {
         const activo = this._elementos.btnEtiquetas.classList.toggle('activo');
         this._plano.establecerEtiquetasVisibles(activo);
+        if (this._motor3D) this._motor3D.establecerCapas({ etiquetas: activo });
       });
     }
 
@@ -74,6 +98,7 @@ export class Hud {
       this._elementos.btnConstrucciones.addEventListener('click', () => {
         const activo = this._elementos.btnConstrucciones.classList.toggle('activo');
         this._plano.establecerConstruccionesVisibles(activo);
+        if (this._motor3D) this._motor3D.establecerCapas({ construcciones: activo });
         this._actualizarEstadoBotonMaestro();
       });
     }
@@ -82,6 +107,7 @@ export class Hud {
       this._elementos.btnProyecciones.addEventListener('click', () => {
         const activo = this._elementos.btnProyecciones.classList.toggle('activo');
         this._plano.establecerProyeccionesVisibles(activo);
+        if (this._motor3D) this._motor3D.establecerCapas({ proyecciones: activo });
         this._estadoApp.actualizar({ mostrarProyecciones: activo });
       });
     }
@@ -90,6 +116,7 @@ export class Hud {
       this._elementos.btnCuadricula.addEventListener('click', () => {
         const activo = this._elementos.btnCuadricula.classList.toggle('activo');
         this._plano.establecerCuadriculaVisible(activo);
+        if (this._motor3D) this._motor3D.establecerCapas({ cuadricula: activo });
         this._estadoApp.actualizar({ mostrarCuadricula: activo });
       });
     }
@@ -98,24 +125,49 @@ export class Hud {
       this._elementos.btnEjes.addEventListener('click', () => {
         const activo = this._elementos.btnEjes.classList.toggle('activo');
         this._plano.establecerEjesVisibles(activo);
+        if (this._motor3D) this._motor3D.establecerCapas({ ejes: activo });
       });
     }
 
     // Controles de Cámara y Navegación
     if (this._elementos.btnZoomIn) {
-      this._elementos.btnZoomIn.addEventListener('click', () => this._plano.cambiarZoom(1.25));
+      this._elementos.btnZoomIn.addEventListener('click', () => {
+        if (this._es3D() && this._motor3D) {
+          this._motor3D.zoomIn();
+        } else {
+          this._plano.cambiarZoom(1.25);
+        }
+      });
     }
 
     if (this._elementos.btnZoomOut) {
-      this._elementos.btnZoomOut.addEventListener('click', () => this._plano.cambiarZoom(0.8));
+      this._elementos.btnZoomOut.addEventListener('click', () => {
+        if (this._es3D() && this._motor3D) {
+          this._motor3D.zoomOut();
+        } else {
+          this._plano.cambiarZoom(0.8);
+        }
+      });
     }
 
     if (this._elementos.btnCentrar) {
-      this._elementos.btnCentrar.addEventListener('click', () => this._plano.centrarOrigen());
+      this._elementos.btnCentrar.addEventListener('click', () => {
+        if (this._es3D() && this._motor3D) {
+          this._motor3D.centrarOrigen();
+        } else {
+          this._plano.centrarOrigen();
+        }
+      });
     }
 
     if (this._elementos.btnAjustar) {
-      this._elementos.btnAjustar.addEventListener('click', () => this._plano.autoAjustarVista());
+      this._elementos.btnAjustar.addEventListener('click', () => {
+        if (this._es3D() && this._motor3D) {
+          this._motor3D.autoAjustar();
+        } else {
+          this._plano.autoAjustarVista();
+        }
+      });
     }
 
     if (this._elementos.btnExportar) {

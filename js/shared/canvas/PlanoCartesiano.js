@@ -29,6 +29,7 @@ export class PlanoCartesiano {
     this._mostrarProyecciones = true;
     this._mostrarCuadricula = true;
 
+    this._activo = true;
     this._arrastrando = false;
     this._ultimoRatonX = 0;
     this._ultimoRatonY = 0;
@@ -36,6 +37,15 @@ export class PlanoCartesiano {
 
     this._inicializarEventos();
     this.ajustarResolucion();
+  }
+
+  establecerActivo(activo) {
+    this._activo = Boolean(activo);
+    if (this._activo) {
+      this._lienzo.style.cursor = 'crosshair';
+      this.ajustarResolucion();
+      this.renderizar();
+    }
   }
 
   alMoverCursor(callback) {
@@ -214,6 +224,8 @@ export class PlanoCartesiano {
   }
 
   renderizar() {
+    if (!this._activo) return;
+
     const rect = this._lienzo.getBoundingClientRect();
     const ancho = rect.width;
     const alto = rect.height;
@@ -605,6 +617,7 @@ export class PlanoCartesiano {
 
   _inicializarEventos() {
     this._lienzo.addEventListener('mousedown', (e) => {
+      if (!this._activo) return;
       this._arrastrando = true;
       this._ultimoRatonX = e.clientX;
       this._ultimoRatonY = e.clientY;
@@ -612,6 +625,8 @@ export class PlanoCartesiano {
     });
 
     window.addEventListener('mousemove', (e) => {
+      if (!this._activo) return;
+
       const rect = this._lienzo.getBoundingClientRect();
       const coords = this.pantallaAMundo(e.clientX - rect.left, e.clientY - rect.top);
 
@@ -632,11 +647,14 @@ export class PlanoCartesiano {
     window.addEventListener('mouseup', () => {
       if (this._arrastrando) {
         this._arrastrando = false;
-        this._lienzo.style.cursor = 'crosshair';
+        if (this._activo) {
+          this._lienzo.style.cursor = 'crosshair';
+        }
       }
     });
 
     this._lienzo.addEventListener('wheel', (e) => {
+      if (!this._activo) return;
       e.preventDefault();
       const rect = this._lienzo.getBoundingClientRect();
       const ratonX = e.clientX - rect.left;

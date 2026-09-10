@@ -26,7 +26,7 @@ export class ControladorSolucion {
 
   _iniciarEventosBase() {
     this._btnCerrarCajon?.addEventListener('click', () => {
-      this.cerrarSolucion();
+      this.cerrar();
     });
   }
 
@@ -96,6 +96,34 @@ export class ControladorSolucion {
           Comprobar y Corregir
         </button>
       `;
+    } else if (modo === Configuracion.MODOS_APP.OPERACIONES_3D) {
+      this._contenedorComprobacion.innerHTML = `
+        <h3><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg> Comprueba tu Solución ${CatalogoInfoContextual.htmlBotonInfo('producto-vectorial')}</h3>
+        <p class="texto-ayuda">Introduce tus cálculos para el producto vectorial u × v y el producto escalar u·v:</p>
+        <div class="inputs-trio">
+          ${GeneradorInputs.crearCampoNumero({ id: 'test-cruz-x', etiqueta: '(u×v)x', placeholder: 'uy·vz - uz·vy' })}
+          ${GeneradorInputs.crearCampoNumero({ id: 'test-cruz-y', etiqueta: '(u×v)y', placeholder: 'uz·vx - ux·vz' })}
+          ${GeneradorInputs.crearCampoNumero({ id: 'test-cruz-z', etiqueta: '(u×v)z', placeholder: 'ux·vy - uy·vx' })}
+        </div>
+        ${GeneradorInputs.crearCampoNumero({ id: 'test-punto-3d', etiqueta: 'u·v', placeholder: 'ux·vx + uy·vy + uz·vz' })}
+        <button id="btn-validar-usuario" class="btn-comprobar-usuario" type="button">
+          Comprobar y Corregir
+        </button>
+      `;
+    } else if (modo === Configuracion.MODOS_APP.PUNTOS_3D) {
+      this._contenedorComprobacion.innerHTML = `
+        <h3><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg> Comprueba tu Solución ${CatalogoInfoContextual.htmlBotonInfo('vector-ab')}</h3>
+        <p class="texto-ayuda">Introduce las componentes de AB (B - A) y su módulo:</p>
+        <div class="inputs-trio">
+          ${GeneradorInputs.crearCampoNumero({ id: 'test-3d-abx', etiqueta: 'ABx', placeholder: 'Bx - Ax' })}
+          ${GeneradorInputs.crearCampoNumero({ id: 'test-3d-aby', etiqueta: 'ABy', placeholder: 'By - Ay' })}
+          ${GeneradorInputs.crearCampoNumero({ id: 'test-3d-abz', etiqueta: 'ABz', placeholder: 'Bz - Az' })}
+        </div>
+        ${GeneradorInputs.crearCampoNumero({ id: 'test-3d-mod', etiqueta: '||AB||', placeholder: '√(x²+y²+z²)' })}
+        <button id="btn-validar-usuario" class="btn-comprobar-usuario" type="button">
+          Comprobar y Corregir
+        </button>
+      `;
     }
 
     const btnValidar = document.getElementById('btn-validar-usuario');
@@ -150,6 +178,50 @@ export class ControladorSolucion {
         'Suma Componente X': resultado.suma.x,
         'Suma Componente Y': resultado.suma.y,
         'Producto Escalar u·v': resultado.productoPunto
+      };
+
+      correcciones = this._casoDeUso.ejecutar(respuestas, esperados);
+
+    } else if (estado.modoActivo === Configuracion.MODOS_APP.OPERACIONES_3D) {
+      const cx = document.getElementById('test-cruz-x')?.value;
+      const cy = document.getElementById('test-cruz-y')?.value;
+      const cz = document.getElementById('test-cruz-z')?.value;
+      const punto = document.getElementById('test-punto-3d')?.value;
+
+      respuestas = {
+        'Producto Vectorial (u×v)x': cx,
+        'Producto Vectorial (u×v)y': cy,
+        'Producto Vectorial (u×v)z': cz,
+        'Producto Escalar u·v': punto
+      };
+
+      esperados = {
+        'Producto Vectorial (u×v)x': resultado.productoCruz.x,
+        'Producto Vectorial (u×v)y': resultado.productoCruz.y,
+        'Producto Vectorial (u×v)z': resultado.productoCruz.z,
+        'Producto Escalar u·v': resultado.productoPunto
+      };
+
+      correcciones = this._casoDeUso.ejecutar(respuestas, esperados);
+
+    } else if (estado.modoActivo === Configuracion.MODOS_APP.PUNTOS_3D) {
+      const abx = document.getElementById('test-3d-abx')?.value;
+      const aby = document.getElementById('test-3d-aby')?.value;
+      const abz = document.getElementById('test-3d-abz')?.value;
+      const mod = document.getElementById('test-3d-mod')?.value;
+
+      respuestas = {
+        'Componente ABx': abx,
+        'Componente ABy': aby,
+        'Componente ABz': abz,
+        'Módulo ||AB||': mod
+      };
+
+      esperados = {
+        'Componente ABx': resultado.vectorAB.x,
+        'Componente ABy': resultado.vectorAB.y,
+        'Componente ABz': resultado.vectorAB.z,
+        'Módulo ||AB||': resultado.modulo
       };
 
       correcciones = this._casoDeUso.ejecutar(respuestas, esperados);

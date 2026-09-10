@@ -5,6 +5,8 @@ import { CalcularCadenaUseCase } from '../../features/cadena-vectores/applicatio
 import { CalcularOperacionesUseCase } from '../../features/operaciones/application/CalcularOperacionesUseCase.js';
 import { EvaluarEquipolenciaUseCase } from '../../features/equipolencia/application/EvaluarEquipolenciaUseCase.js';
 import { VerificarRespuestaUseCase } from '../../features/solucionador/application/VerificarRespuestaUseCase.js';
+import { CalcularOperaciones3DUseCase } from '../../features/espacio-3d/application/CalcularOperaciones3DUseCase.js';
+import { CalcularPuntos3DUseCase } from '../../features/espacio-3d/application/CalcularPuntos3DUseCase.js';
 
 // Controladores de Presentación (Presentation Layer)
 import { ControladorCadena } from '../../features/cadena-vectores/presentation/ControladorCadena.js';
@@ -15,6 +17,8 @@ import { ControladorFormulas } from '../../features/formulas/presentation/Contro
 import { ControladorAlmacenamiento } from '../../features/ejercicios/presentation/ControladorAlmacenamiento.js';
 import { ControladorTeoria } from '../../features/teoria/presentation/ControladorTeoria.js';
 import { PopoverInfoContextual } from '../../features/teoria/presentation/PopoverInfoContextual.js';
+import { ControladorOperaciones3D } from '../../features/espacio-3d/presentation/ControladorOperaciones3D.js';
+import { ControladorPuntos3D } from '../../features/espacio-3d/presentation/ControladorPuntos3D.js';
 
 /**
  * Contenedor de Inversión de Control (IoC) y Factoría de Controladores.
@@ -23,16 +27,20 @@ import { PopoverInfoContextual } from '../../features/teoria/presentation/Popove
 export class FactoriaControladores {
   /**
    * @param {Object} domElements - Referencias a elementos del DOM
+   * @param {Object} domElements - Referencias a elementos del DOM
    * @param {EstadoApp} estadoApp - Store central reactivo
-   * @param {PlanoCartesiano} plano - Motor de renderizado en Canvas
+   * @param {PlanoCartesiano} plano - Motor de renderizado en Canvas 2D
+   * @param {MotorGrafico3D} motor3D - Motor de renderizado en Canvas 3D
    * @returns {Object} Diccionario con los controladores instanciados
    */
-  static fabricar(domElements, estadoApp, plano) {
+  static fabricar(domElements, estadoApp, plano, motor3D) {
     // 1. Instanciación de Casos de Uso (Capa de Aplicación)
     const cadenaUseCase = new CalcularCadenaUseCase();
     const operacionesUseCase = new CalcularOperacionesUseCase();
     const equipolenciaUseCase = new EvaluarEquipolenciaUseCase();
     const verificarUseCase = new VerificarRespuestaUseCase();
+    const operaciones3DUseCase = new CalcularOperaciones3DUseCase();
+    const puntos3DUseCase = new CalcularPuntos3DUseCase();
 
     // 2. Controladores Transversales
     const ctrlSolucion = new ControladorSolucion(
@@ -45,7 +53,7 @@ export class FactoriaControladores {
 
     const ctrlFormulas = new ControladorFormulas(domElements.modalFormulas);
 
-    // 3. Controladores de Modos de Cálculo
+    // 3. Controladores de Modos de Cálculo 2D
     const ctrlCadena = new ControladorCadena(
       domElements.contenedorFormulario,
       domElements.contenedorResumen,
@@ -71,14 +79,33 @@ export class FactoriaControladores {
       estadoApp
     );
 
-    // 4. Controlador de Persistencia y Almacenamiento Local
+    // 4. Controladores de Modos de Cálculo 3D
+    const ctrlOperaciones3D = new ControladorOperaciones3D(
+      domElements.contenedorFormulario,
+      domElements.contenedorResumen,
+      operaciones3DUseCase,
+      estadoApp,
+      motor3D
+    );
+
+    const ctrlPuntos3D = new ControladorPuntos3D(
+      domElements.contenedorFormulario,
+      domElements.contenedorResumen,
+      puntos3DUseCase,
+      estadoApp,
+      motor3D
+    );
+
+    // 5. Controlador de Persistencia y Almacenamiento Local
     const ctrlAlmacenamiento = new ControladorAlmacenamiento(
       domElements.modalAlmacen,
       estadoApp,
       {
         ctrlCadena,
         ctrlOperaciones,
-        ctrlEquipolencia
+        ctrlEquipolencia,
+        ctrlOperaciones3D,
+        ctrlPuntos3D
       },
       (modo) => {
         ctrlSolucion.renderizarFormularioComprobacion(modo, ctrlCadena.puntos);
@@ -86,31 +113,43 @@ export class FactoriaControladores {
       }
     );
 
-    // 5. Controlador de la Sección Teórica Interactiva
+    // 6. Controlador de la Sección Teórica Interactiva
     const ctrlTeoria = new ControladorTeoria(
       domElements.modalTeoria,
       ({ modo, datos, construccion, entorno }) => {
+        const es3D = entorno === Configuracion.ENTORNOS_APP.ESPACIO_3D;
+        plano.establecerActivo(!es3D);
+        if (motor3D) motor3D.establecerActivo(es3D);
+
         estadoApp.actualizar({
           entornoActivo: entorno,
           modoActivo: modo,
-          respuestasVisibles: entorno === 'calculadora',
+          dimensionActiva: es3D ? '3d' : '2d',
+          respuestasVisibles: entorno === 'calculadora' || entorno === 'espacio-3d',
           construccionGeometrica: construccion || 'paralelogramo'
         });
 
         if (modo === Configuracion.MODOS_APP.CADENA_PUNTOS) {
           ctrlCadena.cargarEjercicio(datos);
+          ctrlSolucion.renderizarFormularioComprobacion(modo, ctrlCadena.puntos);
+          plano.autoAjustarVista();
         } else if (modo === Configuracion.MODOS_APP.OPERACIONES) {
           ctrlOperaciones.cargarEjercicio(datos);
+          ctrlSolucion.renderizarFormularioComprobacion(modo);
+          plano.autoAjustarVista();
         } else if (modo === Configuracion.MODOS_APP.EQUIPOLENCIA) {
           ctrlEquipolencia.cargarEjercicio(datos);
+          ctrlSolucion.renderizarFormularioComprobacion(modo);
+          plano.autoAjustarVista();
+        } else if (modo === Configuracion.MODOS_APP.OPERACIONES_3D) {
+          ctrlOperaciones3D.cargarEjercicio(datos);
+        } else if (modo === Configuracion.MODOS_APP.PUNTOS_3D) {
+          ctrlPuntos3D.cargarEjercicio(datos);
         }
-
-        ctrlSolucion.renderizarFormularioComprobacion(modo, ctrlCadena.puntos);
-        plano.autoAjustarVista();
       }
     );
 
-    // 6. Popover de Información Contextual en tiempo real
+    // 7. Popover de Información Contextual en tiempo real
     const popoverInfo = new PopoverInfoContextual((temaId) => {
       ctrlTeoria.abrir(temaId);
     });
@@ -121,6 +160,8 @@ export class FactoriaControladores {
       ctrlCadena,
       ctrlOperaciones,
       ctrlEquipolencia,
+      ctrlOperaciones3D,
+      ctrlPuntos3D,
       ctrlAlmacenamiento,
       ctrlTeoria,
       popoverInfo

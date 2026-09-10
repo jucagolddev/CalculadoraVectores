@@ -67,6 +67,10 @@ export class ControladorAlmacenamiento {
         badgeModo = '<span class="badge-modo badge-operaciones">Operaciones u y v</span>';
       } else if (ej.modo === Configuracion.MODOS_APP.EQUIPOLENCIA) {
         badgeModo = '<span class="badge-modo badge-equipolencia">Equipolencia</span>';
+      } else if (ej.modo === Configuracion.MODOS_APP.OPERACIONES_3D) {
+        badgeModo = '<span class="badge-modo" style="background:rgba(192,132,252,0.15); color:#c084fc; border:1px solid rgba(192,132,252,0.3);">Vectores 3D u × v</span>';
+      } else if (ej.modo === Configuracion.MODOS_APP.PUNTOS_3D) {
+        badgeModo = '<span class="badge-modo" style="background:rgba(56,189,248,0.15); color:#38bdf8; border:1px solid rgba(56,189,248,0.3);">Puntos 3D & Cosenos</span>';
       }
 
       return `
@@ -113,9 +117,12 @@ export class ControladorAlmacenamiento {
     const item = ejercicios.find(e => e.id === id);
     if (!item) return;
 
+    const es3D = item.modo === Configuracion.MODOS_APP.OPERACIONES_3D || item.modo === Configuracion.MODOS_APP.PUNTOS_3D;
+
     this._estadoApp.actualizar({
       modoActivo: item.modo,
-      entornoActivo: Configuracion.ENTORNOS_APP.EJERCICIO,
+      entornoActivo: es3D ? Configuracion.ENTORNOS_APP.ESPACIO_3D : Configuracion.ENTORNOS_APP.EJERCICIO,
+      dimensionActiva: es3D ? '3d' : '2d',
       respuestasVisibles: false
     });
 
@@ -125,6 +132,10 @@ export class ControladorAlmacenamiento {
       this._ctrls.ctrlOperaciones.cargarEjercicio(item.datos);
     } else if (item.modo === Configuracion.MODOS_APP.EQUIPOLENCIA) {
       this._ctrls.ctrlEquipolencia.cargarEjercicio(item.datos);
+    } else if (item.modo === Configuracion.MODOS_APP.OPERACIONES_3D) {
+      this._ctrls.ctrlOperaciones3D?.cargarEjercicio(item.datos);
+    } else if (item.modo === Configuracion.MODOS_APP.PUNTOS_3D) {
+      this._ctrls.ctrlPuntos3D?.cargarEjercicio(item.datos);
     }
 
     if (this._alCargarEjercicio) {
@@ -151,6 +162,12 @@ export class ControladorAlmacenamiento {
     } else if (modo === Configuracion.MODOS_APP.EQUIPOLENCIA) {
       datos = { ...this._ctrls.ctrlEquipolencia._puntos };
       titulo = `Test Equipolencia: A(${datos.ax},${datos.ay}) B(${datos.bx},${datos.by}) vs C(${datos.cx},${datos.cy}) D(${datos.dx},${datos.dy})`;
+    } else if (modo === Configuracion.MODOS_APP.OPERACIONES_3D) {
+      datos = { ...this._ctrls.ctrlOperaciones3D._valores };
+      titulo = `Vectores 3D: u(${datos.ux},${datos.uy},${datos.uz}) v(${datos.vx},${datos.vy},${datos.vz}), k=${datos.k}`;
+    } else if (modo === Configuracion.MODOS_APP.PUNTOS_3D) {
+      datos = { ...this._ctrls.ctrlPuntos3D._puntos };
+      titulo = `Puntos 3D: A(${datos.ax},${datos.ay},${datos.az}) -> B(${datos.bx},${datos.by},${datos.bz})`;
     }
 
     if (!datos) return;

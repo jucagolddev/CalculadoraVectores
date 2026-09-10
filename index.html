@@ -39,32 +39,55 @@
       </div>
     </div>
 
-    <!-- Selector de Entorno: Calculadora vs Ejercicios -->
+    <!-- Selector de Entorno: Calculadora vs Ejercicios vs Espacio 3D -->
     <div class="selector-entorno" role="radiogroup" aria-label="Entorno de trabajo">
-      <button id="btn-entorno-calc" class="btn-entorno activo" data-entorno="calculadora" title="Modo Calculadora: Cálculo e inspección visual en tiempo real">
+      <button id="btn-entorno-calc" class="btn-entorno activo" data-entorno="calculadora" title="Modo Calculadora ℝ²: Cálculo e inspección visual plana en tiempo real">
         <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="4" y="2" width="16" height="20" rx="2"/><line x1="8" y1="6" x2="16" y2="6"/><line x1="16" y1="14" x2="16" y2="18"/><path d="M8 10h.01M12 10h.01M16 10h.01M8 14h.01M12 14h.01M8 18h.01M12 18h.01"/></svg>
-        Calculadora
+        Calculadora ℝ²
       </button>
       <button id="btn-entorno-ejercicio" class="btn-entorno" data-entorno="ejercicio" title="Modo Ejercicios: Resuelve problemas con respuestas ocultas y pon a prueba tus cálculos">
         <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
         Modo Ejercicios
       </button>
+      <button id="btn-entorno-3d" class="btn-entorno" data-entorno="espacio-3d" title="Espacio Tridimensional ℝ³: Álgebra vectorial, producto cruz u × v y cosenos directores">
+        <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/>
+          <polyline points="3.27 6.96 12 12.01 20.73 6.96"/>
+          <line x1="12" y1="22.08" x2="12" y2="12"/>
+        </svg>
+        Vectores 3D (ℝ³)
+      </button>
     </div>
 
     <!-- Pestañas de Modos de Cálculo -->
     <nav class="nav-modos" aria-label="Modos de operación">
-      <button class="boton-modo activo" data-modo="dos-puntos">
-        <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="6" cy="18" r="3"/><circle cx="18" cy="6" r="3"/><line x1="8.5" y1="15.5" x2="15.5" y2="8.5"/></svg>
-        Puntos de Unión / Cadena Vectorial
-      </button>
-      <button class="boton-modo" data-modo="operaciones">
-        <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>
-        Operaciones con Vectores u y v
-      </button>
-      <button class="boton-modo" data-modo="equipolencia">
-        <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 8h16M4 16h16"/></svg>
-        Test de Equipolencia
-      </button>
+      <!-- Modos 2D -->
+      <div id="grupo-modos-2d" style="display:contents;">
+        <button class="boton-modo activo" data-modo="dos-puntos">
+          <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="6" cy="18" r="3"/><circle cx="18" cy="6" r="3"/><line x1="8.5" y1="15.5" x2="15.5" y2="8.5"/></svg>
+          Puntos de Unión / Cadena Vectorial
+        </button>
+        <button class="boton-modo" data-modo="operaciones">
+          <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>
+          Operaciones con Vectores u y v
+        </button>
+        <button class="boton-modo" data-modo="equipolencia">
+          <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 8h16M4 16h16"/></svg>
+          Test de Equipolencia
+        </button>
+      </div>
+
+      <!-- Modos 3D (Visibles en Entorno ℝ³) -->
+      <div id="grupo-modos-3d" style="display:none;">
+        <button class="boton-modo" data-modo="operaciones-3d">
+          <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 2v20M2 12h20"/><circle cx="12" cy="12" r="9"/></svg>
+          Operaciones & Producto Vectorial (u × v)
+        </button>
+        <button class="boton-modo" data-modo="puntos-3d">
+          <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>
+          Vector entre 2 Puntos (A → B) & Cosenos
+        </button>
+      </div>
     </nav>
 
     <!-- Botones de Acción Global -->

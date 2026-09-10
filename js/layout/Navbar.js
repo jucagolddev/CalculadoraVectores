@@ -119,5 +119,17 @@ export class Navbar {
         b.classList.remove('activo');
       }
     });
+
+    const grupo2D = document.getElementById('grupo-modos-2d');
+    const grupo3D = document.getElementById('grupo-modos-3d');
+    if (grupo2D && grupo3D) {
+      if (entorno === 'espacio-3d') {
+        grupo2D.style.display = 'none';
+        grupo3D.style.display = 'contents';
+      } else {
+        grupo2D.style.display = 'contents';
+        grupo3D.style.display = 'none';
+      }
+    }
   }
 }

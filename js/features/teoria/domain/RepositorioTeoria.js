@@ -294,6 +294,97 @@ El vector desplazamiento neto depende **exclusivamente del punto inicial y del p
             }
           }
         }
+      },
+      {
+        id: 'teoria-3d-cartesiana',
+        numero: '9',
+        titulo: 'Expresión Cartesiana y Cosenos Directores en ℝ³',
+        categoria: 'Álgebra Vectorial 3D',
+        descripcion: 'Representación tridimensional en la base canónica i, j, k y orientación angular espacial.',
+        explicacion: `En un sistema cartesiano tridimensional ℝ³, un vector queda especificado mediante sus proyecciones sobre los tres ejes ortogonales X, Y y Z:
+
+**u = ux·i + uy·j + uz·k = (ux, uy, uz)**
+
+Donde **i = (1, 0, 0)**, **j = (0, 1, 0)** y **k = (0, 0, 1)** son los vectores unitarios de la base canónica.
+
+El módulo tridimensional se obtiene por extensión euclídea:
+**||u|| = √(ux² + uy² + uz²)**
+
+**Cosenos Directores:**
+Los ángulos directores α, β y γ son los que forma el vector u con los semiejes positivos X, Y y Z respectivamente:
+• cos α = ux / ||u||
+• cos β = uy / ||u||
+• cos γ = uz / ||u||
+
+**Identidad Fundamental:**
+Elevando al cuadrado y sumando:
+cos²α + cos²β + cos²γ = (ux² + uy² + uz²) / ||u||² = 1
+
+Esto demuestra que las componentes del **vector unitario director** û son precisamente los cosenos directores: **û = (cos α, cos β, cos γ)**.`,
+        formula: '||u|| = √(ux² + uy² + uz²),  cos²α + cos²β + cos²γ = 1',
+        formulaNota: 'Si conoces los ángulos directores y el módulo, puedes reconstruir el vector exacto: ux = ||u||·cos α, uy = ||u||·cos β, uz = ||u||·cos γ.',
+        notaPedagogica: 'Un satélite en órbita o un avión comercial utiliza cosenos directores para definir su vector velocidad en el espacio respecto al centro de coordenadas terrestres.',
+        ejemplo: {
+          enunciado: 'Dado el vector u = (1, 2, 2), calcular su módulo, cosenos directores y vector unitario.',
+          pasos: [
+            { paso: 'Cálculo del módulo', calculo: '||u|| = √(1² + 2² + 2²) = √(1 + 4 + 4) = √9 = 3' },
+            { paso: 'Cosenos directores', calculo: 'cos α = 1/3 ≈ 0.333, cos β = 2/3 ≈ 0.667, cos γ = 2/3 ≈ 0.667' },
+            { paso: 'Comprobación identidad', calculo: '(1/3)² + (2/3)² + (2/3)² = 1/9 + 4/9 + 4/9 = 9/9 = 1' },
+            { paso: 'Vector unitario û', calculo: 'û = (1/3, 2/3, 2/3) ≈ (0.333, 0.667, 0.667)' }
+          ],
+          resultado: '||u|| = 3,  cos=(0.333, 0.667, 0.667),  û=(1/3, 2/3, 2/3)',
+          simulacion: {
+            entorno: 'espacio-3d',
+            modo: 'puntos-3d',
+            datos: { ax: 0, ay: 0, az: 0, bx: 1, by: 2, bz: 2 }
+          }
+        }
+      },
+      {
+        id: 'teoria-3d-producto-vectorial',
+        numero: '10',
+        titulo: 'Producto Vectorial (u × v) y Área del Paralelogramo en ℝ³',
+        categoria: 'Álgebra Vectorial 3D',
+        descripcion: 'Definición mediante determinante de Laplace, regla del tornillo y significado geométrico del módulo.',
+        explicacion: `A diferencia del producto escalar (que produce un número real), el **producto vectorial** o producto cruz entre dos vectores de ℝ³ genera **un nuevo vector** w = u × v con propiedades extraordinarias:
+
+**1. Dirección:** Es estrictamente perpendicular (ortogonal) al plano que contienen a u y v:
+(u × v) · u = 0  y  (u × v) · v = 0
+
+**2. Sentido:** Sigue la regla de la mano derecha (o regla del tornillo): al rotar el vector u hacia el vector v por el camino más corto, el pulgar indica la dirección del vector producto.
+
+**3. Anticonmutatividad:**
+**v × u = -(u × v)**
+
+**Cálculo por Determinante Simbólico:**
+u × v = | i   j   k  |
+        | ux  uy  uz | = (uy·vz - uz·vy)·i - (ux·vz - uz·vx)·j + (ux·vy - uy·vx)·k
+        | vx  vy  vz |
+
+**Interpretación Geométrica Fundamental:**
+El módulo del producto vectorial es exactamente igual al **área del paralelogramo** cuyos lados son u y v:
+**Área = ||u × v|| = ||u|| · ||v|| · sen(θ)**
+
+Si el producto vectorial es el vector nulo (0, 0, 0), los vectores u y v son colineales (paralelos).`,
+        formula: 'u × v = (uy·vz - uz·vy)·i - (ux·vz - uz·vx)·j + (ux·vy - uy·vx)·k',
+        formulaNota: 'El vector resultante u × v es normal a la superficie del paralelogramo y su magnitud ||u × v|| cuantifica dicha superficie.',
+        notaPedagogica: 'En física, el momento de una fuerza (torque) y la fuerza magnética de Lorentz sobre una carga en movimiento se expresan mediante el producto vectorial: F = q·(v × B).',
+        ejemplo: {
+          enunciado: 'Calcular el producto vectorial de u = (3, 1, 2) y v = (-1, 3, 1) y el área del paralelogramo.',
+          pasos: [
+            { paso: 'Componente i', calculo: '(1)(1) - (2)(3) = 1 - 6 = -5' },
+            { paso: 'Componente j', calculo: '-[(3)(1) - (2)(-1)] = -[3 + 2] = -5' },
+            { paso: 'Componente k', calculo: '(3)(3) - (1)(-1) = 9 + 1 = 10' },
+            { paso: 'Vector resultante w', calculo: 'u × v = (-5, -5, 10)' },
+            { paso: 'Área del paralelogramo', calculo: 'Área = √((-5)² + (-5)² + 10²) = √(25 + 25 + 100) = √150 ≈ 12.25 u²' }
+          ],
+          resultado: 'u × v = (-5, -5, 10),  Área = 12.25 u²',
+          simulacion: {
+            entorno: 'espacio-3d',
+            modo: 'operaciones-3d',
+            datos: { ux: 3, uy: 1, uz: 2, vx: -1, vy: 3, vz: 1, k: 1 }
+          }
+        }
       }
     ];
   }

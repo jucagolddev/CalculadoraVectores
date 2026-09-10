@@ -40,6 +40,12 @@
   gap: 0.5rem;
 }
 
+.inputs-trio {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 0.4rem;
+}
+
 /* Ocultar el spin-button nativo por defecto en todos los motores de render */
 input[type="number"]::-webkit-outer-spin-button,
 input[type="number"]::-webkit-inner-spin-button {

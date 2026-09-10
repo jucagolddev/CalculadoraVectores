@@ -1,6 +1,7 @@
 import { EstadoApp } from './core/state/EstadoApp.js';
 import { Configuracion } from './core/constants/Configuracion.js';
 import { PlanoCartesiano } from './shared/canvas/PlanoCartesiano.js';
+import { MotorGrafico3D } from './shared/canvas/MotorGrafico3D.js';
 import { FactoriaControladores } from './core/di/FactoriaControladores.js';
 import { GeneradorEjerciciosService } from './features/ejercicios/domain/GeneradorEjerciciosService.js';
 import { GeneradorInputs } from './shared/utils/GeneradorInputs.js';
@@ -31,11 +32,15 @@ class Bootstrap {
       modalTeoria: document.getElementById('modal-teoria')
     };
 
-    // 3. Motor Gráfico
+    // 3. Motores Gráficos (2D y 3D)
     const plano = new PlanoCartesiano(lienzo);
+    let hud = null;
+    const motor3D = new MotorGrafico3D(lienzo, (infoCam) => {
+      if (hud) hud.actualizarCoordenadas3D(infoCam);
+    });
 
     // 4. Fabricación e Inyección de Dependencias (IoC)
-    const ctrls = FactoriaControladores.fabricar(domControladores, estadoApp, plano);
+    const ctrls = FactoriaControladores.fabricar(domControladores, estadoApp, plano, motor3D);
 
     // 5. Acciones Globales
     const reejecutarControladorActivo = () => {
@@ -46,6 +51,10 @@ class Bootstrap {
         ctrls.ctrlOperaciones.procesarYActualizar();
       } else if (modo === Configuracion.MODOS_APP.EQUIPOLENCIA) {
         ctrls.ctrlEquipolencia.procesarYActualizar();
+      } else if (modo === Configuracion.MODOS_APP.OPERACIONES_3D) {
+        ctrls.ctrlOperaciones3D.procesarYActualizar();
+      } else if (modo === Configuracion.MODOS_APP.PUNTOS_3D) {
+        ctrls.ctrlPuntos3D.procesarYActualizar();
       }
     };
 
@@ -54,14 +63,24 @@ class Bootstrap {
       if (modo === Configuracion.MODOS_APP.CADENA_PUNTOS) {
         ctrls.ctrlCadena.reiniciarACero();
         ctrls.ctrlSolucion.renderizarFormularioComprobacion(modo, ctrls.ctrlCadena.puntos);
+        plano.centrarOrigen();
       } else if (modo === Configuracion.MODOS_APP.OPERACIONES) {
         ctrls.ctrlOperaciones.reiniciarACero();
         ctrls.ctrlSolucion.renderizarFormularioComprobacion(modo);
+        plano.centrarOrigen();
       } else if (modo === Configuracion.MODOS_APP.EQUIPOLENCIA) {
         ctrls.ctrlEquipolencia.reiniciarACero();
         ctrls.ctrlSolucion.renderizarFormularioComprobacion(modo);
+        plano.centrarOrigen();
+      } else if (modo === Configuracion.MODOS_APP.OPERACIONES_3D) {
+        ctrls.ctrlOperaciones3D.reiniciarACero();
+        ctrls.ctrlSolucion.renderizarFormularioComprobacion(modo);
+        motor3D.centrarOrigen();
+      } else if (modo === Configuracion.MODOS_APP.PUNTOS_3D) {
+        ctrls.ctrlPuntos3D.reiniciarACero();
+        ctrls.ctrlSolucion.renderizarFormularioComprobacion(modo);
+        motor3D.centrarOrigen();
       }
-      plano.centrarOrigen();
     };
 
     const generarNuevoReto = () => {
@@ -83,17 +102,64 @@ class Bootstrap {
         const eq = GeneradorEjerciciosService.generarEquipolencia();
         ctrls.ctrlEquipolencia.cargarEjercicio(eq);
         ctrls.ctrlSolucion.renderizarFormularioComprobacion(modo);
+      } else if (modo === Configuracion.MODOS_APP.OPERACIONES_3D) {
+        const ops3D = {
+          ux: Math.floor(Math.random() * 7) - 3,
+          uy: Math.floor(Math.random() * 7) - 3,
+          uz: Math.floor(Math.random() * 7) - 3,
+          vx: Math.floor(Math.random() * 7) - 3,
+          vy: Math.floor(Math.random() * 7) - 3,
+          vz: Math.floor(Math.random() * 7) - 3,
+          k: (Math.floor(Math.random() * 4) + 1) * 0.5
+        };
+        ctrls.ctrlOperaciones3D.cargarEjercicio(ops3D);
+        ctrls.ctrlSolucion.renderizarFormularioComprobacion(modo);
+        motor3D.autoAjustar();
+      } else if (modo === Configuracion.MODOS_APP.PUNTOS_3D) {
+        const pts3D = {
+          ax: Math.floor(Math.random() * 7) - 3,
+          ay: Math.floor(Math.random() * 7) - 3,
+          az: Math.floor(Math.random() * 7) - 3,
+          bx: Math.floor(Math.random() * 7) - 3,
+          by: Math.floor(Math.random() * 7) - 3,
+          bz: Math.floor(Math.random() * 7) - 3
+        };
+        ctrls.ctrlPuntos3D.cargarEjercicio(pts3D);
+        ctrls.ctrlSolucion.renderizarFormularioComprobacion(modo);
+        motor3D.autoAjustar();
       }
-      plano.autoAjustarVista();
+
+      if (modo !== Configuracion.MODOS_APP.OPERACIONES_3D && modo !== Configuracion.MODOS_APP.PUNTOS_3D) {
+        plano.autoAjustarVista();
+      }
     };
 
     const cambiarEntorno = (nuevoEntorno) => {
       const esEjercicio = nuevoEntorno === Configuracion.ENTORNOS_APP.EJERCICIO;
+      const es3D = nuevoEntorno === Configuracion.ENTORNOS_APP.ESPACIO_3D;
+
+      plano.establecerActivo(!es3D);
+      motor3D.establecerActivo(es3D);
+
+      let nuevoModo = estadoApp.obtener().modoActivo;
+      if (es3D) {
+        if (nuevoModo !== Configuracion.MODOS_APP.OPERACIONES_3D && nuevoModo !== Configuracion.MODOS_APP.PUNTOS_3D) {
+          nuevoModo = Configuracion.MODOS_APP.OPERACIONES_3D;
+        }
+      } else {
+        if (nuevoModo === Configuracion.MODOS_APP.OPERACIONES_3D || nuevoModo === Configuracion.MODOS_APP.PUNTOS_3D) {
+          nuevoModo = Configuracion.MODOS_APP.CADENA_PUNTOS;
+        }
+      }
+
       estadoApp.actualizar({
         entornoActivo: nuevoEntorno,
+        modoActivo: nuevoModo,
+        dimensionActiva: es3D ? '3d' : '2d',
         respuestasVisibles: !esEjercicio
       });
-      reejecutarControladorActivo();
+
+      activarModo(nuevoModo);
     };
 
     // 6. Componentes Estructurales de Layout y HUD
@@ -122,7 +188,7 @@ class Bootstrap {
       }
     );
 
-    new Hud(
+    hud = new Hud(
       {
         textoCoords: document.getElementById('hud-coords-texto'),
         btnToggleTodo: document.getElementById('btn-toggle-todo'),
@@ -140,7 +206,8 @@ class Bootstrap {
         btnExportar: document.getElementById('btn-exportar')
       },
       plano,
-      estadoApp
+      estadoApp,
+      motor3D
     );
 
     // 7. Sincronización Reactiva (Estado -> Motor Gráfico)
@@ -158,6 +225,10 @@ class Bootstrap {
 
     // 8. Manejo del Cambio de Modo
     const activarModo = (modo) => {
+      const esModo3D = modo === Configuracion.MODOS_APP.OPERACIONES_3D || modo === Configuracion.MODOS_APP.PUNTOS_3D;
+      plano.establecerActivo(!esModo3D);
+      motor3D.establecerActivo(esModo3D);
+
       if (modo === Configuracion.MODOS_APP.CADENA_PUNTOS) {
         ctrls.ctrlCadena.renderizar();
         ctrls.ctrlCadena.procesarYActualizar();
@@ -169,6 +240,14 @@ class Bootstrap {
       } else if (modo === Configuracion.MODOS_APP.EQUIPOLENCIA) {
         ctrls.ctrlEquipolencia.renderizar();
         ctrls.ctrlEquipolencia.procesarYActualizar();
+        ctrls.ctrlSolucion.renderizarFormularioComprobacion(modo);
+      } else if (modo === Configuracion.MODOS_APP.OPERACIONES_3D) {
+        ctrls.ctrlOperaciones3D.renderizar();
+        ctrls.ctrlOperaciones3D.procesarYActualizar();
+        ctrls.ctrlSolucion.renderizarFormularioComprobacion(modo);
+      } else if (modo === Configuracion.MODOS_APP.PUNTOS_3D) {
+        ctrls.ctrlPuntos3D.renderizar();
+        ctrls.ctrlPuntos3D.procesarYActualizar();
         ctrls.ctrlSolucion.renderizarFormularioComprobacion(modo);
       }
     };

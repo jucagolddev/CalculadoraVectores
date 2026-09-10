@@ -36,6 +36,8 @@ Diseñada con un enfoque de **cero dependencias externas**, explota las capacida
 | ![Fórmulas Vectoriales](docs/img/06_compendio_formulas.png) | ![Gestión de Almacenamiento](docs/img/07_almacen_ejercicios.png) |
 | **7. Guía Teórica y Lógica Matemática en ℝ²** | **8. Popovers de Información Contextual ("ℹ")** |
 | ![Guía Teórica Interactiva](docs/img/08_seccion_teorica.png) | ![Popovers de Información](docs/img/09_popover_informacion.png) |
+| **9. Espacio 3D ℝ³: Producto Vectorial u × v** | **10. Espacio 3D ℝ³: Puntos A→B & Cosenos Directores** |
+| ![Espacio 3D - Producto Vectorial](docs/img/10_espacio_3d.png) | ![Espacio 3D - Cosenos Directores](docs/img/11_cosenos_directores_3d.png) |
 
 ---
 
@@ -95,7 +97,7 @@ Diseñada con un enfoque de **cero dependencias externas**, explota las capacida
 - Eliminación individual o vaciado completo de la base de datos local del navegador.
 
 ### 8. Guía Teórica y Lógica Matemática Interactiva en ℝ²
-- Módulo pedagógico integrado con 8 bloques temáticos rigurosos:
+- Módulo pedagógico integrado con 10 bloques temáticos rigurosos:
   1. **Escalares vs. Vectores:** Magnitudes con dirección y sentido vs. valores unidimensionales.
   2. **Componentes Cartesianas:** Deducción del vector $\vec{AB} = B - A$ (extremo menos origen).
   3. **Módulo y Pitágoras:** Demostración analítica de la norma euclídea $\|\vec{v}\| = \sqrt{v_x^2 + v_y^2}$.
@@ -104,19 +106,35 @@ Diseñada con un enfoque de **cero dependencias externas**, explota las capacida
   6. **Producto Escalar y Ortogonalidad:** Proyección ortogonal y criterio de perpendicularidad ($\vec{u} \cdot \vec{v} = 0$).
   7. **Equipolencia y Vectores Libres:** Relación de equivalencia y traslación rígida en el plano.
   8. **Cadenas Vectoriales y Desplazamiento:** Suma secuencial y equivalencia cinemática del desplazamiento directo.
+  9. **Expresión Cartesiana y Cosenos Directores en ℝ³:** Base canónica $\{\vec{i}, \vec{j}, \vec{k}\}$, ángulos directores $\alpha, \beta, \gamma$ e identidad pitagórica $\cos^2\alpha + \cos^2\beta + \cos^2\gamma = 1$.
+  10. **Producto Vectorial (u × v) y Área del Paralelogramo en ℝ³:** Determinante de Laplace, vector ortogonal resultante, regla del sacacorchos y área euclídea $\|\vec{u} \times \vec{v}\|$.
 - **Buscador conceptual en tiempo real:** Filtrado instantáneo por términos clave.
 - **Acciones interactivas en un clic:**
   - `🚀 Probar en el Simulador`: Inyecta las coordenadas del tema teórico directamente en el canvas con trazado geométrico y centrado de vista.
+
 ### 9. Botones de Información Contextual ("ℹ") y Popovers In Situ
 - Indicadores interactivos colocados estratégicamente al lado de:
-  - **Entradas numéricas y vectores:** Coordenadas cartesianas $P(x, y)$, componentes de $\vec{u}$ y $\vec{v}$, factor de escala $k$, y vectores fijos $\vec{AB}$ y $\vec{CD}$.
-  - **Métricas de salida y resumen:** Vector resultante $\vec{R}$, norma euclídea $\|\vec{v}\|$, ángulo director $\theta$, distancia euclídea $d(A, B)$, suma, resta, producto escalar y test de equipolencia.
+  - **Entradas numéricas y vectores:** Coordenadas cartesianas $P(x, y)$, componentes 2D y 3D ($u_x, u_y, u_z$), factor de escala $k$, y vectores fijos $\vec{AB}$ y $\vec{CD}$.
+  - **Métricas de salida y resumen:** Vector resultante $\vec{R}$, norma euclídea $\|\vec{v}\|$, ángulo director $\theta$, cosenos directores $(\cos\alpha, \cos\beta, \cos\gamma)$, producto cruz $\vec{u} \times \vec{v}$, área del paralelogramo, suma, resta y proyecciones.
   - **Formularios de autoevaluación:** Cabeceras y magnitudes de comprobación.
 - **Tarjeta Popover flotante:** Despliega sin recargar ni tapar el canvas:
   - Definición formal y significado físico.
   - Fórmula matemática exacta aplicada.
   - Interpretación geométrica intuitiva.
   - Botón interactivo `"📖 Ver en Guía Teórica"`: Abre instantáneamente el modal pedagógico en el tema correspondiente.
+
+### 10. Espacio Tridimensional ℝ³: Entorno Gráfico y Álgebra 3D
+- **Pestaña de Entorno Independiente:** Selector en cabecera `Vectores 3D (ℝ³)` que conmuta la barra de modos a la suite tridimensional.
+- **Motor Gráfico 3D Nativo (`MotorGrafico3D.js`):**
+  - Proyección axonométrica/esférica matemática en HTML5 Canvas 2D sin bibliotecas externas pesadas.
+  - Control orbital continuo con ratón: **Yaw** (rotación horizontal) y **Pitch** (elevación vertical con bloqueo de cardán a $\pm 87^\circ$).
+  - Zoom focal interactivo con rueda de ratón o botones del HUD.
+  - Sistema de referencia dextrógiro: Eje $X$ (rojo), Eje $Y$ (verde) y Eje vertical $Z$ (violeta, apuntando hacia arriba según la convención física).
+  - Malla base horizontal en plano $XY$ ($z=0$) y líneas discontinuas de proyección ortogonal al suelo.
+- **Modos Tridimensionales Especializados:**
+  1. **Operaciones & Producto Vectorial ($\vec{u} \times \vec{v}$):** Cálculo del determinante $3 \times 3$, vector perpendicular resultante, suma tridimensional, producto escalar, ángulo espacial y superficie del paralelogramo sustentado con sombreado volumétrico.
+  2. **Vector entre 2 Puntos ($A \to B$) & Cosenos Directores:** Vector relativo $\vec{AB} = B - A$, norma tridimensional, cosenos directores con los tres ejes coordenados, verificación de la identidad $\sum \cos^2 = 1$ y vector unitario director $\hat{u}$.
+- **HUD Dinámico Adaptativo:** Coordenadas angulares de cámara en tiempo real (`Yaw: X°, Pitch: Y° | Zoom: Zpx/u`) y alternancia de capas 3D.
 
 ---
 

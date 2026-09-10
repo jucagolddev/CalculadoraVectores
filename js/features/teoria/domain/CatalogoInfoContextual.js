@@ -142,6 +142,48 @@ export class CatalogoInfoContextual {
       queEs: 'Trazado gráfico de líneas discontinuas que ilustra el método geométrico de resolución en el plano.',
       formula: '\\text{Paralelogramo} \\quad \\text{vs.} \\quad \\text{Punta-Cola}',
       interpretacion: 'El método del paralelogramo traslada ambos vectores al origen; punta-cola encadena el origen de uno en el extremo del otro.'
+    },
+
+    // --- Conceptos Específicos de ℝ³ (Tridimensionales) ---
+    'vector-3d-u': {
+      titulo: 'Vector Concurrente u(ux, uy, uz) en ℝ³',
+      categoria: 'Álgebra Vectorial 3D',
+      temaTeoriaId: 'teoria-3d-cartesiana',
+      queEs: 'Entidad espacial tridimensional expresada en la base ortonormal canónica i, j, k.',
+      formula: '\\vec{u} = u_x \\vec{i} + u_y \\vec{j} + u_z \\vec{k} = (u_x, u_y, u_z)',
+      interpretacion: 'Sus componentes son las proyecciones ortogonales directas sobre los tres ejes espaciales X, Y y Z.'
+    },
+    'vector-3d-v': {
+      titulo: 'Vector Concurrente v(vx, vy, vz) en ℝ³',
+      categoria: 'Álgebra Vectorial 3D',
+      temaTeoriaId: 'teoria-3d-cartesiana',
+      queEs: 'Segundo vector espacial concurrente con u que permite generar un plano tridimensional y calcular su producto cruz.',
+      formula: '\\vec{v} = v_x \\vec{i} + v_y \\vec{j} + v_z \\vec{k} = (v_x, v_y, v_z)',
+      interpretacion: 'Junto con el vector u define la orientación del paralelogramo espacial sustentado.'
+    },
+    'producto-vectorial': {
+      titulo: 'Producto Vectorial (Cross Product) u × v',
+      categoria: 'Álgebra Vectorial 3D',
+      temaTeoriaId: 'teoria-3d-producto-vectorial',
+      queEs: 'Operación que genera un nuevo vector perpendicular tanto a u como a v (ortogonal al plano que ambos forman).',
+      formula: '\\vec{u} \\times \\vec{v} = (u_y v_z - u_z v_y)\\vec{i} - (u_x v_z - u_z v_x)\\vec{j} + (u_x v_y - u_y v_x)\\vec{k}',
+      interpretacion: 'Su sentido sigue la regla del tornillo (mano derecha): girar de u hacia v determina hacia dónde apunta el vector resultante.'
+    },
+    'area-paralelogramo-3d': {
+      titulo: 'Área del Paralelogramo Sustentado en ℝ³',
+      categoria: 'Geometría Espacial',
+      temaTeoriaId: 'teoria-3d-producto-vectorial',
+      queEs: 'Superficie geométrica encerrada entre los vectores u y v en el espacio tridimensional.',
+      formula: '\\text{Área} = \\|\\vec{u} \\times \\vec{v}\\| = \\|\\vec{u}\\| \\|\\vec{v}\\| \\sin\\theta',
+      interpretacion: 'El módulo del producto vectorial representa con exactitud matemática el área del paralelogramo 3D.'
+    },
+    'cosenos-directores': {
+      titulo: 'Cosenos Directores (cos α, cos β, cos γ)',
+      categoria: 'Geometría y Orientación 3D',
+      temaTeoriaId: 'teoria-3d-cartesiana',
+      queEs: 'Cosenos de los ángulos que forma el vector con los semiejes coordenados positivos X, Y y Z.',
+      formula: '\\cos\\alpha = \\frac{u_x}{\\|\\vec{u}\\|}, \\; \\cos\\beta = \\frac{u_y}{\\|\\vec{u}\\|}, \\; \\cos\\gamma = \\frac{u_z}{\\|\\vec{u}\\|} \\implies \\sum \\cos^2 = 1',
+      interpretacion: 'Sus valores coinciden numéricamente con las componentes del vector unitario director û.'
     }
   };
 

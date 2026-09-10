@@ -28,11 +28,14 @@ export const Configuracion = Object.freeze({
   MODOS_APP: Object.freeze({
     CADENA_PUNTOS: 'dos-puntos',
     OPERACIONES: 'operaciones',
-    EQUIPOLENCIA: 'equipolencia'
+    EQUIPOLENCIA: 'equipolencia',
+    OPERACIONES_3D: 'operaciones-3d',
+    PUNTOS_3D: 'puntos-3d'
   }),
 
   ENTORNOS_APP: Object.freeze({
     CALCULADORA: 'calculadora',
-    EJERCICIO: 'ejercicio'
+    EJERCICIO: 'ejercicio',
+    ESPACIO_3D: 'espacio-3d'
   })
 });
