@@ -13,6 +13,7 @@ import { ControladorEquipolencia } from '../../features/equipolencia/presentatio
 import { ControladorSolucion } from '../../features/solucionador/presentation/ControladorSolucion.js';
 import { ControladorFormulas } from '../../features/formulas/presentation/ControladorFormulas.js';
 import { ControladorAlmacenamiento } from '../../features/ejercicios/presentation/ControladorAlmacenamiento.js';
+import { ControladorTeoria } from '../../features/teoria/presentation/ControladorTeoria.js';
 
 /**
  * Contenedor de Inversión de Control (IoC) y Factoría de Controladores.
@@ -84,13 +85,38 @@ export class FactoriaControladores {
       }
     );
 
+    // 5. Controlador de la Sección Teórica Interactiva
+    const ctrlTeoria = new ControladorTeoria(
+      domElements.modalTeoria,
+      ({ modo, datos, construccion, entorno }) => {
+        estadoApp.actualizar({
+          entornoActivo: entorno,
+          modoActivo: modo,
+          respuestasVisibles: entorno === 'calculadora',
+          construccionGeometrica: construccion || 'paralelogramo'
+        });
+
+        if (modo === Configuracion.MODOS_APP.CADENA_PUNTOS) {
+          ctrlCadena.cargarEjercicio(datos);
+        } else if (modo === Configuracion.MODOS_APP.OPERACIONES) {
+          ctrlOperaciones.cargarEjercicio(datos);
+        } else if (modo === Configuracion.MODOS_APP.EQUIPOLENCIA) {
+          ctrlEquipolencia.cargarEjercicio(datos);
+        }
+
+        ctrlSolucion.renderizarFormularioComprobacion(modo, ctrlCadena.puntos);
+        plano.autoAjustarVista();
+      }
+    );
+
     return {
       ctrlSolucion,
       ctrlFormulas,
       ctrlCadena,
       ctrlOperaciones,
       ctrlEquipolencia,
-      ctrlAlmacenamiento
+      ctrlAlmacenamiento,
+      ctrlTeoria
     };
   }
 }

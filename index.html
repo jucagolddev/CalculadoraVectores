@@ -19,6 +19,7 @@
   <link rel="stylesheet" href="css/components/modals.css">
   <link rel="stylesheet" href="css/components/storage.css">
   <link rel="stylesheet" href="css/components/toast.css">
+  <link rel="stylesheet" href="css/components/teoria.css">
 </head>
 <body>
 
@@ -99,6 +100,13 @@
           <path d="M19 11H5m14 0a2 2 0 0 1 2 2v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-6a2 2 0 0 1 2-2m14 0V9a2 2 0 0 0-2-2M5 11V9a2 2 0 0 1 2-2m0 0V5a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v2M7 7h10"/>
         </svg>
         Mis Ejercicios
+      </button>
+
+      <button id="btn-abrir-teoria" class="btn-accion btn-teoria" title="Aprender y repasar conceptos y lógica matemática">
+        <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <path d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/>
+        </svg>
+        Teoría
       </button>
 
       <button id="btn-abrir-formulas" class="btn-accion btn-formulas" title="Consultar compendio de fórmulas vectoriales">
@@ -263,6 +271,40 @@
 
     <div id="cuerpo-solucion" class="cuerpo-cajon">
       <!-- Inyectado dinámicamente -->
+    </div>
+  </div>
+
+  <!-- MODAL: GUÍA TEÓRICA Y APRENDIZAJE CONCEPTUAL INTERACTIVO -->
+  <div id="modal-teoria" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="titulo-modal-teoria">
+    <div class="modal-contenedor">
+      <div class="modal-cabecera">
+        <div class="cabecera-teoria">
+          <div>
+            <h2 id="titulo-modal-teoria" style="display:flex; align-items:center; gap:0.5rem; font-size:1.15rem; color:#ffffff;">
+              <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" style="color:var(--color-violeta);">
+                <path d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/>
+              </svg>
+              Guía Teórica y Lógica Matemática en ℝ²
+            </h2>
+            <p style="font-size:0.78rem; color:var(--color-texto-tenue); margin:0.15rem 0 0 0;">Aprende, repasa y prueba conceptos directamente en el simulador interactivo.</p>
+          </div>
+          <div class="buscador-teoria-caja">
+            <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/>
+            </svg>
+            <input type="text" id="input-buscador-teoria" class="input-buscador-teoria" placeholder="Buscar concepto o fórmula..." autocomplete="off">
+          </div>
+        </div>
+        <button id="btn-cerrar-teoria" class="btn-cerrar-cajon" title="Cerrar guía teórica">
+          <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+      </div>
+      <div class="modal-cuerpo">
+        <div class="layout-teoria">
+          <nav id="indice-temas-teoria" class="sidebar-indice-teoria" aria-label="Índice de temas teóricos"></nav>
+          <main id="visor-contenido-teoria" class="visor-contenido-teoria"></main>
+        </div>
+      </div>
     </div>
   </div>
 

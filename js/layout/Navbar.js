@@ -10,10 +10,12 @@ export class Navbar {
    * @param {HTMLButtonElement} elementos.btnNuevoReto
    * @param {HTMLButtonElement} elementos.btnFormulas
    * @param {HTMLButtonElement} elementos.btnSolucion
+   * @param {HTMLButtonElement} [elementos.btnTeoria]
    * @param {EstadoApp} estadoApp
    * @param {Object} callbacks
    * @param {Function} callbacks.alAbrirFormulas
    * @param {Function} callbacks.alAbrirSolucion
+   * @param {Function} [callbacks.alAbrirTeoria]
    * @param {Function} callbacks.alPonerACero
    * @param {Function} callbacks.alNuevoReto
    * @param {Function} callbacks.alCambiarEntorno
@@ -80,6 +82,12 @@ export class Navbar {
     if (this._elementos.btnSolucion) {
       this._elementos.btnSolucion.addEventListener('click', () => {
         if (this._callbacks.alAbrirSolucion) this._callbacks.alAbrirSolucion();
+      });
+    }
+
+    if (this._elementos.btnTeoria) {
+      this._elementos.btnTeoria.addEventListener('click', () => {
+        if (this._callbacks.alAbrirTeoria) this._callbacks.alAbrirTeoria();
       });
     }
 

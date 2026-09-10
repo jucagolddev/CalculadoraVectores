@@ -27,7 +27,8 @@ class Bootstrap {
       cajonSolucion: document.getElementById('cajon-solucion'),
       cuerpoSolucion: document.getElementById('cuerpo-solucion'),
       modalFormulas: document.getElementById('modal-formulas'),
-      modalAlmacen: document.getElementById('modal-almacen-ejercicios')
+      modalAlmacen: document.getElementById('modal-almacen-ejercicios'),
+      modalTeoria: document.getElementById('modal-teoria')
     };
 
     // 3. Motor Gráfico
@@ -105,12 +106,14 @@ class Bootstrap {
         btnGuardar: document.getElementById('btn-guardar-ejercicio'),
         btnAlmacen: document.getElementById('btn-abrir-almacen'),
         btnFormulas: document.getElementById('btn-abrir-formulas'),
-        btnSolucion: document.getElementById('btn-abrir-solucion')
+        btnSolucion: document.getElementById('btn-abrir-solucion'),
+        btnTeoria: document.getElementById('btn-abrir-teoria')
       },
       estadoApp,
       {
         alAbrirFormulas: () => ctrls.ctrlFormulas.abrir(),
         alAbrirSolucion: () => ctrls.ctrlSolucion.abrir(null),
+        alAbrirTeoria: () => ctrls.ctrlTeoria.abrir(),
         alPonerACero: ponerACero,
         alNuevoReto: generarNuevoReto,
         alCambiarEntorno: cambiarEntorno,
@@ -180,6 +183,7 @@ class Bootstrap {
         ctrls.ctrlFormulas.cerrar();
         ctrls.ctrlSolucion.cerrar();
         ctrls.ctrlAlmacenamiento.cerrar();
+        ctrls.ctrlTeoria.cerrar();
       }
     });
 

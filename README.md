@@ -34,6 +34,8 @@ Diseñada con un enfoque de **cero dependencias externas**, explota las capacida
 | ![Modo Ejercicios](docs/img/04_modo_ejercicios.png) | ![Solución Analítica](docs/img/05_solucion_paso_a_paso.png) |
 | **5. Compendio Teórico de Fórmulas** | **6. Catálogo de Ejercicios en LocalStorage** |
 | ![Fórmulas Vectoriales](docs/img/06_compendio_formulas.png) | ![Gestión de Almacenamiento](docs/img/07_almacen_ejercicios.png) |
+| **7. Guía Teórica y Lógica Matemática en ℝ²** | |
+| ![Guía Teórica Interactiva](docs/img/08_seccion_teorica.png) | |
 
 ---
 
@@ -92,6 +94,21 @@ Diseñada con un enfoque de **cero dependencias externas**, explota las capacida
 - Carga instantánea que conmuta el simulador al modo ejercicio con los datos restaurados.
 - Eliminación individual o vaciado completo de la base de datos local del navegador.
 
+### 8. Guía Teórica y Lógica Matemática Interactiva en ℝ²
+- Módulo pedagógico integrado con 8 bloques temáticos rigurosos:
+  1. **Escalares vs. Vectores:** Magnitudes con dirección y sentido vs. valores unidimensionales.
+  2. **Componentes Cartesianas:** Deducción del vector $\vec{AB} = B - A$ (extremo menos origen).
+  3. **Módulo y Pitágoras:** Demostración analítica de la norma euclídea $\|\vec{v}\| = \sqrt{v_x^2 + v_y^2}$.
+  4. **Vector Unitario y Normalización:** Extracción de la dirección pura $\hat{u} = \vec{v} / \|\vec{v}\|$.
+  5. **Álgebra Concurrente:** Reglas del paralelogramo y punta-cola para suma y resta geométrica.
+  6. **Producto Escalar y Ortogonalidad:** Proyección ortogonal y criterio de perpendicularidad ($\vec{u} \cdot \vec{v} = 0$).
+  7. **Equipolencia y Vectores Libres:** Relación de equivalencia y traslación rígida en el plano.
+  8. **Cadenas Vectoriales y Desplazamiento:** Suma secuencial y equivalencia cinemática del desplazamiento directo.
+- **Buscador conceptual en tiempo real:** Filtrado instantáneo por términos clave.
+- **Acciones interactivas en un clic:**
+  - `🚀 Probar en el Simulador`: Inyecta las coordenadas del tema teórico directamente en el canvas con trazado geométrico y centrado de vista.
+  - `🎯 Practicar en Modo Reto`: Carga el reto en modo autoevaluación para que el usuario calcule y verifique sus resultados.
+
 ---
 
 ## 🏗️ Arquitectura del Sistema
@@ -103,7 +120,7 @@ graph TD
     UI[Controladores de Presentación] -->|Invoca| DI[Factoría IoC / DI]
     DI -->|Instancia e Inyecta| UC[Casos de Uso de Aplicación]
     UC -->|Aplica Lógica Pura| DOM[Entidades de Dominio]
-    UC -->|Consulta / Guarda| REPO[Repositorio LocalStorage]
+    UC -->|Consulta / Guarda| REPO[Repositorios LocalStorage / Teoría]
     UI -->|Renderiza Estado| CANVAS[Motor Plano Cartesiano 2D]
 ```
 
@@ -126,6 +143,7 @@ CalculadoraVectores/
 │   │   ├── hud.css                # Controles flotantes multicapa del canvas
 │   │   ├── modals.css             # Modales de fórmulas y diálogos de información
 │   │   ├── storage.css            # Modal de ejercicios guardados en LocalStorage
+│   │   ├── teoria.css             # Modal interactivo con visor de conceptos y buscador
 │   │   └── toast.css              # Sistema de notificaciones toast flotantes
 │   ├── layout/
 │   │   └── layout.css             # Grid principal (sidebar, canvas, header, footer)
@@ -140,7 +158,8 @@ CalculadoraVectores/
 │   │   ├── cadena/                # Dominio, casos de uso y UI de cadena de puntos
 │   │   ├── operaciones/           # Dominio, casos de uso y UI de álgebra vectorial
 │   │   ├── equipolencia/          # Dominio, casos de uso y UI de equipolencia
-│   │   └── ejercicios/            # Dominio, verificación y persistencia LocalStorage
+│   │   ├── ejercicios/            # Dominio, verificación y persistencia LocalStorage
+│   │   └── teoria/                # Repositorio de conceptos y controlador pedagógico
 │   ├── layout/                    # HUD y navegación de modos
 │   ├── shared/canvas/             # Motor gráfico y capas de renderizado del Canvas 2D
 │   └── main.js                    # Bootstrapper y orquestador del ciclo de vida
