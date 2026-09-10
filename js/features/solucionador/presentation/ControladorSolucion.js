@@ -1,5 +1,6 @@
 import { Configuracion } from '../../../core/constants/Configuracion.js';
 import { GeneradorInputs } from '../../../shared/utils/GeneradorInputs.js';
+import { CatalogoInfoContextual } from '../../teoria/domain/CatalogoInfoContextual.js';
 
 /**
  * Controlador de presentación para el cajón de resolución paso a paso y evaluación formativa.
@@ -35,7 +36,7 @@ export class ControladorSolucion {
       const letraFinal = puntosCadena[puntosCadena.length - 1]?.id || 'B';
 
       this._contenedorComprobacion.innerHTML = `
-        <h3><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg> Comprueba tu Solución</h3>
+        <h3><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg> Comprueba tu Solución ${CatalogoInfoContextual.htmlBotonInfo(esMultiple ? 'vector-resultante' : 'vector-ab')}</h3>
         <p class="texto-ayuda">${esMultiple ? `Calcula el vector resultante neto (R = A → ${letraFinal}) antes de ver la solución:` : '¿Calculaste el vector a mano? Ingresa tus resultados para verificar si están correctos:'}</p>
         <div class="inputs-par">
           ${GeneradorInputs.crearCampoNumero({
@@ -60,7 +61,7 @@ export class ControladorSolucion {
       `;
     } else if (modo === Configuracion.MODOS_APP.OPERACIONES) {
       this._contenedorComprobacion.innerHTML = `
-        <h3><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg> Comprueba tu Solución</h3>
+        <h3><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg> Comprueba tu Solución ${CatalogoInfoContextual.htmlBotonInfo('suma-vectores')}</h3>
         <p class="texto-ayuda">Introduce tus respuestas para suma (u+v) y producto punto (u·v):</p>
         <div class="inputs-par">
           ${GeneradorInputs.crearCampoNumero({
@@ -85,7 +86,7 @@ export class ControladorSolucion {
       `;
     } else if (modo === Configuracion.MODOS_APP.EQUIPOLENCIA) {
       this._contenedorComprobacion.innerHTML = `
-        <h3><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg> Comprueba tu Solución</h3>
+        <h3><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg> Comprueba tu Solución ${CatalogoInfoContextual.htmlBotonInfo('equipolencia')}</h3>
         <p class="texto-ayuda">¿Son equipolentes los vectores AB y CD?:</p>
         <div style="display:flex; gap:1rem; align-items:center; margin: 0.35rem 0;">
           <label class="opcion-radio"><input type="radio" name="test-equipolente" value="si"> SÍ son equipolentes</label>

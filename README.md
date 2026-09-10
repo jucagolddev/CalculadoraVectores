@@ -34,8 +34,8 @@ Diseñada con un enfoque de **cero dependencias externas**, explota las capacida
 | ![Modo Ejercicios](docs/img/04_modo_ejercicios.png) | ![Solución Analítica](docs/img/05_solucion_paso_a_paso.png) |
 | **5. Compendio Teórico de Fórmulas** | **6. Catálogo de Ejercicios en LocalStorage** |
 | ![Fórmulas Vectoriales](docs/img/06_compendio_formulas.png) | ![Gestión de Almacenamiento](docs/img/07_almacen_ejercicios.png) |
-| **7. Guía Teórica y Lógica Matemática en ℝ²** | |
-| ![Guía Teórica Interactiva](docs/img/08_seccion_teorica.png) | |
+| **7. Guía Teórica y Lógica Matemática en ℝ²** | **8. Popovers de Información Contextual ("ℹ")** |
+| ![Guía Teórica Interactiva](docs/img/08_seccion_teorica.png) | ![Popovers de Información](docs/img/09_popover_informacion.png) |
 
 ---
 
@@ -107,7 +107,16 @@ Diseñada con un enfoque de **cero dependencias externas**, explota las capacida
 - **Buscador conceptual en tiempo real:** Filtrado instantáneo por términos clave.
 - **Acciones interactivas en un clic:**
   - `🚀 Probar en el Simulador`: Inyecta las coordenadas del tema teórico directamente en el canvas con trazado geométrico y centrado de vista.
-  - `🎯 Practicar en Modo Reto`: Carga el reto en modo autoevaluación para que el usuario calcule y verifique sus resultados.
+### 9. Botones de Información Contextual ("ℹ") y Popovers In Situ
+- Indicadores interactivos colocados estratégicamente al lado de:
+  - **Entradas numéricas y vectores:** Coordenadas cartesianas $P(x, y)$, componentes de $\vec{u}$ y $\vec{v}$, factor de escala $k$, y vectores fijos $\vec{AB}$ y $\vec{CD}$.
+  - **Métricas de salida y resumen:** Vector resultante $\vec{R}$, norma euclídea $\|\vec{v}\|$, ángulo director $\theta$, distancia euclídea $d(A, B)$, suma, resta, producto escalar y test de equipolencia.
+  - **Formularios de autoevaluación:** Cabeceras y magnitudes de comprobación.
+- **Tarjeta Popover flotante:** Despliega sin recargar ni tapar el canvas:
+  - Definición formal y significado físico.
+  - Fórmula matemática exacta aplicada.
+  - Interpretación geométrica intuitiva.
+  - Botón interactivo `"📖 Ver en Guía Teórica"`: Abre instantáneamente el modal pedagógico en el tema correspondiente.
 
 ---
 
@@ -120,7 +129,7 @@ graph TD
     UI[Controladores de Presentación] -->|Invoca| DI[Factoría IoC / DI]
     DI -->|Instancia e Inyecta| UC[Casos de Uso de Aplicación]
     UC -->|Aplica Lógica Pura| DOM[Entidades de Dominio]
-    UC -->|Consulta / Guarda| REPO[Repositorios LocalStorage / Teoría]
+    UC -->|Consulta / Guarda| REPO[Repositorios LocalStorage / Teoría / Catálogo]
     UI -->|Renderiza Estado| CANVAS[Motor Plano Cartesiano 2D]
 ```
 
@@ -142,6 +151,7 @@ CalculadoraVectores/
 │   │   ├── forms.css              # Inputs de coordenadas, pares numéricos y radios
 │   │   ├── hud.css                # Controles flotantes multicapa del canvas
 │   │   ├── modals.css             # Modales de fórmulas y diálogos de información
+│   │   ├── popover-info.css       # Tarjeta flotante y botón 'ℹ' de ayuda contextual
 │   │   ├── storage.css            # Modal de ejercicios guardados en LocalStorage
 │   │   ├── teoria.css             # Modal interactivo con visor de conceptos y buscador
 │   │   └── toast.css              # Sistema de notificaciones toast flotantes
@@ -159,7 +169,7 @@ CalculadoraVectores/
 │   │   ├── operaciones/           # Dominio, casos de uso y UI de álgebra vectorial
 │   │   ├── equipolencia/          # Dominio, casos de uso y UI de equipolencia
 │   │   ├── ejercicios/            # Dominio, verificación y persistencia LocalStorage
-│   │   └── teoria/                # Repositorio de conceptos y controlador pedagógico
+│   │   └── teoria/                # Repositorio conceptual, catálogo contextual y popover
 │   ├── layout/                    # HUD y navegación de modos
 │   ├── shared/canvas/             # Motor gráfico y capas de renderizado del Canvas 2D
 │   └── main.js                    # Bootstrapper y orquestador del ciclo de vida

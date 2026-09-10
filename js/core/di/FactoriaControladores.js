@@ -14,6 +14,7 @@ import { ControladorSolucion } from '../../features/solucionador/presentation/Co
 import { ControladorFormulas } from '../../features/formulas/presentation/ControladorFormulas.js';
 import { ControladorAlmacenamiento } from '../../features/ejercicios/presentation/ControladorAlmacenamiento.js';
 import { ControladorTeoria } from '../../features/teoria/presentation/ControladorTeoria.js';
+import { PopoverInfoContextual } from '../../features/teoria/presentation/PopoverInfoContextual.js';
 
 /**
  * Contenedor de Inversión de Control (IoC) y Factoría de Controladores.
@@ -109,6 +110,11 @@ export class FactoriaControladores {
       }
     );
 
+    // 6. Popover de Información Contextual en tiempo real
+    const popoverInfo = new PopoverInfoContextual((temaId) => {
+      ctrlTeoria.abrir(temaId);
+    });
+
     return {
       ctrlSolucion,
       ctrlFormulas,
@@ -116,7 +122,8 @@ export class FactoriaControladores {
       ctrlOperaciones,
       ctrlEquipolencia,
       ctrlAlmacenamiento,
-      ctrlTeoria
+      ctrlTeoria,
+      popoverInfo
     };
   }
 }

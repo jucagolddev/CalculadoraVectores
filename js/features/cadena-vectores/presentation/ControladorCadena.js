@@ -2,6 +2,7 @@ import { Punto2D } from '../../../core/models/Punto2D.js';
 import { Configuracion } from '../../../core/constants/Configuracion.js';
 import { FormateadorMatematico } from '../../../shared/utils/FormateadorMatematico.js';
 import { GeneradorInputs } from '../../../shared/utils/GeneradorInputs.js';
+import { CatalogoInfoContextual } from '../../teoria/domain/CatalogoInfoContextual.js';
 
 /**
  * Controlador de presentación para la gestión de puntos de unión y cadena vectorial.
@@ -40,6 +41,7 @@ export class ControladorCadena {
           <span class="etiqueta-vector">
             <span class="punto-color" style="background:${pt.color}"></span>
             Punto ${pt.id} ${idx === 0 ? '(Origen inicial)' : (idx === this._puntos.length - 1 ? '(Extremo final)' : `(Unión ${idx})`)}
+            ${CatalogoInfoContextual.htmlBotonInfo('coord-punto')}
           </span>
           ${this._puntos.length > 2 ? `
             <button class="btn-eliminar-punto" data-indice="${idx}" type="button" title="Eliminar punto ${pt.id}">
@@ -200,19 +202,19 @@ export class ControladorCadena {
     if (!esCadena) {
       this._contenedorResumen.innerHTML = `
         <div class="item-resumen">
-          <div class="etiqueta">Componentes AB</div>
+          <div class="etiqueta">Componentes AB ${CatalogoInfoContextual.htmlBotonInfo('vector-ab')}</div>
           <div class="valor">(${v1.x}, ${v1.y})</div>
         </div>
         <div class="item-resumen">
-          <div class="etiqueta">Módulo ||AB||</div>
+          <div class="etiqueta">Módulo ||AB|| ${CatalogoInfoContextual.htmlBotonInfo('modulo')}</div>
           <div class="valor">${FormateadorMatematico.formatearNumero(v1.modulo())} u</div>
         </div>
         <div class="item-resumen">
-          <div class="etiqueta">Ángulo θ</div>
+          <div class="etiqueta">Ángulo θ ${CatalogoInfoContextual.htmlBotonInfo('angulo-director')}</div>
           <div class="valor">${FormateadorMatematico.formatearGrados(v1.direccionGrados())}</div>
         </div>
         <div class="item-resumen">
-          <div class="etiqueta">Distancia d(A,B)</div>
+          <div class="etiqueta">Distancia d(A,B) ${CatalogoInfoContextual.htmlBotonInfo('distancia-puntos')}</div>
           <div class="valor">${FormateadorMatematico.formatearNumero(puntosEntidad[0].distanciaA(puntosEntidad[1]))}</div>
         </div>
       `;
@@ -220,19 +222,19 @@ export class ControladorCadena {
       const r = resultado.vectorResultante;
       this._contenedorResumen.innerHTML = `
         <div class="item-resumen">
-          <div class="etiqueta">Vector Resultante R</div>
+          <div class="etiqueta">Vector Resultante R ${CatalogoInfoContextual.htmlBotonInfo('vector-resultante')}</div>
           <div class="valor" style="color:#10b981">(${r.x}, ${r.y})</div>
         </div>
         <div class="item-resumen">
-          <div class="etiqueta">Módulo ||R|| Neto</div>
+          <div class="etiqueta">Módulo ||R|| Neto ${CatalogoInfoContextual.htmlBotonInfo('modulo')}</div>
           <div class="valor" style="color:#10b981">${FormateadorMatematico.formatearNumero(r.modulo())} u</div>
         </div>
         <div class="item-resumen">
-          <div class="etiqueta">Vectores Unidos</div>
+          <div class="etiqueta">Vectores Unidos ${CatalogoInfoContextual.htmlBotonInfo('vector-resultante')}</div>
           <div class="valor">${resultado.vectores.length} tramos</div>
         </div>
         <div class="item-resumen">
-          <div class="etiqueta">Trayectoria Total</div>
+          <div class="etiqueta">Trayectoria Total ${CatalogoInfoContextual.htmlBotonInfo('modulo')}</div>
           <div class="valor">${FormateadorMatematico.formatearNumero(resultado.longitudTotal)} u</div>
         </div>
         <div class="item-resumen" style="grid-column: span 2;">

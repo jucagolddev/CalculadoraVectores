@@ -184,6 +184,7 @@ class Bootstrap {
         ctrls.ctrlSolucion.cerrar();
         ctrls.ctrlAlmacenamiento.cerrar();
         ctrls.ctrlTeoria.cerrar();
+        ctrls.popoverInfo.cerrar();
       }
     });
 

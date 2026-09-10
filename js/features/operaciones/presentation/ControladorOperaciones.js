@@ -3,6 +3,7 @@ import { Vector2D } from '../../../core/models/Vector2D.js';
 import { Configuracion } from '../../../core/constants/Configuracion.js';
 import { FormateadorMatematico } from '../../../shared/utils/FormateadorMatematico.js';
 import { GeneradorInputs } from '../../../shared/utils/GeneradorInputs.js';
+import { CatalogoInfoContextual } from '../../teoria/domain/CatalogoInfoContextual.js';
 
 /**
  * Controlador de presentación para la pestaña de operaciones vectoriales con u y v.
@@ -52,7 +53,7 @@ export class ControladorOperaciones {
     this._contenedorFormulario.innerHTML = `
       <div class="grupo-coordenadas">
         <div class="fila-vector">
-          <span class="etiqueta-vector"><span class="punto-color" style="background:#06b6d4"></span> Vector u (ux, uy)</span>
+          <span class="etiqueta-vector"><span class="punto-color" style="background:#06b6d4"></span> Vector u (ux, uy) ${CatalogoInfoContextual.htmlBotonInfo('vector-u')}</span>
           <div class="inputs-par">
             ${GeneradorInputs.crearCampoNumero({
               id: 'input-ux',
@@ -73,7 +74,7 @@ export class ControladorOperaciones {
           </div>
         </div>
         <div class="fila-vector">
-          <span class="etiqueta-vector"><span class="punto-color" style="background:#f59e0b"></span> Vector v (vx, vy)</span>
+          <span class="etiqueta-vector"><span class="punto-color" style="background:#f59e0b"></span> Vector v (vx, vy) ${CatalogoInfoContextual.htmlBotonInfo('vector-v')}</span>
           <div class="inputs-par">
             ${GeneradorInputs.crearCampoNumero({
               id: 'input-vx',
@@ -94,7 +95,7 @@ export class ControladorOperaciones {
           </div>
         </div>
         <div class="fila-vector">
-          <span class="etiqueta-vector"><span class="punto-color" style="background:#a855f7"></span> Escalar k (Ponderación k·u)</span>
+          <span class="etiqueta-vector"><span class="punto-color" style="background:#a855f7"></span> Escalar k (Ponderación k·u) ${CatalogoInfoContextual.htmlBotonInfo('escalar-k')}</span>
           ${GeneradorInputs.crearCampoNumero({
             id: 'input-escalar',
             name: 'k',
@@ -105,7 +106,7 @@ export class ControladorOperaciones {
           })}
         </div>
         <div class="opciones-union">
-          <span style="font-size:0.75rem; font-weight:700; color:var(--color-texto-secundario); text-transform:uppercase;">Representación de la Unión:</span>
+          <span style="font-size:0.75rem; font-weight:700; color:var(--color-texto-secundario); text-transform:uppercase;">Representación de la Unión: ${CatalogoInfoContextual.htmlBotonInfo('construccion-geometrica')}</span>
           <label class="opcion-radio">
             <input type="radio" name="modo-geom" value="paralelogramo" ${estado.construccionGeometrica === 'paralelogramo' ? 'checked' : ''}>
             Regla del Paralelogramo (Suma)
@@ -182,19 +183,19 @@ export class ControladorOperaciones {
 
     this._contenedorResumen.innerHTML = `
       <div class="item-resumen">
-        <div class="etiqueta">Suma u + v</div>
+        <div class="etiqueta">Suma u + v ${CatalogoInfoContextual.htmlBotonInfo('suma-vectores')}</div>
         <div class="valor">(${resultado.suma.x}, ${resultado.suma.y})</div>
       </div>
       <div class="item-resumen">
-        <div class="etiqueta">Resta u - v</div>
+        <div class="etiqueta">Resta u - v ${CatalogoInfoContextual.htmlBotonInfo('resta-vectores')}</div>
         <div class="valor">(${resultado.resta.x}, ${resultado.resta.y})</div>
       </div>
       <div class="item-resumen">
-        <div class="etiqueta">Producto Escalar</div>
+        <div class="etiqueta">Producto Escalar ${CatalogoInfoContextual.htmlBotonInfo('producto-escalar')}</div>
         <div class="valor">${FormateadorMatematico.formatearNumero(resultado.productoPunto)}</div>
       </div>
       <div class="item-resumen">
-        <div class="etiqueta">Ángulo entre ellos</div>
+        <div class="etiqueta">Ángulo entre ellos ${CatalogoInfoContextual.htmlBotonInfo('angulo-entre-vectores')}</div>
         <div class="valor">${FormateadorMatematico.formatearGrados(resultado.angulo)}</div>
       </div>
     `;
