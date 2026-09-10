@@ -1,0 +1,109 @@
+/**
+ * Componente: Modales y Compendio Teórico de Fórmulas
+ */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(3, 7, 18, 0.8);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  z-index: 200;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.25s ease;
+}
+
+.modal-overlay.activo {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.modal-contenedor {
+  background: #0f172a;
+  border: 1px solid var(--color-borde-activo);
+  border-radius: var(--radio-xl);
+  max-width: 900px;
+  width: 100%;
+  max-height: 90vh;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7), var(--sombra-resplandor);
+  transform: scale(0.95);
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.modal-overlay.activo .modal-contenedor {
+  transform: scale(1);
+}
+
+.modal-cabecera {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.25rem 1.75rem;
+  border-bottom: 1px solid var(--color-borde);
+  background: rgba(30, 41, 59, 0.5);
+}
+
+.modal-cabecera h2 {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.modal-cuerpo {
+  padding: 1.5rem 1.75rem;
+  overflow-y: auto;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
+  gap: 1.25rem;
+}
+
+/* Ficha documental de fórmula */
+.tarjeta-formula-doc {
+  background: rgba(30, 41, 59, 0.6);
+  border: 1px solid var(--color-borde);
+  border-radius: var(--radio-lg);
+  padding: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.tarjeta-formula-doc h3 {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--color-cian);
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.tarjeta-formula-doc .ecuacion-caja {
+  background: #090d16;
+  border-radius: var(--radio-md);
+  padding: 0.75rem 1rem;
+  font-family: var(--fuente-mono);
+  font-size: 0.92rem;
+  color: #f8fafc;
+  border-left: 3px solid var(--color-cian);
+}
+
+.tarjeta-formula-doc p {
+  font-size: 0.82rem;
+  color: var(--color-texto-secundario);
+  line-height: 1.5;
+}
+
+@media (max-width: 768px) {
+  .modal-cuerpo {
+    grid-template-columns: 1fr;
+  }
+}

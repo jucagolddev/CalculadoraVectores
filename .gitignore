@@ -1,0 +1,33 @@
+# =============================================================================
+# REGLAS GLOBALES DE EXCLUSION GIT - CALCULADORA VECTORES R2
+# =============================================================================
+
+# Archivos del Sistema Operativo
+.DS_Store
+Thumbs.db
+desktop.ini
+ehthumbs.db
+$RECYCLE.BIN/
+
+# Entornos de desarrollo y editores
+.idea/
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+.history/
+*.sublime-project
+*.sublime-workspace
+
+# Archivos temporales y de depuración
+*.log
+*.tmp
+*.bak
+*.swp
+*~
+
+# Dependencias y compilados (en caso de ampliación)
+node_modules/
+dist/
+.cache/

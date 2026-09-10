@@ -1,0 +1,118 @@
+import { Punto2D } from '../../../core/models/Punto2D.js';
+
+/**
+ * Servicio de dominio para la generación algorítmica de retos y ejercicios vectoriales.
+ * Garantiza datos de entrada con coordenadas enteras bien condicionadas para resolución pedagógica.
+ */
+export class GeneradorEjerciciosService {
+  /**
+   * Genera un número entero aleatorio dentro de un rango inclusivo [min, max], excluyendo opcionalmente valores específicos.
+   * @param {number} min
+   * @param {number} max
+   * @param {number[]} [excluidos=[]]
+   * @returns {number}
+   */
+  static enteroAleatorio(min, max, excluidos = []) {
+    let valor;
+    do {
+      valor = Math.floor(Math.random() * (max - min + 1)) + min;
+    } while (excluidos.includes(valor));
+    return valor;
+  }
+
+  /**
+   * Genera una cadena de puntos para cálculo de vectores de unión y resultante.
+   * @param {number} [cantidad=2]
+   * @returns {Punto2D[]}
+   */
+  static generarPuntosCadena(cantidad = 2) {
+    const letras = ['A', 'B', 'C', 'D', 'E', 'F'];
+    const puntos = [];
+    const posicionesUsadas = new Set();
+
+    for (let i = 0; i < cantidad; i++) {
+      let x, y, clave;
+      do {
+        x = this.enteroAleatorio(-6, 6);
+        y = this.enteroAleatorio(-6, 6);
+        clave = `${x},${y}`;
+      } while (posicionesUsadas.has(clave));
+
+      posicionesUsadas.add(clave);
+      puntos.push(new Punto2D(x, y, letras[i] || `P${i + 1}`));
+    }
+
+    return puntos;
+  }
+
+  /**
+   * Genera parámetros para operaciones vectoriales con u y v más factor de ponderación k.
+   * @returns {{ux: number, uy: number, vx: number, vy: number, k: number}}
+   */
+  static generarOperaciones() {
+    let ux, uy, vx, vy;
+
+    // u no nulo
+    do {
+      ux = this.enteroAleatorio(-5, 5);
+      uy = this.enteroAleatorio(-5, 5);
+    } while (ux === 0 && uy === 0);
+
+    // v no nulo y no colineal trivial directo
+    do {
+      vx = this.enteroAleatorio(-5, 5);
+      vy = this.enteroAleatorio(-5, 5);
+    } while ((vx === 0 && vy === 0) || (vx === ux && vy === uy));
+
+    const factoresEscalares = [-3, -2, 2, 3, 4];
+    const k = factoresEscalares[Math.floor(Math.random() * factoresEscalares.length)];
+
+    return { ux, uy, vx, vy, k };
+  }
+
+  /**
+   * Genera 4 puntos (A, B, C, D) para evaluar equipolencia.
+   * 50% de probabilidad de equipolencia exacta; 50% no equipolentes.
+   * @returns {{Ax: number, Ay: number, Bx: number, By: number, Cx: number, Cy: number, Dx: number, Dy: number, equipolentesEsperados: boolean}}
+   */
+  static generarEquipolencia() {
+    // Vector base director (dx, dy) no nulo
+    let dx, dy;
+    do {
+      dx = this.enteroAleatorio(-5, 5);
+      dy = this.enteroAleatorio(-5, 5);
+    } while (dx === 0 && dy === 0);
+
+    // Punto origen A
+    const Ax = this.enteroAleatorio(-4, 4);
+    const Ay = this.enteroAleatorio(-4, 4);
+    const Bx = Ax + dx;
+    const By = Ay + dy;
+
+    // Punto origen C (diferente de A para que no sea idéntico en posición)
+    let Cx, Cy;
+    do {
+      Cx = this.enteroAleatorio(-4, 4);
+      Cy = this.enteroAleatorio(-4, 4);
+    } while (Cx === Ax && Cy === Ay);
+
+    const sonEquipolentes = Math.random() < 0.5;
+
+    let Dx, Dy;
+    if (sonEquipolentes) {
+      Dx = Cx + dx;
+      Dy = Cy + dy;
+    } else {
+      // Perturbación aleatoria de al menos una componente
+      const perturbacionX = this.enteroAleatorio(-2, 2, [0]);
+      Dx = Cx + dx + perturbacionX;
+      Dy = Cy + dy;
+    }
+
+    return {
+      Ax, Ay, Bx, By,
+      Cx, Cy, Dx, Dy,
+      equipolentesEsperados: sonEquipolentes
+    };
+  }
+}

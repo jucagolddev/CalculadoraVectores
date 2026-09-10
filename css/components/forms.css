@@ -1,0 +1,100 @@
+/**
+ * Componente: Formularios, Entradas Numéricas e Inputs Cartesiano
+ */
+.grupo-coordenadas {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.fila-vector {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.cabecera-punto-fila {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.etiqueta-vector {
+  font-size: 0.82rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.punto-color {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.inputs-par {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.5rem;
+}
+
+.input-con-icono {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.input-con-icono span {
+  position: absolute;
+  left: 0.75rem;
+  font-family: var(--fuente-mono);
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--color-texto-tenue);
+  pointer-events: none;
+}
+
+.input-numero {
+  width: 100%;
+  background: rgba(15, 23, 42, 0.9);
+  border: 1px solid var(--color-borde);
+  border-radius: var(--radio-md);
+  padding: 0.55rem 0.6rem 0.55rem 2.2rem;
+  color: #ffffff;
+  font-family: var(--fuente-mono);
+  font-size: 0.9rem;
+  font-weight: 500;
+  outline: none;
+  transition: var(--transicion-suave);
+}
+
+.input-numero:focus {
+  border-color: var(--color-cian);
+  box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.15);
+}
+
+.opciones-union {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  background: rgba(15, 23, 42, 0.6);
+  padding: 0.75rem;
+  border-radius: var(--radio-md);
+  border: 1px solid var(--color-borde);
+}
+
+.opcion-radio {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.82rem;
+  color: var(--color-texto-secundario);
+  cursor: pointer;
+}
+
+.opcion-radio input[type="radio"] {
+  accent-color: var(--color-cian);
+  cursor: pointer;
+}

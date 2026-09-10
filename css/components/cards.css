@@ -1,0 +1,66 @@
+/**
+ * Componente: Tarjetas, Paneles de Métricas y Resumen Rápido
+ */
+.tarjeta-formulario {
+  background: var(--color-bg-tarjeta);
+  border: 1px solid var(--color-borde);
+  border-radius: var(--radio-lg);
+  padding: 1.25rem;
+  box-shadow: var(--sombra-tarjeta);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.titulo-seccion {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #f1f5f9;
+  letter-spacing: -0.01em;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.badge-tag {
+  font-size: 0.7rem;
+  padding: 0.2rem 0.5rem;
+  border-radius: var(--radio-sm);
+  font-weight: 600;
+  font-family: var(--fuente-mono);
+  background: rgba(56, 189, 248, 0.15);
+  color: var(--color-cian);
+  border: 1px solid rgba(56, 189, 248, 0.3);
+}
+
+/* Grilla de Resumen Rápido de Magnitudes */
+.resumen-rapido {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.5rem;
+}
+
+.item-resumen {
+  background: rgba(15, 23, 42, 0.7);
+  border: 1px solid var(--color-borde);
+  border-radius: var(--radio-md);
+  padding: 0.5rem 0.65rem;
+}
+
+.item-resumen .etiqueta {
+  font-size: 0.68rem;
+  color: var(--color-texto-tenue);
+  text-transform: uppercase;
+  font-weight: 600;
+}
+
+.item-resumen .valor {
+  font-family: var(--fuente-mono);
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #ffffff;
+}

@@ -1,0 +1,94 @@
+/**
+ * Componente: Autoevaluación Interactiva y Corrección Formativa
+ */
+
+/* Tarjeta en panel lateral */
+.tarjeta-comprobacion {
+  background: rgba(15, 23, 42, 0.85);
+  border: 1px dashed rgba(56, 189, 248, 0.35);
+  border-radius: var(--radio-lg);
+  padding: 1.1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.tarjeta-comprobacion h3 {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--color-cian);
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.texto-ayuda {
+  font-size: 0.78rem;
+  color: var(--color-texto-secundario);
+  line-height: 1.4;
+}
+
+/* Sección de evaluación en el cajón de solución */
+.seccion-evaluacion-usuario {
+  background: rgba(16, 185, 129, 0.08);
+  border: 1px solid rgba(16, 185, 129, 0.25);
+  border-radius: var(--radio-lg);
+  padding: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.seccion-evaluacion-usuario.con-errores {
+  background: rgba(244, 63, 94, 0.08);
+  border-color: rgba(244, 63, 94, 0.3);
+}
+
+.titulo-evaluacion {
+  font-size: 0.95rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.grid-correcciones {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 0.75rem;
+}
+
+.tarjeta-resultado-item {
+  background: rgba(15, 23, 42, 0.75);
+  border-radius: var(--radio-md);
+  padding: 0.75rem 1rem;
+  border-left: 4px solid var(--color-cian);
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.tarjeta-resultado-item.valido {
+  border-left-color: var(--color-esmeralda);
+}
+
+.tarjeta-resultado-item.erroneo {
+  border-left-color: var(--color-rosa);
+}
+
+.tarjeta-resultado-item .nombre-variable {
+  font-size: 0.75rem;
+  color: var(--color-texto-tenue);
+  text-transform: uppercase;
+  font-weight: 600;
+}
+
+.tarjeta-resultado-item .valores-comparados {
+  font-family: var(--fuente-mono);
+  font-size: 0.85rem;
+}
+
+.tarjeta-resultado-item .feedback-texto {
+  font-size: 0.8rem;
+  font-weight: 500;
+}

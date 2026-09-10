@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Calculadora gráfica interactiva de vectores en R2 con representación en plano cartesiano, cálculo de coordenadas entre puntos, equipolencia, operaciones algebraicas, verificación y compendio de fórmulas.">
+  <title>Calculadora y Visualizador Gráfico de Vectores en ℝ²</title>
+  <!-- Sistema de Diseño VectorLab (CSS Modular Component-Driven) -->
+  <link rel="stylesheet" href="css/abstracts/variables.css">
+  <link rel="stylesheet" href="css/abstracts/animations.css">
+  <link rel="stylesheet" href="css/base/base.css">
+  <link rel="stylesheet" href="css/layout/layout.css">
+  <link rel="stylesheet" href="css/components/buttons.css">
+  <link rel="stylesheet" href="css/components/forms.css">
+  <link rel="stylesheet" href="css/components/cards.css">
+  <link rel="stylesheet" href="css/components/hud.css">
+  <link rel="stylesheet" href="css/components/drawer.css">
+  <link rel="stylesheet" href="css/components/evaluacion.css">
+  <link rel="stylesheet" href="css/components/modals.css">
+  <link rel="stylesheet" href="css/components/storage.css">
+  <link rel="stylesheet" href="css/components/toast.css">
+</head>
+<body>
+
+  <!-- CABECERA SUPERIOR DE NAVEGACIÓN Y ACCIONES RÁPIDAS -->
+  <header class="cabecera-principal">
+    <div class="marca-logo">
+      <div class="marca-icono" aria-hidden="true">
+        <svg viewBox="0 0 24 24">
+          <line x1="4" y1="20" x2="20" y2="4"></line>
+          <polyline points="10 4 20 4 20 14"></polyline>
+        </svg>
+      </div>
+      <div class="marca-texto">
+        <h1>VectorLab ℝ²</h1>
+        <span>Cálculo & Geometría Vectorial</span>
+      </div>
+    </div>
+
+    <!-- Selector de Entorno: Calculadora vs Ejercicios -->
+    <div class="selector-entorno" role="radiogroup" aria-label="Entorno de trabajo">
+      <button id="btn-entorno-calc" class="btn-entorno activo" data-entorno="calculadora" title="Modo Calculadora: Cálculo e inspección visual en tiempo real">
+        <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="4" y="2" width="16" height="20" rx="2"/><line x1="8" y1="6" x2="16" y2="6"/><line x1="16" y1="14" x2="16" y2="18"/><path d="M8 10h.01M12 10h.01M16 10h.01M8 14h.01M12 14h.01M8 18h.01M12 18h.01"/></svg>
+        Calculadora
+      </button>
+      <button id="btn-entorno-ejercicio" class="btn-entorno" data-entorno="ejercicio" title="Modo Ejercicios: Resuelve problemas con respuestas ocultas y pon a prueba tus cálculos">
+        <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+        Modo Ejercicios
+      </button>
+    </div>
+
+    <!-- Pestañas de Modos de Cálculo -->
+    <nav class="nav-modos" aria-label="Modos de operación">
+      <button class="boton-modo activo" data-modo="dos-puntos">
+        <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="6" cy="18" r="3"/><circle cx="18" cy="6" r="3"/><line x1="8.5" y1="15.5" x2="15.5" y2="8.5"/></svg>
+        Puntos de Unión / Cadena Vectorial
+      </button>
+      <button class="boton-modo" data-modo="operaciones">
+        <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>
+        Operaciones con Vectores u y v
+      </button>
+      <button class="boton-modo" data-modo="equipolencia">
+        <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 8h16M4 16h16"/></svg>
+        Test de Equipolencia
+      </button>
+    </nav>
+
+    <!-- Botones de Acción Global -->
+    <div class="acciones-cabecera">
+      <button id="btn-poner-a-cero" class="btn-accion btn-reseteo" title="Poner todos los valores a 0 y limpiar el plano">
+        <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/>
+          <path d="M3 3v5h5"/>
+        </svg>
+        Poner a 0
+      </button>
+
+      <button id="btn-nuevo-reto" class="btn-accion btn-reto" title="Generar un nuevo ejercicio aleatorio">
+        <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <rect x="2" y="2" width="20" height="20" rx="5"/>
+          <circle cx="8" cy="8" r="1.5" fill="currentColor"/>
+          <circle cx="16" cy="16" r="1.5" fill="currentColor"/>
+          <circle cx="12" cy="12" r="1.5" fill="currentColor"/>
+        </svg>
+        Nuevo Ejercicio
+      </button>
+
+      <button id="btn-guardar-ejercicio" class="btn-accion btn-guardar" title="Guardar este ejercicio en tu almacenamiento local">
+        <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/>
+          <polyline points="17 21 17 13 7 13 7 21"/>
+          <polyline points="7 3 7 8 15 8"/>
+        </svg>
+        Guardar
+      </button>
+
+      <button id="btn-abrir-almacen" class="btn-accion btn-almacen" title="Ver lista de ejercicios guardados localmente">
+        <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <path d="M19 11H5m14 0a2 2 0 0 1 2 2v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-6a2 2 0 0 1 2-2m14 0V9a2 2 0 0 0-2-2M5 11V9a2 2 0 0 1 2-2m0 0V5a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v2M7 7h10"/>
+        </svg>
+        Mis Ejercicios
+      </button>
+
+      <button id="btn-abrir-formulas" class="btn-accion btn-formulas" title="Consultar compendio de fórmulas vectoriales">
+        <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/>
+          <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>
+        </svg>
+        Fórmulas
+      </button>
+
+      <button id="btn-abrir-solucion" class="btn-accion btn-solucion-cabecera" title="Ver resolución matemática paso a paso">
+        <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <circle cx="12" cy="12" r="10"/>
+          <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/>
+          <line x1="12" y1="17" x2="12.01" y2="17"/>
+        </svg>
+        Ver Solución
+      </button>
+    </div>
+  </header>
+
+  <!-- CONTENEDOR PRINCIPAL: PANEL DE CONTROL + PLANO CARTESIANO -->
+  <main class="contenedor-principal">
+    
+    <!-- PANEL LATERAL DE ENTRADA Y EVALUACIÓN -->
+    <aside class="panel-lateral">
+      
+      <!-- Tarjeta de Entrada de Datos Dinámica -->
+      <section class="tarjeta-formulario">
+        <div class="titulo-seccion">
+          <span>Parámetros de Entrada</span>
+          <span class="badge-tag">Valores ℝ²</span>
+        </div>
+        
+        <div id="contenedor-formulario-dinamico">
+          <!-- Inyectado por app.js según el modo seleccionado -->
+        </div>
+      </section>
+
+      <!-- Tarjeta de Resumen Rápido -->
+      <section class="tarjeta-formulario">
+        <div class="titulo-seccion">
+          <span>Resumen de Magnitudes</span>
+          <span class="badge-tag">En tiempo real</span>
+        </div>
+        <div id="contenedor-resumen-rapido" class="resumen-rapido">
+          <!-- Inyectado por app.js -->
+        </div>
+      </section>
+
+      <!-- Tarjeta de Autoevaluación y Corrección -->
+      <section id="contenedor-comprobacion-dinamica" class="tarjeta-comprobacion">
+        <!-- Inyectado por app.js -->
+      </section>
+
+    </aside>
+
+    <!-- ESCENARIO DEL GRÁFICO CARTESIANO -->
+    <section class="area-grafico" aria-label="Plano Cartesiano Interactivo">
+      
+      <!-- Canvas 2D Interactivo -->
+      <canvas id="lienzo-cartesiano"></canvas>
+
+      <!-- HUD: Coordenadas Cartesiano del Cursor -->
+      <div class="hud-coordenadas" id="hud-coordenadas">
+        <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="2" x2="12" y2="22"/><line x1="2" y1="12" x2="22" y2="12"/></svg>
+        <span id="hud-coords-texto">X: 0.00, Y: 0.00</span>
+      </div>
+
+      <!-- HUD: Alternadores Visuales y Capas del Grafo -->
+      <div class="hud-visualizacion" role="toolbar" aria-label="Control de capas del grafo">
+        <button id="btn-toggle-todo" class="btn-hud activo btn-hud-maestro" title="Ocultar o mostrar todos los elementos del grafo">
+          <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+          <span class="texto-btn-todo">Grafo Completo</span>
+        </button>
+        <button id="btn-toggle-vectores" class="btn-hud activo" title="Mostrar/ocultar flechas vectoriales">
+          <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="5" y1="19" x2="19" y2="5"/><polyline points="12 5 19 5 19 12"/></svg>
+          Vectores
+        </button>
+        <button id="btn-toggle-puntos" class="btn-hud activo" title="Mostrar/ocultar nodos y puntos cartesianos">
+          <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><circle cx="12" cy="12" r="8" stroke-dasharray="2 2"/></svg>
+          Puntos
+        </button>
+        <button id="btn-toggle-etiquetas" class="btn-hud activo" title="Mostrar/ocultar etiquetas de nombres y valores">
+          <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg>
+          Etiquetas
+        </button>
+        <button id="btn-toggle-construcciones" class="btn-hud activo" title="Mostrar/ocultar líneas auxiliares de unión (paralelogramo / polígono / equipolencia)">
+          <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M3 21l18-18"/><path d="M3 3l18 18" stroke-dasharray="2 2"/></svg>
+          Líneas Unión
+        </button>
+        <button id="btn-toggle-proyecciones" class="btn-hud activo" title="Mostrar/ocultar proyecciones ortogonales punteadas a los ejes">
+          <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="3" y1="3" x2="21" y2="21" stroke-dasharray="3 3"/></svg>
+          Proyecciones
+        </button>
+        <button id="btn-toggle-cuadricula" class="btn-hud activo" title="Mostrar/ocultar cuadrícula de referencia">
+          <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="3" y1="15" x2="21" y2="15"/><line x1="9" y1="3" x2="9" y2="21"/><line x1="15" y1="3" x2="15" y2="21"/></svg>
+          Cuadrícula
+        </button>
+        <button id="btn-toggle-ejes" class="btn-hud activo" title="Mostrar/ocultar ejes principales X e Y">
+          <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="12" y1="2" x2="12" y2="22"/><line x1="2" y1="12" x2="22" y2="12"/></svg>
+          Ejes
+        </button>
+      </div>
+
+      <!-- HUD: Controles de Cámara (Zoom, Centrado, Ajuste, Descarga) -->
+      <div class="hud-camara">
+        <button id="btn-zoom-in" class="btn-camara" title="Acercar zoom (+)">
+          <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg>
+        </button>
+        <button id="btn-zoom-out" class="btn-camara" title="Alejar zoom (-)">
+          <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="8" y1="11" x2="14" y2="11"/></svg>
+        </button>
+        <button id="btn-centrar" class="btn-camara" title="Centrar en el origen (0,0)">
+          <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="3"/></svg>
+        </button>
+        <button id="btn-ajustar" class="btn-camara" title="Ajustar vista a todos los elementos">
+          <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"/></svg>
+        </button>
+        <button id="btn-exportar" class="btn-camara" title="Descargar captura del gráfico como imagen PNG">
+          <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+        </button>
+      </div>
+
+      <!-- Leyenda Dinámica -->
+      <div class="hud-leyenda" id="hud-leyenda">
+        <div class="item-leyenda">
+          <span class="indicador" style="background:#38bdf8;"></span>
+          <span>Vector principal / AB</span>
+        </div>
+        <div class="item-leyenda">
+          <span class="indicador" style="background:#10b981;"></span>
+          <span>Vector resultante (Suma)</span>
+        </div>
+        <div class="item-leyenda">
+          <span class="indicador" style="background:#f59e0b;"></span>
+          <span>Vector secundario v / CD</span>
+        </div>
+      </div>
+
+    </section>
+
+  </main>
+
+  <!-- CAJÓN DESPLEGABLE: SOLUCIÓN DETALLADA Y CORRECCIÓN FORMATIVA -->
+  <div id="cajon-solucion" class="cajon-solucion" role="region" aria-label="Desarrollo analítico y solución paso a paso">
+    <div class="cabecera-cajon">
+      <h2>
+        <svg width="22" height="22" fill="none" stroke="#38bdf8" stroke-width="2" viewBox="0 0 24 24">
+          <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+          <polyline points="14 2 14 8 20 8"/>
+          <line x1="16" y1="13" x2="8" y2="13"/>
+          <line x1="16" y1="17" x2="8" y2="17"/>
+          <polyline points="10 9 9 9 8 9"/>
+        </svg>
+        Solución Matemática Paso a Paso y Corrección
+      </h2>
+      <button id="btn-cerrar-cajon" class="btn-cerrar-cajon" title="Cerrar panel de solución">
+        <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+
+    <div id="cuerpo-solucion" class="cuerpo-cajon">
+      <!-- Inyectado dinámicamente -->
+    </div>
+  </div>
+
+  <!-- MODAL: COMPENDIO COMPLETO DE FÓRMULAS VECTORIALES -->
+  <div id="modal-formulas" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="titulo-modal-formulas">
+    <div class="modal-contenedor">
+      <div class="modal-cabecera">
+        <h2 id="titulo-modal-formulas">
+          <svg width="22" height="22" fill="none" stroke="#a855f7" stroke-width="2" viewBox="0 0 24 24">
+            <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/>
+            <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>
+          </svg>
+          Compendio de Fórmulas y Teoría de Vectores en ℝ²
+        </h2>
+        <button id="btn-cerrar-formulas" class="btn-cerrar-cajon" title="Cerrar formulario">
+          <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+      </div>
+
+      <div class="modal-cuerpo">
+        
+        <!-- Fórmula 1: Vector entre dos puntos -->
+        <article class="tarjeta-formula-doc">
+          <h3>1. Vector que une dos puntos A y B</h3>
+          <div class="ecuacion-caja">AB = B - A = (xB - xA, yB - yA)</div>
+          <p>Dadas las coordenadas del origen A(xA, yA) y del extremo B(xB, yB), las componentes del vector director se obtienen restando las coordenadas del extremo menos las del origen.</p>
+        </article>
+
+        <!-- Fórmula 2: Módulo o Magnitud -->
+        <article class="tarjeta-formula-doc">
+          <h3>2. Módulo (Norma Euclidiana)</h3>
+          <div class="ecuacion-caja">||v|| = √(vx² + vy²)</div>
+          <p>Representa la longitud o tamaño del segmento orientado en el plano cartesiano. Se deduce mediante el Teorema de Pitágoras y siempre es un número real no negativo (||v|| >= 0).</p>
+        </article>
+
+        <!-- Fórmula 3: Dirección Angular -->
+        <article class="tarjeta-formula-doc">
+          <h3>3. Dirección e Inclinación Angular</h3>
+          <div class="ecuacion-caja">θ = arctan(vy / vx)</div>
+          <p>Ángulo que forma la dirección del vector respecto al semieje positivo de las abscisas (+X). El signo de vx y vy determina el cuadrante trigonométrico correspondiente.</p>
+        </article>
+
+        <!-- Fórmula 4: Vector Unitario -->
+        <article class="tarjeta-formula-doc">
+          <h3>4. Vector Unitario Normalizado</h3>
+          <div class="ecuacion-caja">u = v / ||v|| = (vx / ||v||, vy / ||v||)</div>
+          <p>Vector que conserva idéntica dirección y sentido que v pero cuya magnitud es exactamente igual a la unidad (||u|| = 1).</p>
+        </article>
+
+        <!-- Fórmula 5: Suma y Resta -->
+        <article class="tarjeta-formula-doc">
+          <h3>5. Suma y Resta de Vectores</h3>
+          <div class="ecuacion-caja">u ± v = (ux ± vx, uy ± vy)</div>
+          <p>Se calcula operando componente a componente. Gráficamente, la suma equivale a la diagonal del paralelogramo o al encadenamiento punta con cola.</p>
+        </article>
+
+        <!-- Fórmula 6: Multiplicación por Escalar -->
+        <article class="tarjeta-formula-doc">
+          <h3>6. Multiplicación por un Escalar (k real)</h3>
+          <div class="ecuacion-caja">k · v = (k · vx, k · vy)</div>
+          <p>Modifica el tamaño del vector por un factor |k|. Si k &gt; 0 conserva el sentido; si k &lt; 0 el sentido se invierte 180°.</p>
+        </article>
+
+        <!-- Fórmula 7: Producto Escalar (Punto) -->
+        <article class="tarjeta-formula-doc">
+          <h3>7. Producto Escalar (Dot Product)</h3>
+          <div class="ecuacion-caja">u · v = ux·vx + uy·vy = ||u||·||v||·cos(θ)</div>
+          <p>Da como resultado un valor escalar. Si u · v = 0 (y ninguno es nulo), los dos vectores son estrictamente perpendiculares u ortogonales.</p>
+        </article>
+
+        <!-- Fórmula 8: Ángulo entre dos vectores -->
+        <article class="tarjeta-formula-doc">
+          <h3>8. Ángulo entre Dos Vectores</h3>
+          <div class="ecuacion-caja">cos(θ) = (u · v) / (||u|| · ||v||)</div>
+          <p>Permite despejar el ángulo convexo θ en el intervalo [0°, 180°] que forman dos vectores concurrentes a partir de su producto escalar y sus normas.</p>
+        </article>
+
+        <!-- Fórmula 9: Equipolencia -->
+        <article class="tarjeta-formula-doc">
+          <h3>9. Equipolencia de Vectores</h3>
+          <div class="ecuacion-caja">AB = CD &lt;=&gt; (xB - xA = xD - xC) y (yB - yA = yD - yC)</div>
+          <p>Dos vectores fijos son equipolentes si y sólo si poseen el mismo módulo, la misma dirección y el mismo sentido, sin importar dónde se encuentren anclados sus orígenes en el plano.</p>
+        </article>
+
+        <!-- Fórmula 10: Métodos Geométricos de Unión -->
+        <article class="tarjeta-formula-doc">
+          <h3>10. Representación de Uniones (Paralelogramo y Polígono)</h3>
+          <div class="ecuacion-caja">u + v = Diagonal del paralelogramo trazado con lados concurrentes u y v</div>
+          <p>El método punta con cola traslada el origen de v al extremo de u; el vector que une el origen inicial con el extremo final es la suma resultante.</p>
+        </article>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: ALMACENAMIENTO LOCAL DE EJERCICIOS (LOCALSTORAGE) -->
+  <div id="modal-almacen-ejercicios" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="titulo-modal-almacen">
+    <div class="modal-contenedor">
+      <div class="modal-cabecera">
+        <h2 id="titulo-modal-almacen">
+          <svg width="22" height="22" fill="none" stroke="#38bdf8" stroke-width="2" viewBox="0 0 24 24">
+            <path d="M19 11H5m14 0a2 2 0 0 1 2 2v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-6a2 2 0 0 1 2-2m14 0V9a2 2 0 0 0-2-2M5 11V9a2 2 0 0 1 2-2m0 0V5a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v2M7 7h10"/>
+          </svg>
+          Ejercicios Guardados en LocalStorage
+        </h2>
+        <button class="btn-cerrar-cajon btn-cerrar-modal-almacen" title="Cerrar ventana">
+          <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+      </div>
+      <div class="modal-cuerpo">
+        <p class="texto-ayuda" style="margin-bottom: 1rem;">
+          Todos los ejercicios guardados se conservan localmente en tu navegador para que puedas reanudarlos o practicarlos cuando quieras.
+        </p>
+        <div id="lista-ejercicios-guardados" class="lista-ejercicios-almacen">
+          <!-- Inyectado dinámicamente por ControladorAlmacenamiento.js -->
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scripts ES6 Modulares con Arquitectura Limpia -->
+  <script type="module" src="js/main.js"></script>
+</body>
+</html>

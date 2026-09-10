@@ -1,0 +1,121 @@
+/**
+ * Componente: Cajón Desplegable de Solución Matemática Paso a Paso
+ */
+.cajon-solucion {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  max-height: 85vh;
+  background: rgba(15, 23, 42, 0.95);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-top: 1px solid var(--color-borde-activo);
+  box-shadow: 0 -10px 40px rgba(0, 0, 0, 0.6);
+  z-index: 100;
+  transform: translateY(105%);
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  display: flex;
+  flex-direction: column;
+}
+
+.cajon-solucion.abierto {
+  transform: translateY(0);
+}
+
+.cabecera-cajon {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 1.5rem;
+  border-bottom: 1px solid var(--color-borde);
+  background: rgba(30, 41, 59, 0.4);
+}
+
+.cabecera-cajon h2 {
+  font-size: 1.15rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: #ffffff;
+}
+
+.btn-cerrar-cajon {
+  background: transparent;
+  border: none;
+  color: var(--color-texto-secundario);
+  cursor: pointer;
+  padding: 0.4rem;
+  border-radius: var(--radio-sm);
+  transition: var(--transicion-suave);
+  display: flex;
+  align-items: center;
+}
+
+.btn-cerrar-cajon:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: #ffffff;
+}
+
+.cuerpo-cajon {
+  padding: 1.5rem;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+/* Tarjeta individual de paso matemático */
+.paso-matematico {
+  background: var(--color-bg-tarjeta);
+  border: 1px solid var(--color-borde);
+  border-radius: var(--radio-lg);
+  padding: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  transition: var(--transicion-suave);
+}
+
+.paso-matematico:hover {
+  border-color: rgba(56, 189, 248, 0.4);
+  background: var(--color-bg-tarjeta-hover);
+}
+
+.paso-titulo {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #38bdf8;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.bloque-formula {
+  background: rgba(10, 15, 29, 0.85);
+  border-radius: var(--radio-md);
+  padding: 0.6rem 0.9rem;
+  font-family: var(--fuente-mono);
+  font-size: 0.88rem;
+  color: #e2e8f0;
+  border-left: 3px solid var(--color-violeta);
+}
+
+.bloque-sustitucion {
+  font-family: var(--fuente-mono);
+  font-size: 0.85rem;
+  color: #cbd5e1;
+  padding-left: 0.5rem;
+}
+
+.bloque-resultado {
+  background: rgba(16, 185, 129, 0.12);
+  border: 1px solid rgba(16, 185, 129, 0.3);
+  border-radius: var(--radio-md);
+  padding: 0.6rem 0.9rem;
+  font-family: var(--fuente-mono);
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #34d399;
+}

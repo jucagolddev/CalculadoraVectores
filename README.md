@@ -1,0 +1,214 @@
+# 📐 VectorLab ℝ² — Calculadora y Visualizador Gráfico de Vectores
+
+[![JavaScript](https://img.shields.io/badge/JavaScript-ES6%2B%20Modules-F7DF1E?logo=javascript&logoColor=000)](https://developer.mozilla.org/es/docs/Web/JavaScript)
+[![HTML5 Canvas](https://img.shields.io/badge/HTML5-Canvas%202D-E34F26?logo=html5&logoColor=fff)](https://developer.mozilla.org/es/docs/Web/API/Canvas_API)
+[![CSS3](https://img.shields.io/badge/CSS3-Component--Driven%20(7--1)-1572B6?logo=css3&logoColor=fff)](https://developer.mozilla.org/es/docs/Web/CSS)
+[![Architecture](https://img.shields.io/badge/Architecture-Clean%20%2F%20DDD%20%2B%20IoC-brightgreen)](#-arquitectura-del-sistema)
+[![Storage](https://img.shields.io/badge/Storage-LocalStorage%20API-blueviolet)](#-persistencia-local-de-ejercicios)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+
+> Suite científica de cálculo vectorial, simulación gráfica interactiva y resolución analítica paso a paso en el espacio euclídeo bidimensional ($\mathbb{R}^2$). Desarrollada bajo principios estrictos de **Clean Architecture**, **Domain-Driven Design (DDD)** y un motor gráfico vectorial en **HTML5 Canvas 2D**.
+
+---
+
+## 🎯 Descripción General
+
+**VectorLab ℝ²** es una herramienta de ingeniería y aprendizaje matemático interactivo diseñada para resolver problemas de álgebra lineal y geometría analítica plana. La aplicación proporciona un entorno gráfico dinámico de alto rendimiento para modelar cadenas de puntos, operaciones algebraicas de vectores concurrentes, comprobaciones formales de equipolencia, y un modo interactivo de autoaprendizaje con persistencia local.
+
+Diseñada con un enfoque de **cero dependencias externas**, explota las capacidades nativas del navegador para ofrecer renderizado fluido a 60 FPS con transformaciones de coordenadas en tiempo real (zoom, pan, centrado y control multicapa).
+
+---
+
+## 📸 Demostración Visual
+
+| 1. Cadenas Vectoriales de Puntos | 2. Álgebra Concurrente y Paralelogramo |
+| :---: | :---: |
+| ![Cadena Vectorial](docs/img/simulador_cadena.png) | ![Operaciones Concurrentes](docs/img/operaciones_paralelogramo.png) |
+| **3. Solucionario Matemático Paso a Paso** | **4. Catálogo de Ejercicios en LocalStorage** |
+| ![Solución Analítica](docs/img/solucion_paso_a_paso.png) | ![Gestión de Almacenamiento](docs/img/almacen_ejercicios.png) |
+
+---
+
+## ✨ Características Principales
+
+### 1. Cadenas de Puntos y Vectores Consecutivos ($A \to B \to C \to \dots$)
+- Generación de rutas continuas con puntos dinámicos identificados alfabéticamente.
+- Cálculo analítico de componentes $\vec{v} = (x_2 - x_1, y_2 - y_1)$, norma euclídea $\|\vec{v}\|$, dirección angular $\theta$ y vector unitario director $\hat{u}$.
+- Determinación automática del **Vector Resultante Global** $\vec{R} = \vec{v}_1 + \vec{v}_2 + \dots + \vec{v}_n$.
+- Adición y supresión dinámica de nodos con re-indexación automática.
+
+### 2. Álgebra de Vectores Concurrentes
+- Operaciones directas entre vectores libres concurrentes $\vec{u}$ y $\vec{v}$:
+  - **Suma vectorial:** $\vec{u} + \vec{v}$ con representación de la regla del paralelogramo.
+  - **Resta vectorial:** $\vec{u} - \vec{v}$ y $\vec{v} - \vec{u}$.
+  - **Producto por escalar:** $k \cdot \vec{u}$ con factor de escala ajustable.
+  - **Producto escalar (dot product):** $\vec{u} \cdot \vec{v} = u_x v_x + u_y v_y$.
+  - **Ángulo entre vectores:** $\theta = \arccos\left(\frac{\vec{u} \cdot \vec{v}}{\|\vec{u}\| \|\vec{v}\|}\right)$ expresado en grados y radianes.
+
+### 3. Diagnóstico Formal de Equipolencia
+- Comparación matemática exhaustiva entre dos vectores dados por sus extremos: $\vec{AB}$ y $\vec{CD}$.
+- Verificación triple:
+  1. **Mismo Módulo:** $\|\vec{AB}\| = \|\vec{CD}\|$ (tolerancia $\varepsilon = 10^{-6}$).
+  2. **Misma Dirección:** Pendientes idénticas o paralelismo estricto.
+  3. **Mismo Sentido:** Coincidencia en el vector unitario director $\hat{u}_{AB} = \hat{u}_{CD}$.
+
+### 4. Modo Práctica / Autoevaluación a Ciegas
+- Permite al usuario entrenar resolviendo ejercicios sin ver los resultados directos.
+- Formulario de comprobación para introducir:
+  - Coordenadas calculadas $(v_x, v_y)$.
+  - Módulo / longitud $\|\vec{v}\|$.
+  - Ángulo director $\theta$ (°).
+- Retroalimentación inmediata con badges de estado (Correcto / Incorrecto), indicación del error absoluto y opción de desvelar el solucionario.
+
+### 5. Control Multicapa del Grafo Cartesiano (HUD)
+- **Interruptor Maestro (`#btn-toggle-todo`):** Oculta o visibiliza de forma global todos los elementos geométricos con un solo clic.
+- **Filtros de Capa Independientes:**
+  - Vectores directores y cabezas de flecha.
+  - Nodos circulares de puntos de unión.
+  - Cajas flotantes de etiquetas de texto y nombres.
+  - Líneas auxiliares de construcción geométrica (paralelogramos y proyecciones).
+  - Proyecciones ortogonales a los ejes coordenados.
+  - Malla / cuadrícula mayor y menor.
+  - Ejes directores principales $X$ e $Y$.
+- Controles de cámara: Centrado automático de vista y reseteo de escala.
+
+### 6. Cajón Analítico de Solución Paso a Paso
+- Panel deslizante no obstructivo con desglose algebraico formal:
+  - Enunciado del problema y datos de partida.
+  - Fórmulas universales aplicadas.
+  - Sustitución algebraica paso a paso.
+  - Resultado final simplificado con redondeo configurable.
+
+### 7. Persistencia Local de Ejercicios (`LocalStorage`)
+- Guardado de estados completos de ejercicios con marcas de tiempo legibles y badges por categoría.
+- Carga instantánea que conmuta el simulador al modo ejercicio con los datos restaurados.
+- Eliminación individual o vaciado completo de la base de datos local del navegador.
+
+---
+
+## 🏗️ Arquitectura del Sistema
+
+El proyecto sigue una arquitectura **Hexagonal / Clean Architecture** guiada por **Domain-Driven Design (DDD)** e inyección de dependencias (IoC), garantizando desacoplamiento total entre las reglas matemáticas y los detalles de renderizado o persistencia:
+
+```mermaid
+graph TD
+    UI[Controladores de Presentación] -->|Invoca| DI[Factoría IoC / DI]
+    DI -->|Instancia e Inyecta| UC[Casos de Uso de Aplicación]
+    UC -->|Aplica Lógica Pura| DOM[Entidades de Dominio]
+    UC -->|Consulta / Guarda| REPO[Repositorio LocalStorage]
+    UI -->|Renderiza Estado| CANVAS[Motor Plano Cartesiano 2D]
+```
+
+### 📂 Estructura de Directorios
+
+```plaintext
+CalculadoraVectores/
+├── css/
+│   ├── abstracts/
+│   │   ├── variables.css          # Variables de diseño, colores HSL y espaciados
+│   │   └── animations.css         # Keyframes y transiciones de alto rendimiento
+│   ├── base/
+│   │   └── reset.css              # Reset universal y normalización de box-sizing
+│   ├── components/                # Arquitectura CSS Component-Driven (7-1 Pattern)
+│   │   ├── buttons.css            # Botones primarios, secundarios, toggles e iconos
+│   │   ├── cards.css              # Contenedores de formularios, badges y métricas
+│   │   ├── drawer.css             # Cajón deslizante del solucionario paso a paso
+│   │   ├── evaluacion.css         # Tarjetas de autoevaluación en modo ejercicios
+│   │   ├── forms.css              # Inputs de coordenadas, pares numéricos y radios
+│   │   ├── hud.css                # Controles flotantes multicapa del canvas
+│   │   ├── modals.css             # Modales de fórmulas y diálogos de información
+│   │   ├── storage.css            # Modal de ejercicios guardados en LocalStorage
+│   │   └── toast.css              # Sistema de notificaciones toast flotantes
+│   ├── layout/
+│   │   └── layout.css             # Grid principal (sidebar, canvas, header, footer)
+│   └── main.css                   # Índice unificado de hojas de estilo
+├── js/
+│   ├── core/
+│   │   ├── di/
+│   │   │   └── FactoriaControladores.js  # Contenedor IoC / Factory de dependencias
+│   │   ├── enums/                 # Enums: Modos de app, capas de visualización
+│   │   └── types/                 # Interfaces de tipos y contratos de datos
+│   ├── features/
+│   │   ├── cadena/                # Dominio, casos de uso y UI de cadena de puntos
+│   │   ├── operaciones/           # Dominio, casos de uso y UI de álgebra vectorial
+│   │   ├── equipolencia/          # Dominio, casos de uso y UI de equipolencia
+│   │   └── ejercicios/            # Dominio, verificación y persistencia LocalStorage
+│   ├── layout/                    # HUD y navegación de modos
+│   ├── shared/canvas/             # Motor gráfico y capas de renderizado del Canvas 2D
+│   └── main.js                    # Bootstrapper y orquestador del ciclo de vida
+├── docs/                          # Recursos visuales y documentación técnica
+│   └── img/                       # Capturas de pantalla de la suite
+├── .gitignore                     # Reglas de exclusión para Git
+├── index.html                     # Punto de entrada de la aplicación
+├── LICENSE                        # Licencia MIT
+└── README.md                      # Documentación principal
+```
+
+---
+
+## 📐 Formulaciones Matemáticas Implementadas
+
+| Concepto | Expresión Matemática | Implementación en Código |
+| :--- | :--- | :--- |
+| **Vector entre 2 Puntos** | $\vec{v} = (x_B - x_A, y_B - y_A)$ | `Vector2D.desdePuntos(origen, destino)` |
+| **Módulo (Norma Euclídea)** | $\|\vec{v}\| = \sqrt{v_x^2 + v_y^2}$ | `Vector2D.calcularModulo()` |
+| **Ángulo Director** | $\theta = \operatorname{atan2}(v_y, v_x)$ | `Vector2D.calcularAnguloGrados()` |
+| **Vector Unitario** | $\hat{u} = \left(\frac{v_x}{\|\vec{v}\|}, \frac{v_y}{\|\vec{v}\|}\right)$ | `Vector2D.calcularUnitario()` |
+| **Suma de Vectores** | $\vec{u} + \vec{v} = (u_x + v_x, u_y + v_y)$ | `Vector2D.sumar(otroVector)` |
+| **Resta de Vectores** | $\vec{u} - \vec{v} = (u_x - v_x, u_y - v_y)$ | `Vector2D.restar(otroVector)` |
+| **Producto Escalar** | $\vec{u} \cdot \vec{v} = u_x v_x + u_y v_y$ | `Vector2D.productoEscalar(otroVector)` |
+| **Ángulo entre Vectores** | $\theta = \arccos\left(\frac{\vec{u} \cdot \vec{v}}{\|\vec{u}\| \|\vec{v}\|}\right)$ | `Vector2D.calcularAnguloEntre(otroVector)` |
+| **Equipolencia** | $\|\vec{u}\| = \|\vec{v}\| \land \hat{u} = \hat{v}$ | `EvaluarEquipolenciaUseCase.ejecutar()` |
+
+---
+
+## 🚀 Puesta en Marcha / Instalación Local
+
+Al ser una aplicación 100% nativa construida sobre estándares web modernos (ES Modules), no requiere ningún proceso de compilación, transpilación ni instalación de paquetes externos.
+
+### Opción 1: Con Python (Cualquier Sistema Operativo)
+```bash
+# Clonar el repositorio
+git clone https://github.com/jucagolddev/CalculadoraVectores.git
+
+# Entrar en la carpeta
+cd CalculadoraVectores
+
+# Iniciar servidor HTTP local
+python -m http.server 8080
+```
+Abrir `http://localhost:8080` en cualquier navegador moderno.
+
+### Opción 2: Con XAMPP / Apache
+1. Clonar o copiar el repositorio dentro de `htdocs`:
+   ```bash
+   git clone https://github.com/jucagolddev/CalculadoraVectores.git c:\xampp\htdocs\CalculadoraVectores
+   ```
+2. Iniciar el servicio **Apache** desde el Panel de Control de XAMPP.
+3. Acceder en el navegador a `http://localhost/CalculadoraVectores/`.
+
+### Opción 3: Con VS Code Live Server
+1. Abrir la carpeta `CalculadoraVectores` en Visual Studio Code.
+2. Hacer clic derecho sobre `index.html` y seleccionar **"Open with Live Server"**.
+
+---
+
+## 🌐 Compatibilidad y Estándares
+
+- **Navegadores Soportados:** Chrome / Chromium (v90+), Firefox (v88+), Edge (v90+), Safari (v15+).
+- **Tipografía y Renderizado:** Sanitización total de glifos matemáticos estándar UTF-8 sin caracteres inestables o dependientes de fuentes propietarias.
+- **Rendimiento Gráfico:** Canvas 2D acelerado por hardware con escalado adaptable a pantallas HiDPI / Retina (`window.devicePixelRatio`).
+
+---
+
+## 👤 Autor
+
+**Juan Carlos Dorado López**
+- GitHub: [@jucagolddev](https://github.com/jucagolddev)
+- Portafolio: [Portafolio de Ingeniería Inmersiva](https://github.com/jucagolddev/Portfolio)
+
+---
+
+## 📄 Licencia
+
+Este proyecto está distribuido bajo la Licencia **MIT**. Consulta el archivo [LICENSE](LICENSE) para más información.
