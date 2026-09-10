@@ -19,13 +19,21 @@ Diseñada con un enfoque de **cero dependencias externas**, explota las capacida
 
 ---
 
-## 📸 Demostración Visual
+## 📸 Demostración Visual y Galería de la Suite
 
-| 1. Cadenas Vectoriales de Puntos | 2. Álgebra Concurrente y Paralelogramo |
+> Vista general del simulador vectorial en tiempo real con motor Canvas 2D acelerado, controles multicapa, formulario de coordenadas con steppers numéricos estilizados y cálculo continuo de vectores resultantes:
+
+![VectorLab ℝ² - Vista Principal](docs/img/01_cadena_vectorial.png)
+
+### 🧩 Módulos y Modos de Trabajo
+
+| 1. Álgebra Concurrente (Regla del Paralelogramo) | 2. Diagnóstico Formal de Equipolencia |
 | :---: | :---: |
-| ![Cadena Vectorial](docs/img/simulador_cadena.png) | ![Operaciones Concurrentes](docs/img/operaciones_paralelogramo.png) |
-| **3. Solucionario Matemático Paso a Paso** | **4. Catálogo de Ejercicios en LocalStorage** |
-| ![Solución Analítica](docs/img/solucion_paso_a_paso.png) | ![Gestión de Almacenamiento](docs/img/almacen_ejercicios.png) |
+| ![Operaciones Concurrentes](docs/img/02_operaciones_paralelogramo.png) | ![Test de Equipolencia](docs/img/03_diagnostico_equipolencia.png) |
+| **3. Modo Ejercicios y Autoevaluación** | **4. Solucionario Matemático Paso a Paso** |
+| ![Modo Ejercicios](docs/img/04_modo_ejercicios.png) | ![Solución Analítica](docs/img/05_solucion_paso_a_paso.png) |
+| **5. Compendio Teórico de Fórmulas** | **6. Catálogo de Ejercicios en LocalStorage** |
+| ![Fórmulas Vectoriales](docs/img/06_compendio_formulas.png) | ![Gestión de Almacenamiento](docs/img/07_almacen_ejercicios.png) |
 
 ---
 
