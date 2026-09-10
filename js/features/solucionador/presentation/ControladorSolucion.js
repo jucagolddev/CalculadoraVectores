@@ -1,4 +1,5 @@
 import { Configuracion } from '../../../core/constants/Configuracion.js';
+import { GeneradorInputs } from '../../../shared/utils/GeneradorInputs.js';
 
 /**
  * Controlador de presentación para el cajón de resolución paso a paso y evaluación formativa.
@@ -17,15 +18,15 @@ export class ControladorSolucion {
     this._cuerpoSolucion = cuerpoSolucion;
     this._casoDeUso = casoDeUso;
     this._estadoApp = estadoApp;
+    this._btnCerrarCajon = document.getElementById('btn-cerrar-cajon');
 
-    this._vincularEventos();
+    this._iniciarEventosBase();
   }
 
-  _vincularEventos() {
-    const btnCerrar = document.getElementById('btn-cerrar-cajon');
-    if (btnCerrar) {
-      btnCerrar.addEventListener('click', () => this.cerrar());
-    }
+  _iniciarEventosBase() {
+    this._btnCerrarCajon?.addEventListener('click', () => {
+      this.cerrarSolucion();
+    });
   }
 
   renderizarFormularioComprobacion(modo, puntosCadena = []) {
@@ -37,19 +38,22 @@ export class ControladorSolucion {
         <h3><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg> Comprueba tu Solución</h3>
         <p class="texto-ayuda">${esMultiple ? `Calcula el vector resultante neto (R = A → ${letraFinal}) antes de ver la solución:` : '¿Calculaste el vector a mano? Ingresa tus resultados para verificar si están correctos:'}</p>
         <div class="inputs-par">
-          <div class="input-con-icono">
-            <span>${esMultiple ? 'Rx' : 'dx'}</span>
-            <input type="number" id="test-vx" class="input-numero" placeholder="${esMultiple ? 'Suma dx' : 'Bx - Ax'}" step="any">
-          </div>
-          <div class="input-con-icono">
-            <span>${esMultiple ? 'Ry' : 'dy'}</span>
-            <input type="number" id="test-vy" class="input-numero" placeholder="${esMultiple ? 'Suma dy' : 'By - Ay'}" step="any">
-          </div>
+          ${GeneradorInputs.crearCampoNumero({
+            id: 'test-vx',
+            etiqueta: esMultiple ? 'Rx' : 'dx',
+            placeholder: esMultiple ? 'Suma dx' : 'Bx - Ax'
+          })}
+          ${GeneradorInputs.crearCampoNumero({
+            id: 'test-vy',
+            etiqueta: esMultiple ? 'Ry' : 'dy',
+            placeholder: esMultiple ? 'Suma dy' : 'By - Ay'
+          })}
         </div>
-        <div class="input-con-icono">
-          <span>${esMultiple ? '||R||' : '||v||'}</span>
-          <input type="number" id="test-modulo" class="input-numero" placeholder="Magnitud estimada" step="any">
-        </div>
+        ${GeneradorInputs.crearCampoNumero({
+          id: 'test-modulo',
+          etiqueta: esMultiple ? '||R||' : '||v||',
+          placeholder: 'Magnitud estimada'
+        })}
         <button id="btn-validar-usuario" class="btn-comprobar-usuario" type="button">
           Comprobar y Corregir
         </button>
@@ -59,19 +63,22 @@ export class ControladorSolucion {
         <h3><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg> Comprueba tu Solución</h3>
         <p class="texto-ayuda">Introduce tus respuestas para suma (u+v) y producto punto (u·v):</p>
         <div class="inputs-par">
-          <div class="input-con-icono">
-            <span>Sx</span>
-            <input type="number" id="test-sumax" class="input-numero" placeholder="ux + vx" step="any">
-          </div>
-          <div class="input-con-icono">
-            <span>Sy</span>
-            <input type="number" id="test-sumay" class="input-numero" placeholder="uy + vy" step="any">
-          </div>
+          ${GeneradorInputs.crearCampoNumero({
+            id: 'test-sumax',
+            etiqueta: 'Sx',
+            placeholder: 'ux + vx'
+          })}
+          ${GeneradorInputs.crearCampoNumero({
+            id: 'test-sumay',
+            etiqueta: 'Sy',
+            placeholder: 'uy + vy'
+          })}
         </div>
-        <div class="input-con-icono">
-          <span>u·v</span>
-          <input type="number" id="test-punto" class="input-numero" placeholder="ux·vx + uy·vy" step="any">
-        </div>
+        ${GeneradorInputs.crearCampoNumero({
+          id: 'test-punto',
+          etiqueta: 'u·v',
+          placeholder: 'ux·vx + uy·vy'
+        })}
         <button id="btn-validar-usuario" class="btn-comprobar-usuario" type="button">
           Comprobar y Corregir
         </button>

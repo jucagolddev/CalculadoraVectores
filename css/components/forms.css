@@ -40,41 +40,120 @@
   gap: 0.5rem;
 }
 
+/* Ocultar el spin-button nativo por defecto en todos los motores de render */
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type="number"] {
+  -moz-appearance: textfield;
+  appearance: textfield;
+  color-scheme: dark;
+}
+
+/* Contenedor flexible de entrada: prefijo lateral + campo + stepper */
 .input-con-icono {
   position: relative;
   display: flex;
-  align-items: center;
-}
-
-.input-con-icono span {
-  position: absolute;
-  left: 0.75rem;
-  font-family: var(--fuente-mono);
-  font-size: 0.8rem;
-  font-weight: 600;
-  color: var(--color-texto-tenue);
-  pointer-events: none;
-}
-
-.input-numero {
-  width: 100%;
-  background: rgba(15, 23, 42, 0.9);
+  align-items: stretch;
+  background: rgba(15, 23, 42, 0.95);
   border: 1px solid var(--color-borde);
   border-radius: var(--radio-md);
-  padding: 0.55rem 0.6rem 0.55rem 2.2rem;
+  overflow: hidden;
+  transition: var(--transicion-suave);
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+.input-con-icono:focus-within {
+  border-color: var(--color-cian);
+  box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.2), inset 0 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+/* Etiqueta / Prefijo del campo (Ax, Ay, dx, ||v||, u·v, etc.) */
+.input-con-icono span {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 0.65rem;
+  background: rgba(30, 41, 59, 0.85);
+  border-right: 1px solid var(--color-borde);
+  font-family: var(--fuente-mono);
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--color-cian);
+  user-select: none;
+  white-space: nowrap;
+  pointer-events: none;
+  min-width: 2.3rem;
+}
+
+/* Campo numérico interno sin bordes independientes ni solapamientos */
+.input-con-icono .input-numero {
+  flex: 1;
+  min-width: 0;
+  width: 100%;
+  background: transparent;
+  border: none;
+  border-radius: 0;
+  padding: 0.52rem 0.65rem;
   color: #ffffff;
   font-family: var(--fuente-mono);
   font-size: 0.9rem;
   font-weight: 500;
   outline: none;
-  transition: var(--transicion-suave);
+  box-shadow: none;
 }
 
-.input-numero:focus {
-  border-color: var(--color-cian);
-  box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.15);
+.input-con-icono .input-numero::placeholder {
+  color: rgba(148, 163, 184, 0.45);
+  font-size: 0.82rem;
 }
 
+/* Stepper personalizado con flechas estilizadas */
+.stepper-controles {
+  display: flex;
+  flex-direction: column;
+  width: 22px;
+  border-left: 1px solid var(--color-borde);
+  background: rgba(30, 41, 59, 0.5);
+  user-select: none;
+}
+
+.btn-step {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: none;
+  color: var(--color-texto-tenue);
+  cursor: pointer;
+  padding: 0;
+  margin: 0;
+  transition: all 0.15s ease;
+}
+
+.btn-step:hover {
+  background: rgba(56, 189, 248, 0.2);
+  color: var(--color-cian);
+}
+
+.btn-step:active {
+  background: rgba(56, 189, 248, 0.4);
+  color: #ffffff;
+}
+
+.btn-step-arriba {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.btn-step svg {
+  pointer-events: none;
+}
+
+/* Opciones de Unión y Radios */
 .opciones-union {
   display: flex;
   flex-direction: column;

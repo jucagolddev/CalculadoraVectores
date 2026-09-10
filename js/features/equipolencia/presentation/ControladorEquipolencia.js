@@ -1,5 +1,6 @@
 import { Punto2D } from '../../../core/models/Punto2D.js';
 import { Configuracion } from '../../../core/constants/Configuracion.js';
+import { GeneradorInputs } from '../../../shared/utils/GeneradorInputs.js';
 
 /**
  * Controlador de presentación para el test de equipolencia de vectores.
@@ -53,23 +54,23 @@ export class ControladorEquipolencia {
         <div class="fila-vector">
           <span class="etiqueta-vector"><span class="punto-color" style="background:#38bdf8"></span> Vector A → B</span>
           <div class="inputs-par">
-            <div class="input-con-icono"><span>Ax</span><input type="number" id="input-ax" name="ax" class="input-numero input-eq" data-campo="ax" value="${this._puntos.ax}" step="any"></div>
-            <div class="input-con-icono"><span>Ay</span><input type="number" id="input-ay" name="ay" class="input-numero input-eq" data-campo="ay" value="${this._puntos.ay}" step="any"></div>
+            ${GeneradorInputs.crearCampoNumero({ id: 'input-ax', name: 'ax', etiqueta: 'Ax', valor: this._puntos.ax, clasesExtra: 'input-eq', dataAttrs: 'data-campo="ax"' })}
+            ${GeneradorInputs.crearCampoNumero({ id: 'input-ay', name: 'ay', etiqueta: 'Ay', valor: this._puntos.ay, clasesExtra: 'input-eq', dataAttrs: 'data-campo="ay"' })}
           </div>
           <div class="inputs-par" style="margin-top:0.35rem;">
-            <div class="input-con-icono"><span>Bx</span><input type="number" id="input-bx" name="bx" class="input-numero input-eq" data-campo="bx" value="${this._puntos.bx}" step="any"></div>
-            <div class="input-con-icono"><span>By</span><input type="number" id="input-by" name="by" class="input-numero input-eq" data-campo="by" value="${this._puntos.by}" step="any"></div>
+            ${GeneradorInputs.crearCampoNumero({ id: 'input-bx', name: 'bx', etiqueta: 'Bx', valor: this._puntos.bx, clasesExtra: 'input-eq', dataAttrs: 'data-campo="bx"' })}
+            ${GeneradorInputs.crearCampoNumero({ id: 'input-by', name: 'by', etiqueta: 'By', valor: this._puntos.by, clasesExtra: 'input-eq', dataAttrs: 'data-campo="by"' })}
           </div>
         </div>
         <div class="fila-vector">
           <span class="etiqueta-vector"><span class="punto-color" style="background:#f59e0b"></span> Vector C → D</span>
           <div class="inputs-par">
-            <div class="input-con-icono"><span>Cx</span><input type="number" id="input-cx" name="cx" class="input-numero input-eq" data-campo="cx" value="${this._puntos.cx}" step="any"></div>
-            <div class="input-con-icono"><span>Cy</span><input type="number" id="input-cy" name="cy" class="input-numero input-eq" data-campo="cy" value="${this._puntos.cy}" step="any"></div>
+            ${GeneradorInputs.crearCampoNumero({ id: 'input-cx', name: 'cx', etiqueta: 'Cx', valor: this._puntos.cx, clasesExtra: 'input-eq', dataAttrs: 'data-campo="cx"' })}
+            ${GeneradorInputs.crearCampoNumero({ id: 'input-cy', name: 'cy', etiqueta: 'Cy', valor: this._puntos.cy, clasesExtra: 'input-eq', dataAttrs: 'data-campo="cy"' })}
           </div>
           <div class="inputs-par" style="margin-top:0.35rem;">
-            <div class="input-con-icono"><span>Dx</span><input type="number" id="input-dx" name="dx" class="input-numero input-eq" data-campo="dx" value="${this._puntos.dx}" step="any"></div>
-            <div class="input-con-icono"><span>Dy</span><input type="number" id="input-dy" name="dy" class="input-numero input-eq" data-campo="dy" value="${this._puntos.dy}" step="any"></div>
+            ${GeneradorInputs.crearCampoNumero({ id: 'input-dx', name: 'dx', etiqueta: 'Dx', valor: this._puntos.dx, clasesExtra: 'input-eq', dataAttrs: 'data-campo="dx"' })}
+            ${GeneradorInputs.crearCampoNumero({ id: 'input-dy', name: 'dy', etiqueta: 'Dy', valor: this._puntos.dy, clasesExtra: 'input-eq', dataAttrs: 'data-campo="dy"' })}
           </div>
         </div>
       </div>

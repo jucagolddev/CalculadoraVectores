@@ -2,6 +2,7 @@ import { Punto2D } from '../../../core/models/Punto2D.js';
 import { Vector2D } from '../../../core/models/Vector2D.js';
 import { Configuracion } from '../../../core/constants/Configuracion.js';
 import { FormateadorMatematico } from '../../../shared/utils/FormateadorMatematico.js';
+import { GeneradorInputs } from '../../../shared/utils/GeneradorInputs.js';
 
 /**
  * Controlador de presentación para la pestaña de operaciones vectoriales con u y v.
@@ -53,35 +54,55 @@ export class ControladorOperaciones {
         <div class="fila-vector">
           <span class="etiqueta-vector"><span class="punto-color" style="background:#06b6d4"></span> Vector u (ux, uy)</span>
           <div class="inputs-par">
-            <div class="input-con-icono">
-              <span>ux</span>
-              <input type="number" id="input-ux" name="ux" class="input-numero input-op" data-campo="ux" value="${this._valores.ux}" step="any">
-            </div>
-            <div class="input-con-icono">
-              <span>uy</span>
-              <input type="number" id="input-uy" name="uy" class="input-numero input-op" data-campo="uy" value="${this._valores.uy}" step="any">
-            </div>
+            ${GeneradorInputs.crearCampoNumero({
+              id: 'input-ux',
+              name: 'ux',
+              etiqueta: 'ux',
+              valor: this._valores.ux,
+              clasesExtra: 'input-op',
+              dataAttrs: 'data-campo="ux"'
+            })}
+            ${GeneradorInputs.crearCampoNumero({
+              id: 'input-uy',
+              name: 'uy',
+              etiqueta: 'uy',
+              valor: this._valores.uy,
+              clasesExtra: 'input-op',
+              dataAttrs: 'data-campo="uy"'
+            })}
           </div>
         </div>
         <div class="fila-vector">
           <span class="etiqueta-vector"><span class="punto-color" style="background:#f59e0b"></span> Vector v (vx, vy)</span>
           <div class="inputs-par">
-            <div class="input-con-icono">
-              <span>vx</span>
-              <input type="number" id="input-vx" name="vx" class="input-numero input-op" data-campo="vx" value="${this._valores.vx}" step="any">
-            </div>
-            <div class="input-con-icono">
-              <span>vy</span>
-              <input type="number" id="input-vy" name="vy" class="input-numero input-op" data-campo="vy" value="${this._valores.vy}" step="any">
-            </div>
+            ${GeneradorInputs.crearCampoNumero({
+              id: 'input-vx',
+              name: 'vx',
+              etiqueta: 'vx',
+              valor: this._valores.vx,
+              clasesExtra: 'input-op',
+              dataAttrs: 'data-campo="vx"'
+            })}
+            ${GeneradorInputs.crearCampoNumero({
+              id: 'input-vy',
+              name: 'vy',
+              etiqueta: 'vy',
+              valor: this._valores.vy,
+              clasesExtra: 'input-op',
+              dataAttrs: 'data-campo="vy"'
+            })}
           </div>
         </div>
         <div class="fila-vector">
           <span class="etiqueta-vector"><span class="punto-color" style="background:#a855f7"></span> Escalar k (Ponderación k·u)</span>
-          <div class="input-con-icono">
-            <span>k</span>
-            <input type="number" id="input-escalar" name="k" class="input-numero input-op" data-campo="k" value="${this._valores.k}" step="any">
-          </div>
+          ${GeneradorInputs.crearCampoNumero({
+            id: 'input-escalar',
+            name: 'k',
+            etiqueta: 'k',
+            valor: this._valores.k,
+            clasesExtra: 'input-op',
+            dataAttrs: 'data-campo="k"'
+          })}
         </div>
         <div class="opciones-union">
           <span style="font-size:0.75rem; font-weight:700; color:var(--color-texto-secundario); text-transform:uppercase;">Representación de la Unión:</span>

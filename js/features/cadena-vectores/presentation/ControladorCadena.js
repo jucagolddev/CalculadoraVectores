@@ -1,6 +1,7 @@
 import { Punto2D } from '../../../core/models/Punto2D.js';
 import { Configuracion } from '../../../core/constants/Configuracion.js';
 import { FormateadorMatematico } from '../../../shared/utils/FormateadorMatematico.js';
+import { GeneradorInputs } from '../../../shared/utils/GeneradorInputs.js';
 
 /**
  * Controlador de presentación para la gestión de puntos de unión y cadena vectorial.
@@ -24,6 +25,8 @@ export class ControladorCadena {
       { id: 'A', x: 1, y: 2, color: Configuracion.PALETA_VECTORES[0] },
       { id: 'B', x: 5, y: 6, color: Configuracion.PALETA_VECTORES[1] }
     ];
+
+    this._abecedario = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
   }
 
   get puntos() {
@@ -45,14 +48,22 @@ export class ControladorCadena {
           ` : ''}
         </div>
         <div class="inputs-par">
-          <div class="input-con-icono">
-            <span>${pt.id}x</span>
-            <input type="number" id="coord-${pt.id}-x" name="coord-${pt.id}-x" class="input-numero input-cadena-coord" data-indice="${idx}" data-eje="x" value="${pt.x}" step="any">
-          </div>
-          <div class="input-con-icono">
-            <span>${pt.id}y</span>
-            <input type="number" id="coord-${pt.id}-y" name="coord-${pt.id}-y" class="input-numero input-cadena-coord" data-indice="${idx}" data-eje="y" value="${pt.y}" step="any">
-          </div>
+          ${GeneradorInputs.crearCampoNumero({
+            id: `coord-${pt.id}-x`,
+            name: `coord-${pt.id}-x`,
+            etiqueta: `${pt.id}x`,
+            valor: pt.x,
+            clasesExtra: 'input-cadena-coord',
+            dataAttrs: `data-indice="${idx}" data-eje="x"`
+          })}
+          ${GeneradorInputs.crearCampoNumero({
+            id: `coord-${pt.id}-y`,
+            name: `coord-${pt.id}-y`,
+            etiqueta: `${pt.id}y`,
+            valor: pt.y,
+            clasesExtra: 'input-cadena-coord',
+            dataAttrs: `data-indice="${idx}" data-eje="y"`
+          })}
         </div>
       </div>
     `).join('');

@@ -3,6 +3,7 @@ import { Configuracion } from './core/constants/Configuracion.js';
 import { PlanoCartesiano } from './shared/canvas/PlanoCartesiano.js';
 import { FactoriaControladores } from './core/di/FactoriaControladores.js';
 import { GeneradorEjerciciosService } from './features/ejercicios/domain/GeneradorEjerciciosService.js';
+import { GeneradorInputs } from './shared/utils/GeneradorInputs.js';
 import { Navbar } from './layout/Navbar.js';
 import { Hud } from './layout/Hud.js';
 
@@ -11,6 +12,9 @@ import { Hud } from './layout/Hud.js';
  */
 class Bootstrap {
   static iniciar() {
+    // Inicialización del manejador global de steppers numéricos
+    GeneradorInputs.inicializarManejadorSteppers();
+
     // 1. Instanciación del Estado Global Centralizado
     const estadoApp = new EstadoApp();
 
