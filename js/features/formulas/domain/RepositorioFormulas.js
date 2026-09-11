@@ -1,5 +1,5 @@
 /**
- * Repositorio de dominio con el compendio completo de fórmulas vectoriales en ℝ²
+ * Repositorio de dominio con el compendio completo de fórmulas vectoriales en ℝ² y ℝ³
  */
 export class RepositorioFormulas {
   /**
@@ -57,6 +57,26 @@ export class RepositorioFormulas {
         titulo: '10. Cadena de Unión y Vector Resultante Neto',
         ecuacion: 'R = v_1 + v_2 + ... + v_n = P_final - P_inicial',
         descripcion: 'La resultante del encadenamiento punta con cola es el vector que une directamente el origen del primer punto con el extremo del último punto del recorrido.'
+      },
+      {
+        titulo: '11. Producto Vectorial en ℝ³ (Cruz)',
+        ecuacion: 'u × v = (uy·vz - uz·vy) i - (ux·vz - uz·vx) j + (ux·vy - uy·vx) k',
+        descripcion: 'Operación exclusiva de ℝ³ que genera un nuevo vector simultáneamente ortogonal (perpendicular) tanto a u como a v, cuyo sentido se rige por la regla de la mano derecha.'
+      },
+      {
+        titulo: '12. Área del Paralelogramo Sustentado',
+        ecuacion: 'Área = ||u × v|| = ||u|| · ||v|| · sen(θ)',
+        descripcion: 'La norma o longitud del producto vectorial representa con exactitud matemática el área superficial del paralelogramo determinado por los vectores concurrentes u y v.'
+      },
+      {
+        titulo: '13. Cosenos Directores en ℝ³ y Relación Pitagórica',
+        ecuacion: 'cos(α) = vx/||v||, cos(β) = vy/||v||, cos(γ) = vz/||v|| => cos²(α) + cos²(β) + cos²(γ) = 1',
+        descripcion: 'Ángulos α, β y γ que forma el vector tridimensional con los semiejes positivos coordenados X, Y y Z. La suma de los cuadrados de sus cosenos es idéntica a 1.'
+      },
+      {
+        titulo: '14. Producto Mixto y Volumen en ℝ³',
+        ecuacion: '[u, v, w] = u · (v × w) = det([u; v; w]) => Volumen = |[u, v, w]|',
+        descripcion: 'Combina el producto escalar y vectorial de tres vectores. Su valor absoluto cuantifica el volumen del paralelepípedo que sustentan en el espacio euclídeo.'
       }
     ];
   }

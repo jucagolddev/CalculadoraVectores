@@ -351,7 +351,7 @@
             <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/>
             <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>
           </svg>
-          Compendio de Fórmulas y Teoría de Vectores en ℝ²
+          Compendio de Fórmulas y Teoría de Vectores en ℝ² y ℝ³
         </h2>
         <button id="btn-cerrar-formulas" class="btn-cerrar-cajon" title="Cerrar formulario">
           <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
@@ -359,77 +359,7 @@
       </div>
 
       <div class="modal-cuerpo">
-        
-        <!-- Fórmula 1: Vector entre dos puntos -->
-        <article class="tarjeta-formula-doc">
-          <h3>1. Vector que une dos puntos A y B</h3>
-          <div class="ecuacion-caja">AB = B - A = (xB - xA, yB - yA)</div>
-          <p>Dadas las coordenadas del origen A(xA, yA) y del extremo B(xB, yB), las componentes del vector director se obtienen restando las coordenadas del extremo menos las del origen.</p>
-        </article>
-
-        <!-- Fórmula 2: Módulo o Magnitud -->
-        <article class="tarjeta-formula-doc">
-          <h3>2. Módulo (Norma Euclidiana)</h3>
-          <div class="ecuacion-caja">||v|| = √(vx² + vy²)</div>
-          <p>Representa la longitud o tamaño del segmento orientado en el plano cartesiano. Se deduce mediante el Teorema de Pitágoras y siempre es un número real no negativo (||v|| >= 0).</p>
-        </article>
-
-        <!-- Fórmula 3: Dirección Angular -->
-        <article class="tarjeta-formula-doc">
-          <h3>3. Dirección e Inclinación Angular</h3>
-          <div class="ecuacion-caja">θ = arctan(vy / vx)</div>
-          <p>Ángulo que forma la dirección del vector respecto al semieje positivo de las abscisas (+X). El signo de vx y vy determina el cuadrante trigonométrico correspondiente.</p>
-        </article>
-
-        <!-- Fórmula 4: Vector Unitario -->
-        <article class="tarjeta-formula-doc">
-          <h3>4. Vector Unitario Normalizado</h3>
-          <div class="ecuacion-caja">u = v / ||v|| = (vx / ||v||, vy / ||v||)</div>
-          <p>Vector que conserva idéntica dirección y sentido que v pero cuya magnitud es exactamente igual a la unidad (||u|| = 1).</p>
-        </article>
-
-        <!-- Fórmula 5: Suma y Resta -->
-        <article class="tarjeta-formula-doc">
-          <h3>5. Suma y Resta de Vectores</h3>
-          <div class="ecuacion-caja">u ± v = (ux ± vx, uy ± vy)</div>
-          <p>Se calcula operando componente a componente. Gráficamente, la suma equivale a la diagonal del paralelogramo o al encadenamiento punta con cola.</p>
-        </article>
-
-        <!-- Fórmula 6: Multiplicación por Escalar -->
-        <article class="tarjeta-formula-doc">
-          <h3>6. Multiplicación por un Escalar (k real)</h3>
-          <div class="ecuacion-caja">k · v = (k · vx, k · vy)</div>
-          <p>Modifica el tamaño del vector por un factor |k|. Si k &gt; 0 conserva el sentido; si k &lt; 0 el sentido se invierte 180°.</p>
-        </article>
-
-        <!-- Fórmula 7: Producto Escalar (Punto) -->
-        <article class="tarjeta-formula-doc">
-          <h3>7. Producto Escalar (Dot Product)</h3>
-          <div class="ecuacion-caja">u · v = ux·vx + uy·vy = ||u||·||v||·cos(θ)</div>
-          <p>Da como resultado un valor escalar. Si u · v = 0 (y ninguno es nulo), los dos vectores son estrictamente perpendiculares u ortogonales.</p>
-        </article>
-
-        <!-- Fórmula 8: Ángulo entre dos vectores -->
-        <article class="tarjeta-formula-doc">
-          <h3>8. Ángulo entre Dos Vectores</h3>
-          <div class="ecuacion-caja">cos(θ) = (u · v) / (||u|| · ||v||)</div>
-          <p>Permite despejar el ángulo convexo θ en el intervalo [0°, 180°] que forman dos vectores concurrentes a partir de su producto escalar y sus normas.</p>
-        </article>
-
-        <!-- Fórmula 9: Equipolencia -->
-        <article class="tarjeta-formula-doc">
-          <h3>9. Equipolencia de Vectores</h3>
-          <div class="ecuacion-caja">AB = CD &lt;=&gt; (xB - xA = xD - xC) y (yB - yA = yD - yC)</div>
-          <p>Dos vectores fijos son equipolentes si y sólo si poseen el mismo módulo, la misma dirección y el mismo sentido, sin importar dónde se encuentren anclados sus orígenes en el plano.</p>
-        </article>
-
-        <!-- Fórmula 10: Métodos Geométricos de Unión -->
-        <article class="tarjeta-formula-doc">
-          <h3>10. Representación de Uniones (Paralelogramo y Polígono)</h3>
-          <div class="ecuacion-caja">u + v = Diagonal del paralelogramo trazado con lados concurrentes u y v</div>
-          <p>El método punta con cola traslada el origen de v al extremo de u; el vector que une el origen inicial con el extremo final es la suma resultante.</p>
-        </article>
-
+        <!-- Inyectado dinámicamente por ControladorFormulas.js desde RepositorioFormulas.js -->
       </div>
     </div>
   </div>
@@ -460,6 +390,6 @@
   </div>
 
   <!-- Scripts ES6 Modulares con Arquitectura Limpia -->
-  <script type="module" src="js/main.js?v=clean2"></script>
+  <script type="module" src="js/main.js?v=clean4"></script>
 </body>
 </html>

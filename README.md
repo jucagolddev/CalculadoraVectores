@@ -181,11 +181,16 @@ El proyecto sigue una arquitectura **Hexagonal / Clean Architecture** guiada por
 
 ```mermaid
 graph TD
-    UI[Controladores de Presentación] -->|Invoca| DI[Factoría IoC / DI]
+    UI[Controladores de Presentación 2D y 3D] -->|Invoca| DI[Factoría IoC / DI]
     DI -->|Instancia e Inyecta| UC[Casos de Uso de Aplicación]
-    UC -->|Aplica Lógica Pura| DOM[Entidades de Dominio]
-    UC -->|Consulta / Guarda| REPO[Repositorios LocalStorage / Teoría / Catálogo]
-    UI -->|Renderiza Estado| CANVAS[Motor Plano Cartesiano 2D]
+    UC -->|Aplica Lógica Pura| DOM[Entidades de Dominio Vector2D y Vector3D]
+    UC -->|Consulta / Guarda| REPO[Repositorios LocalStorage / Teoría / Catálogo / Fórmulas]
+    UI -->|Renderiza Estado 2D| CANVAS2D[Motor Plano Cartesiano 2D]
+    UI -->|Renderiza Estado 3D| CANVAS3D[Motor Gráfico 3D - Orquestador]
+    CANVAS3D -->|Transformación R3 a R2| CAM[CamaraOrbital3D]
+    CANVAS3D -->|Ejes R3 y Suelo XY| EJES[RenderizadorEjes3D]
+    CANVAS3D -->|Blueprint Milimetrado R2| PAPEL[RenderizadorPlanoPapel]
+    CANVAS3D -->|Vectores, Proyecciones y Áreas| GEOM[RenderizadorGeometria3D]
 ```
 
 ### 📂 Estructura de Directorios
@@ -224,12 +229,22 @@ CalculadoraVectores/
 │   │   ├── operaciones/           # Dominio, casos de uso y UI de álgebra vectorial
 │   │   ├── equipolencia/          # Dominio, casos de uso y UI de equipolencia
 │   │   ├── ejercicios/            # Dominio, verificación y persistencia LocalStorage
-│   │   └── teoria/                # Repositorio conceptual, catálogo contextual y popover
-│   ├── layout/                    # HUD y navegación de modos
-│   ├── shared/canvas/             # Motor gráfico y capas de renderizado del Canvas 2D
+│   │   ├── teoria/                # Repositorio conceptual, catálogo contextual y popover
+│   │   └── espacio-3d/            # Dominio, entidades R3, casos de uso y controladores 3D
+│   ├── layout/                    # HUD adaptativo y barra de navegación de modos
+│   ├── shared/
+│   │   ├── canvas/
+│   │   │   ├── PlanoCartesiano.js # Motor gráfico del plano euclídeo 2D
+│   │   │   ├── MotorGrafico3D.js  # Fachada y orquestador maestro del Canvas 3D
+│   │   │   └── motor3d/           # Submódulos especializados del motor tridimensional
+│   │   │       ├── CamaraOrbital3D.js        # Ángulos Yaw/Pitch, zoom y proyección esférica
+│   │   │       ├── RenderizadorEjes3D.js     # Ejes espaciales y graduación métrica
+│   │   │       ├── RenderizadorPlanoPapel.js # Plano técnico de ingeniería milimetrado
+│   │   │       └── RenderizadorGeometria3D.js# Vectores, cotas, áreas y símbolos perpendiculares
+│   │   └── utils/                 # Utilidades de DOM y generador de campos numéricos
 │   └── main.js                    # Bootstrapper y orquestador del ciclo de vida
 ├── docs/                          # Recursos visuales y documentación técnica
-│   └── img/                       # Capturas de pantalla de la suite
+│   └── img/                       # Capturas de pantalla de la suite completa
 ├── .gitignore                     # Reglas de exclusión para Git
 ├── index.html                     # Punto de entrada de la aplicación
 ├── LICENSE                        # Licencia MIT
@@ -242,15 +257,18 @@ CalculadoraVectores/
 
 | Concepto | Expresión Matemática | Implementación en Código |
 | :--- | :--- | :--- |
-| **Vector entre 2 Puntos** | $\vec{v} = (x_B - x_A, y_B - y_A)$ | `Vector2D.desdePuntos(origen, destino)` |
-| **Módulo (Norma Euclídea)** | $\|\vec{v}\| = \sqrt{v_x^2 + v_y^2}$ | `Vector2D.calcularModulo()` |
+| **Vector entre 2 Puntos (ℝ²)** | $\vec{v} = (x_B - x_A, y_B - y_A)$ | `Vector2D.desdePuntos(origen, destino)` |
+| **Módulo (Norma Euclídea ℝ²)** | $\|\vec{v}\| = \sqrt{v_x^2 + v_y^2}$ | `Vector2D.calcularModulo()` |
 | **Ángulo Director** | $\theta = \operatorname{atan2}(v_y, v_x)$ | `Vector2D.calcularAnguloGrados()` |
 | **Vector Unitario** | $\hat{u} = \left(\frac{v_x}{\|\vec{v}\|}, \frac{v_y}{\|\vec{v}\|}\right)$ | `Vector2D.calcularUnitario()` |
-| **Suma de Vectores** | $\vec{u} + \vec{v} = (u_x + v_x, u_y + v_y)$ | `Vector2D.sumar(otroVector)` |
-| **Resta de Vectores** | $\vec{u} - \vec{v} = (u_x - v_x, u_y - v_y)$ | `Vector2D.restar(otroVector)` |
-| **Producto Escalar** | $\vec{u} \cdot \vec{v} = u_x v_x + u_y v_y$ | `Vector2D.productoEscalar(otroVector)` |
-| **Ángulo entre Vectores** | $\theta = \arccos\left(\frac{\vec{u} \cdot \vec{v}}{\|\vec{u}\| \|\vec{v}\|}\right)$ | `Vector2D.calcularAnguloEntre(otroVector)` |
+| **Suma / Resta de Vectores** | $\vec{u} \pm \vec{v} = (u_x \pm v_x, u_y \pm v_y)$ | `Vector2D.sumar()` / `restar()` |
+| **Producto Escalar (Dot)** | $\vec{u} \cdot \vec{v} = u_x v_x + u_y v_y = \|\vec{u}\|\|\vec{v}\|\cos\theta$ | `Vector2D.productoEscalar()` |
+| **Ángulo entre Vectores** | $\theta = \arccos\left(\frac{\vec{u} \cdot \vec{v}}{\|\vec{u}\| \|\vec{v}\|}\right)$ | `Vector2D.calcularAnguloEntre()` |
 | **Equipolencia** | $\|\vec{u}\| = \|\vec{v}\| \land \hat{u} = \hat{v}$ | `EvaluarEquipolenciaUseCase.ejecutar()` |
+| **Producto Vectorial (Cruz en ℝ³)** | $\vec{u} \times \vec{v} = \begin{vmatrix} \hat{i} & \hat{j} & \hat{k} \\ u_x & u_y & u_z \\ v_x & v_y & v_z \end{vmatrix}$ | `Vector3D.productoCruz()` |
+| **Área del Paralelogramo** | $\text{Área} = \|\vec{u} \times \vec{v}\|$ | `Vector3D.calcularAreaParalelogramo()` |
+| **Cosenos Directores (ℝ³)** | $\cos\alpha = \frac{v_x}{\|\vec{v}\|}, \cos\beta = \frac{v_y}{\|\vec{v}\|}, \cos\gamma = \frac{v_z}{\|\vec{v}\|}$ | `Vector3D.calcularCosenosDirectores()` |
+| **Identidad Pitagórica 3D** | $\cos^2\alpha + \cos^2\beta + \cos^2\gamma = 1$ | `VerificarCosenosDirectoresUseCase` |
 
 ---
 
