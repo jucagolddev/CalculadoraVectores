@@ -1,6 +1,6 @@
 import { Punto3D } from '../../../core/models/Punto3D.js';
 import { Vector3D } from '../../../core/models/Vector3D.js';
-import { FormateadorMatematico } from '../../../shared/utils/FormateadorMatematico.js';
+import { FormateadorMatematico } from '../../../shared/utils/FormateadorMatematico.js?v=flechas15';
 import { GeneradorInputs } from '../../../shared/utils/GeneradorInputs.js';
 import { CatalogoInfoContextual } from '../../teoria/domain/CatalogoInfoContextual.js';
 
@@ -202,42 +202,42 @@ export class ControladorOperaciones3D {
     this._contenedorResumen.innerHTML = `
       <div class="item-resumen">
         <div class="etiqueta">
-          Producto Vectorial u × v
+          Producto Vectorial ${FormateadorMatematico.htmlVector('u')} × ${FormateadorMatematico.htmlVector('v')}
           ${CatalogoInfoContextual.htmlBotonInfo('producto-vectorial')}
         </div>
         <div class="valor" style="color:#c084fc">(${resultado.productoCruz.x}, ${resultado.productoCruz.y}, ${resultado.productoCruz.z})</div>
       </div>
       <div class="item-resumen">
         <div class="etiqueta">
-          Área Paralelogramo
+          Área ||${FormateadorMatematico.htmlVector('u')} × ${FormateadorMatematico.htmlVector('v')}||
           ${CatalogoInfoContextual.htmlBotonInfo('area-paralelogramo-3d')}
         </div>
         <div class="valor" style="color:#c084fc">${FormateadorMatematico.formatearNumero(resultado.area)} u²</div>
       </div>
       <div class="item-resumen">
         <div class="etiqueta">
-          Producto Escalar u · v
+          Producto Escalar ${FormateadorMatematico.htmlVector('u')} · ${FormateadorMatematico.htmlVector('v')}
           ${CatalogoInfoContextual.htmlBotonInfo('producto-escalar')}
         </div>
         <div class="valor">${FormateadorMatematico.formatearNumero(resultado.productoPunto)}</div>
       </div>
       <div class="item-resumen">
         <div class="etiqueta">
-          Ángulo θ
+          Ángulo θ (${FormateadorMatematico.htmlVector('u')}, ${FormateadorMatematico.htmlVector('v')})
           ${CatalogoInfoContextual.htmlBotonInfo('angulo-entre-vectores')}
         </div>
         <div class="valor">${FormateadorMatematico.formatearGrados(resultado.angulo)}</div>
       </div>
       <div class="item-resumen">
         <div class="etiqueta">
-          Suma u + v
+          Suma ${FormateadorMatematico.htmlVector('u')} + ${FormateadorMatematico.htmlVector('v')}
           ${CatalogoInfoContextual.htmlBotonInfo('suma-vectores')}
         </div>
         <div class="valor">(${resultado.suma.x}, ${resultado.suma.y}, ${resultado.suma.z})</div>
       </div>
       <div class="item-resumen">
         <div class="etiqueta">
-          Diferencia u - v
+          Diferencia ${FormateadorMatematico.htmlVector('u')} - ${FormateadorMatematico.htmlVector('v')}
           ${CatalogoInfoContextual.htmlBotonInfo('resta-vectores')}
         </div>
         <div class="valor">(${resultado.resta.x}, ${resultado.resta.y}, ${resultado.resta.z})</div>

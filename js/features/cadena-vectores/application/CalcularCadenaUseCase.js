@@ -31,11 +31,12 @@ export class CalcularCadenaUseCase {
       const mod = v.modulo();
       longitudTotal += mod;
 
+      const cmdFlecha = etiqueta.startsWith('BA') ? '\\overleftarrow' : '\\overrightarrow';
       pasos.push({
-        titulo: `Vector de Unión ${i + 1}: \\vec{${etiqueta}} (${pOrigen.etiqueta} \\to ${pDestino.etiqueta})`,
-        formula: `$$\\vec{${etiqueta}} = ${pDestino.etiqueta} - ${pOrigen.etiqueta} = (${pDestino.etiqueta}_x - ${pOrigen.etiqueta}_x, \\; ${pDestino.etiqueta}_y - ${pOrigen.etiqueta}_y)$$`,
-        sustitucion: `$$\\vec{${etiqueta}} = (${pDestino.x} - (${pOrigen.x}), \\; ${pDestino.y} - (${pOrigen.y}))$$`,
-        resultado: `$$\\vec{${etiqueta}} = (${v.x}, \\; ${v.y}) \\quad \\big| \\quad \\|\\vec{${etiqueta}}\\| = ${mod.toFixed(4)} \\text{ u} \\quad \\big| \\quad \\theta = ${v.direccionGrados().toFixed(2)}^\\circ$$`
+        titulo: `Vector de Unión ${i + 1}: $${cmdFlecha}{${etiqueta}}$ ($${pOrigen.etiqueta} \\to ${pDestino.etiqueta}$)`,
+        formula: `$$${cmdFlecha}{${etiqueta}} = ${pDestino.etiqueta} - ${pOrigen.etiqueta} = (${pDestino.etiqueta}_x - ${pOrigen.etiqueta}_x, \\; ${pDestino.etiqueta}_y - ${pOrigen.etiqueta}_y)$$`,
+        sustitucion: `$$${cmdFlecha}{${etiqueta}} = (${pDestino.x} - (${pOrigen.x}), \\; ${pDestino.y} - (${pOrigen.y}))$$`,
+        resultado: `$$${cmdFlecha}{${etiqueta}} = (${v.x}, \\; ${v.y}) \\quad \\big| \\quad \\|${cmdFlecha}{${etiqueta}}\\| = ${mod.toFixed(4)} \\text{ u} \\quad \\big| \\quad \\theta = ${v.direccionGrados().toFixed(2)}^\\circ$$`
       });
     }
 
@@ -54,10 +55,10 @@ export class CalcularCadenaUseCase {
       const sumatoriaY = vectores.map(v => v.y >= 0 ? `+${v.y}` : `${v.y}`).join(' ').replace(/^\+/, '');
 
       pasos.push({
-        titulo: `Vector Resultante Total: \\vec{R} (${pInicial.etiqueta} \\to ${pFinal.etiqueta})`,
-        formula: '$$\\vec{R} = \\sum_{i=1}^{n} \\vec{v}_i = \\left(\\sum v_{ix}, \\; \\sum v_{iy}\\right) = P_{\\text{final}} - P_{\\text{inicial}}$$',
+        titulo: `Vector Resultante Total: $\\overrightarrow{R}$ ($${pInicial.etiqueta} \\to ${pFinal.etiqueta}$)`,
+        formula: '$$\\overrightarrow{R} = \\sum_{i=1}^{n} \\vec{v}_i = \\left(\\sum v_{ix}, \\; \\sum v_{iy}\\right) = P_{\\text{final}} - P_{\\text{inicial}}$$',
         sustitucion: `$$R_x = ${sumatoriaX} = ${vectorResultante.x} \\quad \\big| \\quad R_y = ${sumatoriaY} = ${vectorResultante.y}$$`,
-        resultado: `$$\\vec{R} = (${vectorResultante.x}, \\; ${vectorResultante.y}) \\quad \\big| \\quad \\|\\vec{R}\\| = ${modResultante.toFixed(4)} \\text{ u} \\quad \\big| \\quad \\theta = ${vectorResultante.direccionGrados().toFixed(2)}^\\circ$$`
+        resultado: `$$\\overrightarrow{R} = (${vectorResultante.x}, \\; ${vectorResultante.y}) \\quad \\big| \\quad \\|\\overrightarrow{R}\\| = ${modResultante.toFixed(4)} \\text{ u} \\quad \\big| \\quad \\theta = ${vectorResultante.direccionGrados().toFixed(2)}^\\circ$$`
       });
 
       pasos.push({

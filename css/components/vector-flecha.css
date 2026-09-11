@@ -1,0 +1,56 @@
+/* ==========================================================================
+   TIPOGRAFÍA Y NOTACIÓN VECTORIAL: FLECHAS SUPERIORES MATEMÁTICAS (→ y ←)
+   ========================================================================== */
+
+.vector-flecha {
+  display: inline-block;
+  position: relative;
+  line-height: 1.1;
+  padding-top: 0.48em;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  vertical-align: baseline;
+  text-align: center;
+}
+
+.vector-flecha::before {
+  content: '→';
+  position: absolute;
+  top: -0.18em;
+  left: 0;
+  right: 0;
+  font-size: 0.88em;
+  line-height: 1;
+  font-weight: 800;
+  color: currentColor;
+  text-align: center;
+  pointer-events: none;
+  font-family: 'Inter', system-ui, sans-serif;
+  transform: scaleX(1.15);
+}
+
+/* Sentido Inverso: Flecha hacia la izquierda (←) para vectores opuestos o BA */
+.vector-flecha.vector-flecha-izq::before {
+  content: '←';
+}
+
+/* Modificadores de Escala */
+.vector-flecha.vector-sm {
+  font-size: 0.86em;
+  padding-top: 0.42em;
+}
+
+.vector-flecha.vector-sm::before {
+  top: -0.22em;
+  font-size: 0.82em;
+}
+
+.vector-flecha.vector-lg {
+  font-size: 1.18em;
+  padding-top: 0.52em;
+}
+
+.vector-flecha.vector-lg::before {
+  top: -0.15em;
+  font-size: 0.9em;
+}

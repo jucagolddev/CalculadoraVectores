@@ -266,22 +266,22 @@ export class RenderizadorGeometria3D {
     const anchoResto = ctx.measureText(resto).width;
     const anchoTotal = anchoPrefijo + anchoResto;
 
-    const paddingX = 8;
-    const alto = 20;
+    const paddingX = 9;
+    const alto = 26;
     const ancho = anchoTotal + paddingX * 2;
     const cajaX = x - paddingX;
     const cajaY = y - alto + 3;
 
-    ctx.fillStyle = 'rgba(15, 23, 42, 0.92)';
+    ctx.fillStyle = 'rgba(15, 23, 42, 0.94)';
     ctx.strokeStyle = colorBorde;
-    ctx.lineWidth = 1.2;
+    ctx.lineWidth = 1.3;
 
     ctx.beginPath();
-    ctx.roundRect(cajaX, cajaY, ancho, alto, 5);
+    ctx.roundRect(cajaX, cajaY, ancho, alto, 6);
     ctx.fill();
     ctx.stroke();
 
-    const textoY = y - 3;
+    const textoY = y - 4;
     let cursorX = cajaX + paddingX;
 
     if (tienePrefijoVector) {
@@ -289,19 +289,35 @@ export class RenderizadorGeometria3D {
       ctx.fillStyle = colorBorde;
       ctx.fillText(prefijo, cursorX, textoY);
 
-      // 2. Trazo de flecha vectorial encima del nombre
-      const flechaY = textoY - 9;
+      // 2. Trazo de flecha vectorial encima del nombre (→ o ←)
+      const flechaY = textoY - 11;
       const fX1 = cursorX;
       const fX2 = cursorX + anchoPrefijo;
+      const esIzquierda = (prefijo === 'BA' || prefijo.includes('←'));
+
       ctx.strokeStyle = colorBorde;
-      ctx.lineWidth = 1.2;
+      ctx.fillStyle = colorBorde;
+      ctx.lineWidth = 1.5;
+      ctx.lineCap = 'round';
+      ctx.lineJoin = 'round';
+
       ctx.beginPath();
       ctx.moveTo(fX1, flechaY);
       ctx.lineTo(fX2, flechaY);
-      ctx.lineTo(fX2 - 2.5, flechaY - 2);
-      ctx.moveTo(fX2, flechaY);
-      ctx.lineTo(fX2 - 2.5, flechaY + 2);
       ctx.stroke();
+
+      ctx.beginPath();
+      if (esIzquierda) {
+        ctx.moveTo(fX1, flechaY);
+        ctx.lineTo(fX1 + 4, flechaY - 2.5);
+        ctx.lineTo(fX1 + 4, flechaY + 2.5);
+      } else {
+        ctx.moveTo(fX2, flechaY);
+        ctx.lineTo(fX2 - 4, flechaY - 2.5);
+        ctx.lineTo(fX2 - 4, flechaY + 2.5);
+      }
+      ctx.closePath();
+      ctx.fill();
 
       cursorX += anchoPrefijo;
     }

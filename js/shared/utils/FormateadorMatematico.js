@@ -23,4 +23,15 @@ export class FormateadorMatematico {
   static formatearGrados(grados) {
     return `${this.formatearNumero(grados, 1)}°`;
   }
+
+  /**
+   * Genera el HTML semántico con la flecha matemática superior (→ o ←).
+   * @param {string} nombre - Nombre del vector (ej. 'AB', 'BA', 'u', 'v', 'R')
+   * @param {'derecha'|'izquierda'} [sentido='derecha'] - Dirección de la flecha superior
+   * @returns {string} Fragmento HTML con clase .vector-flecha
+   */
+  static htmlVector(nombre, sentido = 'derecha') {
+    const claseSentido = (sentido === 'izquierda' || nombre === 'BA') ? ' vector-flecha-izq' : '';
+    return `<span class="vector-flecha${claseSentido}">${nombre}</span>`;
+  }
 }

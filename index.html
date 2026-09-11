@@ -22,6 +22,7 @@
   <link rel="stylesheet" href="css/components/toast.css">
   <link rel="stylesheet" href="css/components/teoria.css">
   <link rel="stylesheet" href="css/components/popover-info.css">
+  <link rel="stylesheet" href="css/components/vector-flecha.css">
   <!-- KaTeX: Motor Editorial de Fórmulas y Simbología Matemática TeX -->
   <link rel="stylesheet" href="vendor/katex/katex.min.css">
 </head>
@@ -276,15 +277,15 @@
       <div class="hud-leyenda" id="hud-leyenda">
         <div class="item-leyenda">
           <span class="indicador" style="background:#38bdf8;"></span>
-          <span>Vector principal / AB</span>
+          <span>Vector principal / <span class="vector-flecha">AB</span></span>
         </div>
         <div class="item-leyenda">
           <span class="indicador" style="background:#10b981;"></span>
-          <span>Vector resultante (Suma)</span>
+          <span>Vector resultante (<span class="vector-flecha">R</span>)</span>
         </div>
         <div class="item-leyenda">
           <span class="indicador" style="background:#f59e0b;"></span>
-          <span>Vector secundario v / CD</span>
+          <span>Vector secundario <span class="vector-flecha">v</span> / <span class="vector-flecha">CD</span></span>
         </div>
       </div>
 
@@ -414,6 +415,6 @@
   <script src="vendor/katex/contrib/auto-render.min.js"></script>
 
   <!-- Scripts ES6 Modulares con Arquitectura Limpia -->
-  <script type="module" src="js/main.js?v=katex13"></script>
+  <script type="module" src="js/main.js?v=flechas15"></script>
 </body>
 </html>

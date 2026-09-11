@@ -106,14 +106,14 @@ export class RepositorioTeoria {
           { simbolo: 'vx = x₂ - x₁', nombre: 'Componente X', descripcion: 'Desplazamiento horizontal neto de A hacia B.' },
           { simbolo: 'vy = y₂ - y₁', nombre: 'Componente Y', descripcion: 'Desplazamiento vertical neto de A hacia B.' }
         ],
-        formula: '$$\\vec{v} = \\vec{AB} = B - A = (x_2 - x_1, \\; y_2 - y_1)$$',
-        formulaNota: 'El orden de la resta es sagrado: siempre Extremo (Llegada) menos Origen (Partida).',
+        formula: '$$\\overrightarrow{AB} = B - A = (x_2 - x_1, \\; y_2 - y_1) \\quad \\big| \\quad \\overleftarrow{BA} = -\\overrightarrow{AB} = A - B$$',
+        formulaNota: 'Notación estándar: la saeta superior indica el sentido. De A hacia B se denota con flecha a la derecha $\\overrightarrow{AB}$; de B hacia A con flecha a la izquierda $\\overleftarrow{BA}$.',
         demostracion: {
-          titulo: 'Deducción vectorial por suma de vectores de posición',
+          titulo: 'Deducción vectorial por suma de vectores de posición (Relación de Chasles)',
           pasos: [
-            { paso: 'Vectores de posición respecto al origen O(0,0)', detalle: 'Los puntos A y B definen vectores de posición anclados en el origen: OA = (x₁, y₁) y OB = (x₂, y₁).' },
-            { paso: 'Relación triangular de Chasles', detalle: 'Por suma de desplazamientos consecutivos: OA + AB = OB.' },
-            { paso: 'Despeje algebraico', detalle: 'AB = OB - OA = (x₂, y₂) - (x₁, y₁) = (x₂ - x₁, y₂ - y₁). Queda demostrado.' }
+            { paso: 'Vectores de posición respecto al origen O(0,0)', detalle: 'Los puntos A y B definen vectores de posición anclados en el origen: $\\overrightarrow{OA} = (x_1, y_1)$ y $\\overrightarrow{OB} = (x_2, y_2)$.' },
+            { paso: 'Relación triangular de Chasles', detalle: 'Por suma de desplazamientos consecutivos en el plano: $\\overrightarrow{OA} + \\overrightarrow{AB} = \\overrightarrow{OB}$.' },
+            { paso: 'Despeje algebraico y vector inverso', detalle: '$\\overrightarrow{AB} = \\overrightarrow{OB} - \\overrightarrow{OA} = (x_2 - x_1, \\; y_2 - y_1)$. Si el sentido se invierte de B a A: $\\overleftarrow{BA} = -\\overrightarrow{AB} = A - B$. Queda demostrado.' }
           ]
         },
         algoritmoPasos: [

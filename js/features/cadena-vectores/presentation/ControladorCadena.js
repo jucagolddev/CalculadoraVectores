@@ -1,6 +1,6 @@
 import { Punto2D } from '../../../core/models/Punto2D.js';
 import { Configuracion } from '../../../core/constants/Configuracion.js';
-import { FormateadorMatematico } from '../../../shared/utils/FormateadorMatematico.js';
+import { FormateadorMatematico } from '../../../shared/utils/FormateadorMatematico.js?v=flechas15';
 import { GeneradorInputs } from '../../../shared/utils/GeneradorInputs.js';
 import { CatalogoInfoContextual } from '../../teoria/domain/CatalogoInfoContextual.js';
 
@@ -200,13 +200,14 @@ export class ControladorCadena {
     const v1 = resultado.vectores[0];
 
     if (!esCadena) {
+      const etqV1 = v1.etiqueta || 'AB';
       this._contenedorResumen.innerHTML = `
         <div class="item-resumen">
-          <div class="etiqueta">Componentes AB ${CatalogoInfoContextual.htmlBotonInfo('vector-ab')}</div>
+          <div class="etiqueta">Componentes ${FormateadorMatematico.htmlVector(etqV1)} ${CatalogoInfoContextual.htmlBotonInfo('vector-ab')}</div>
           <div class="valor">(${v1.x}, ${v1.y})</div>
         </div>
         <div class="item-resumen">
-          <div class="etiqueta">Módulo ||AB|| ${CatalogoInfoContextual.htmlBotonInfo('modulo')}</div>
+          <div class="etiqueta">Módulo ||${FormateadorMatematico.htmlVector(etqV1)}|| ${CatalogoInfoContextual.htmlBotonInfo('modulo')}</div>
           <div class="valor">${FormateadorMatematico.formatearNumero(v1.modulo())} u</div>
         </div>
         <div class="item-resumen">
@@ -222,11 +223,11 @@ export class ControladorCadena {
       const r = resultado.vectorResultante;
       this._contenedorResumen.innerHTML = `
         <div class="item-resumen">
-          <div class="etiqueta">Vector Resultante R ${CatalogoInfoContextual.htmlBotonInfo('vector-resultante')}</div>
+          <div class="etiqueta">Vector Resultante ${FormateadorMatematico.htmlVector('R')} ${CatalogoInfoContextual.htmlBotonInfo('vector-resultante')}</div>
           <div class="valor" style="color:#10b981">(${r.x}, ${r.y})</div>
         </div>
         <div class="item-resumen">
-          <div class="etiqueta">Módulo ||R|| Neto ${CatalogoInfoContextual.htmlBotonInfo('modulo')}</div>
+          <div class="etiqueta">Módulo ||${FormateadorMatematico.htmlVector('R')}|| Neto ${CatalogoInfoContextual.htmlBotonInfo('modulo')}</div>
           <div class="valor" style="color:#10b981">${FormateadorMatematico.formatearNumero(r.modulo())} u</div>
         </div>
         <div class="item-resumen">

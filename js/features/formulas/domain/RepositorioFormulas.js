@@ -10,8 +10,8 @@ export class RepositorioFormulas {
     return [
       {
         titulo: '1. Vector que une dos puntos A y B',
-        ecuacion: '$$\\vec{AB} = B - A = (x_B - x_A, \\; y_B - y_A)$$',
-        descripcion: 'Dadas las coordenadas del origen A(xA, yA) y del extremo B(xB, yB), las componentes del vector director se obtienen restando las coordenadas del extremo menos las del origen.'
+        ecuacion: '$$\\overrightarrow{AB} = B - A = (x_B - x_A, \\; y_B - y_A) \\quad \\big| \\quad \\overleftarrow{BA} = -\\overrightarrow{AB} = A - B$$',
+        descripcion: 'Dadas las coordenadas del origen A(xA, yA) y del extremo B(xB, yB), el vector directo se denota con flecha a la derecha sobre AB; el vector opuesto con flecha a la izquierda sobre BA.'
       },
       {
         titulo: '2. Módulo o Magnitud (Norma Euclidiana)',
@@ -50,12 +50,12 @@ export class RepositorioFormulas {
       },
       {
         titulo: '9. Equipolencia de Vectores',
-        ecuacion: '$$\\vec{AB} \\sim \\vec{CD} \\iff \\begin{cases} x_B - x_A = x_D - x_C \\\\ y_B - y_A = y_D - y_C \\end{cases}$$',
+        ecuacion: '$$\\overrightarrow{AB} \\equiv \\overrightarrow{CD} \\iff \\begin{cases} x_B - x_A = x_D - x_C \\\\ y_B - y_A = y_D - y_C \\end{cases}$$',
         descripcion: 'Dos vectores fijos son equipolentes si y sólo si poseen el mismo módulo, la misma dirección y el mismo sentido, sin importar dónde se encuentren anclados sus orígenes en el plano.'
       },
       {
         titulo: '10. Cadena de Unión y Vector Resultante Neto',
-        ecuacion: '$$\\vec{R} = \\sum_{i=1}^n \\vec{v}_i = P_{\\text{final}} - P_{\\text{inicial}}$$',
+        ecuacion: '$$\\overrightarrow{R} = \\sum_{i=1}^n \\vec{v}_i = P_{\\text{final}} - P_{\\text{inicial}}$$',
         descripcion: 'La resultante del encadenamiento punta con cola es el vector que une directamente el origen del primer punto con el extremo del último punto del recorrido.'
       },
       {

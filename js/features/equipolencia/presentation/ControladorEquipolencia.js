@@ -1,5 +1,6 @@
 import { Punto2D } from '../../../core/models/Punto2D.js';
 import { Configuracion } from '../../../core/constants/Configuracion.js';
+import { FormateadorMatematico } from '../../../shared/utils/FormateadorMatematico.js?v=flechas15';
 import { GeneradorInputs } from '../../../shared/utils/GeneradorInputs.js';
 import { CatalogoInfoContextual } from '../../teoria/domain/CatalogoInfoContextual.js';
 
@@ -53,7 +54,7 @@ export class ControladorEquipolencia {
     this._contenedorFormulario.innerHTML = `
       <div class="grupo-coordenadas">
         <div class="fila-vector">
-          <span class="etiqueta-vector"><span class="punto-color" style="background:#38bdf8"></span> Vector A → B ${CatalogoInfoContextual.htmlBotonInfo('vector-ab')}</span>
+          <span class="etiqueta-vector"><span class="punto-color" style="background:#38bdf8"></span> Vector ${FormateadorMatematico.htmlVector('AB')} (A → B) ${CatalogoInfoContextual.htmlBotonInfo('vector-ab')}</span>
           <div class="inputs-par">
             ${GeneradorInputs.crearCampoNumero({ id: 'input-ax', name: 'ax', etiqueta: 'Ax', valor: this._puntos.ax, clasesExtra: 'input-eq', dataAttrs: 'data-campo="ax"' })}
             ${GeneradorInputs.crearCampoNumero({ id: 'input-ay', name: 'ay', etiqueta: 'Ay', valor: this._puntos.ay, clasesExtra: 'input-eq', dataAttrs: 'data-campo="ay"' })}
@@ -64,7 +65,7 @@ export class ControladorEquipolencia {
           </div>
         </div>
         <div class="fila-vector">
-          <span class="etiqueta-vector"><span class="punto-color" style="background:#f59e0b"></span> Vector C → D ${CatalogoInfoContextual.htmlBotonInfo('vector-cd')}</span>
+          <span class="etiqueta-vector"><span class="punto-color" style="background:#f59e0b"></span> Vector ${FormateadorMatematico.htmlVector('CD')} (C → D) ${CatalogoInfoContextual.htmlBotonInfo('vector-cd')}</span>
           <div class="inputs-par">
             ${GeneradorInputs.crearCampoNumero({ id: 'input-cx', name: 'cx', etiqueta: 'Cx', valor: this._puntos.cx, clasesExtra: 'input-eq', dataAttrs: 'data-campo="cx"' })}
             ${GeneradorInputs.crearCampoNumero({ id: 'input-cy', name: 'cy', etiqueta: 'Cy', valor: this._puntos.cy, clasesExtra: 'input-eq', dataAttrs: 'data-campo="cy"' })}
@@ -102,9 +103,13 @@ export class ControladorEquipolencia {
     const estado = this._estadoApp.obtener();
     const esEjercicioOculto = estado.entornoActivo === Configuracion.ENTORNOS_APP.EJERCICIO && !estado.respuestasVisibles;
 
+    const vectoresADibujar = esEjercicioOculto
+      ? [resultado.vectorAB]
+      : [resultado.vectorAB, resultado.vectorCD];
+
     this._estadoApp.actualizar({
       ultimoResultado: resultado,
-      vectoresRenderizables: [resultado.vectorAB, resultado.vectorCD],
+      vectoresRenderizables: vectoresADibujar,
       puntosRenderizables: [puntoA, puntoB, puntoC, puntoD]
     });
 
@@ -128,17 +133,17 @@ export class ControladorEquipolencia {
 
     this._contenedorResumen.innerHTML = `
       <div class="item-resumen">
-        <div class="etiqueta">Vector AB ${CatalogoInfoContextual.htmlBotonInfo('vector-ab')}</div>
+        <div class="etiqueta">Vector ${FormateadorMatematico.htmlVector('AB')} ${CatalogoInfoContextual.htmlBotonInfo('vector-ab')}</div>
         <div class="valor">(${resultado.vectorAB.x}, ${resultado.vectorAB.y})</div>
       </div>
       <div class="item-resumen">
-        <div class="etiqueta">Vector CD ${CatalogoInfoContextual.htmlBotonInfo('vector-cd')}</div>
+        <div class="etiqueta">Vector ${FormateadorMatematico.htmlVector('CD')} ${CatalogoInfoContextual.htmlBotonInfo('vector-cd')}</div>
         <div class="valor">(${resultado.vectorCD.x}, ${resultado.vectorCD.y})</div>
       </div>
       <div class="item-resumen" style="grid-column: span 2;">
-        <div class="etiqueta">Equipolencia ${CatalogoInfoContextual.htmlBotonInfo('equipolencia')}</div>
+        <div class="etiqueta">Equipolencia ${FormateadorMatematico.htmlVector('AB')} ≡ ${FormateadorMatematico.htmlVector('CD')} ${CatalogoInfoContextual.htmlBotonInfo('equipolencia')}</div>
         <div class="valor" style="color:${resultado.sonEquipolentes ? '#10b981' : '#f43f5e'}; font-weight: 700;">
-          ${resultado.sonEquipolentes ? 'SI: EQUIPOLENTES (Vectores Identicos)' : 'NO: NO EQUIPOLENTES (Difieren en direccion o modulo)'}
+          ${resultado.sonEquipolentes ? 'SÍ: EQUIPOLENTES (Vectores Idénticos)' : 'NO: NO EQUIPOLENTES (Difieren en dirección o módulo)'}
         </div>
       </div>
     `;

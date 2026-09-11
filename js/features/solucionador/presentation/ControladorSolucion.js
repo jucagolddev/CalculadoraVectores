@@ -292,13 +292,23 @@ export class ControladorSolucion {
       return str;
     };
 
+    const formatearInline = (texto) => {
+      if (!texto) return '';
+      const str = String(texto).trim();
+      if (str.includes('$')) return str;
+      if (str.includes('\\')) {
+        return str.replace(/(\\[a-zA-Z]+(?:\{[^{}]*\})*(?:\s*\\to\s*[a-zA-Z0-9]+)?)/g, '$$$1$$');
+      }
+      return str;
+    };
+
     const htmlPasos = resultado.pasos.map(paso => `
       <div class="paso-matematico">
         <div class="paso-titulo">
           <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
             <polyline points="9 18 15 12 9 6"/>
           </svg>
-          ${paso.titulo}
+          ${formatearInline(paso.titulo)}
         </div>
         <div class="bloque-formula"><span style="font-weight:600; color:var(--color-primario);">Fórmula teórica:</span> ${formatearBloque(paso.formula)}</div>
         <div class="bloque-sustitucion"><span style="font-weight:600; color:#38bdf8;">Sustitución de datos:</span> ${formatearBloque(paso.sustitucion)}</div>

@@ -505,24 +505,24 @@ export class PlanoCartesiano {
       const anchoComponentes = this._ctx.measureText(componentes).width;
       const anchoTotal = anchoNombre + anchoComponentes;
 
-      const paddingX = 8;
+      const paddingX = 9;
       const anchoCaja = anchoTotal + paddingX * 2;
-      const altoCaja = 22;
+      const altoCaja = 28;
 
       const cajaX = centroX - (anchoCaja / 2);
       const cajaY = centroY - (altoCaja / 2);
 
       // Fondo del recuadro con borde de color del vector
-      this._ctx.fillStyle = 'rgba(15, 23, 42, 0.92)';
+      this._ctx.fillStyle = 'rgba(15, 23, 42, 0.94)';
       this._ctx.strokeStyle = vector.color;
-      this._ctx.lineWidth = 1.2;
+      this._ctx.lineWidth = 1.4;
       this._ctx.beginPath();
-      this._ctx.roundRect(cajaX, cajaY, anchoCaja, altoCaja, 5);
+      this._ctx.roundRect(cajaX, cajaY, anchoCaja, altoCaja, 6);
       this._ctx.fill();
       this._ctx.stroke();
 
       const inicioTextoX = cajaX + paddingX;
-      const textoY = centroY + 2;
+      const textoY = centroY + 4;
 
       // 1. Nombre del vector con su color de realce
       this._ctx.fillStyle = vector.color;
@@ -530,19 +530,39 @@ export class PlanoCartesiano {
       this._ctx.textBaseline = 'middle';
       this._ctx.fillText(nombre, inicioTextoX, textoY);
 
-      // 2. Trazo vectorial de la flecha matemática horizontal encima del nombre
-      const flechaY = textoY - 8;
+      // 2. Trazo vectorial matemático horizontal encima del nombre (→ o ←)
+      const flechaY = centroY - 6;
       const fX1 = inicioTextoX;
       const fX2 = inicioTextoX + anchoNombre;
+      const esIzquierda = (nombre === 'BA' || nombre.includes('←'));
+
       this._ctx.strokeStyle = vector.color;
-      this._ctx.lineWidth = 1.2;
+      this._ctx.fillStyle = vector.color;
+      this._ctx.lineWidth = 1.5;
+      this._ctx.lineCap = 'round';
+      this._ctx.lineJoin = 'round';
+
+      // Trazo del cuerpo de la flecha
       this._ctx.beginPath();
       this._ctx.moveTo(fX1, flechaY);
       this._ctx.lineTo(fX2, flechaY);
-      this._ctx.lineTo(fX2 - 3, flechaY - 2.5);
-      this._ctx.moveTo(fX2, flechaY);
-      this._ctx.lineTo(fX2 - 3, flechaY + 2.5);
       this._ctx.stroke();
+
+      // Punta sólida de saeta matemática
+      this._ctx.beginPath();
+      if (esIzquierda) {
+        // Punta hacia la izquierda (←)
+        this._ctx.moveTo(fX1, flechaY);
+        this._ctx.lineTo(fX1 + 4.5, flechaY - 3);
+        this._ctx.lineTo(fX1 + 4.5, flechaY + 3);
+      } else {
+        // Punta hacia la derecha (→)
+        this._ctx.moveTo(fX2, flechaY);
+        this._ctx.lineTo(fX2 - 4.5, flechaY - 3);
+        this._ctx.lineTo(fX2 - 4.5, flechaY + 3);
+      }
+      this._ctx.closePath();
+      this._ctx.fill();
 
       // 3. Componentes numéricas
       this._ctx.fillStyle = '#f8fafc';

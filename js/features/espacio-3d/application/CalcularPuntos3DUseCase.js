@@ -18,16 +18,16 @@ export class CalcularPuntos3DUseCase {
 
     const pasos = [
       {
-        titulo: '1. Componentes del Vector Fijo AB (Extremo - Origen)',
-        formula: '\\vec{AB} = (x_B - x_A)\\vec{i} + (y_B - y_A)\\vec{j} + (z_B - z_A)\\vec{k}',
-        sustitucion: `\\vec{AB} = (${puntoB.x} - (${puntoA.x}))\\vec{i} + (${puntoB.y} - (${puntoA.y}))\\vec{j} + (${puntoB.z} - (${puntoA.z}))\\vec{k}`,
-        resultado: `\\vec{AB} = (${vectorAB.x}, ${vectorAB.y}, ${vectorAB.z})`
+        titulo: '1. Componentes del Vector Fijo $\\overrightarrow{AB}$ (Extremo - Origen)',
+        formula: '\\overrightarrow{AB} = (x_B - x_A)\\vec{i} + (y_B - y_A)\\vec{j} + (z_B - z_A)\\vec{k}',
+        sustitucion: `\\overrightarrow{AB} = (${puntoB.x} - (${puntoA.x}))\\vec{i} + (${puntoB.y} - (${puntoA.y}))\\vec{j} + (${puntoB.z} - (${puntoA.z}))\\vec{k}`,
+        resultado: `\\overrightarrow{AB} = (${vectorAB.x}, ${vectorAB.y}, ${vectorAB.z})`
       },
       {
-        titulo: '2. Módulo o Longitud Tridimensional (||AB||)',
-        formula: '\\|\\vec{AB}\\| = \\sqrt{(x_B - x_A)^2 + (y_B - y_A)^2 + (z_B - z_A)^2}',
-        sustitucion: `\\|\\vec{AB}\\| = \\sqrt{(${vectorAB.x})^2 + (${vectorAB.y})^2 + (${vectorAB.z})^2}`,
-        resultado: `\\|\\vec{AB}\\| = ${FormateadorMatematico.formatearNumero(modulo)} \\text{ u}`
+        titulo: '2. Módulo o Longitud Tridimensional (\\|\\overrightarrow{AB}\\|)',
+        formula: '\\|\\overrightarrow{AB}\\| = \\sqrt{(x_B - x_A)^2 + (y_B - y_A)^2 + (z_B - z_A)^2}',
+        sustitucion: `\\|\\overrightarrow{AB}\\| = \\sqrt{(${vectorAB.x})^2 + (${vectorAB.y})^2 + (${vectorAB.z})^2}`,
+        resultado: `\\|\\overrightarrow{AB}\\| = ${FormateadorMatematico.formatearNumero(modulo)} \\text{ u}`
       },
       {
         titulo: '3. Cosenos Directores respecto a los Ejes X, Y y Z',
@@ -43,7 +43,7 @@ export class CalcularPuntos3DUseCase {
       },
       {
         titulo: '5. Vector Unitario Director (û)',
-        formula: '\\hat{u} = \\frac{\\vec{AB}}{\\|\\vec{AB}\\|} = \\cos\\alpha\\vec{i} + \\cos\\beta\\vec{j} + \\cos\\gamma\\vec{k}',
+        formula: '\\hat{u} = \\frac{\\overrightarrow{AB}}{\\|\\overrightarrow{AB}\\|} = \\cos\\alpha\\vec{i} + \\cos\\beta\\vec{j} + \\cos\\gamma\\vec{k}',
         sustitucion: `\\hat{u} = \\left(\\frac{${vectorAB.x}}{${FormateadorMatematico.formatearNumero(modulo)}}, \\frac{${vectorAB.y}}{${FormateadorMatematico.formatearNumero(modulo)}}, \\frac{${vectorAB.z}}{${FormateadorMatematico.formatearNumero(modulo)}}\\right)`,
         resultado: `\\hat{u} = (${FormateadorMatematico.formatearNumero(unitario.x, 3)}, ${FormateadorMatematico.formatearNumero(unitario.y, 3)}, ${FormateadorMatematico.formatearNumero(unitario.z, 3)})`
       }

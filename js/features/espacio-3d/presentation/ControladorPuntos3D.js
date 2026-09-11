@@ -1,5 +1,5 @@
 import { Punto3D } from '../../../core/models/Punto3D.js';
-import { FormateadorMatematico } from '../../../shared/utils/FormateadorMatematico.js';
+import { FormateadorMatematico } from '../../../shared/utils/FormateadorMatematico.js?v=flechas15';
 import { GeneradorInputs } from '../../../shared/utils/GeneradorInputs.js';
 import { CatalogoInfoContextual } from '../../teoria/domain/CatalogoInfoContextual.js';
 
@@ -151,14 +151,14 @@ export class ControladorPuntos3D {
     this._contenedorResumen.innerHTML = `
       <div class="item-resumen">
         <div class="etiqueta">
-          Vector AB (B - A)
+          Vector ${FormateadorMatematico.htmlVector('AB')} (B - A)
           ${CatalogoInfoContextual.htmlBotonInfo('vector-ab')}
         </div>
         <div class="valor" style="color:#38bdf8">(${resultado.vectorAB.x}, ${resultado.vectorAB.y}, ${resultado.vectorAB.z})</div>
       </div>
       <div class="item-resumen">
         <div class="etiqueta">
-          Módulo ||AB||
+          Módulo ||${FormateadorMatematico.htmlVector('AB')}||
           ${CatalogoInfoContextual.htmlBotonInfo('modulo')}
         </div>
         <div class="valor">${FormateadorMatematico.formatearNumero(resultado.modulo)} u</div>
