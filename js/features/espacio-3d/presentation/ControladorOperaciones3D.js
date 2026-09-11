@@ -99,6 +99,10 @@ export class ControladorOperaciones3D {
             <input type="checkbox" id="check-3d-paralelogramo" ${this._valores.mostrarParalelogramo ? 'checked' : ''}>
             Mostrar Paralelogramo Sustentado (Área)
           </label>
+          <label class="opcion-radio" style="font-size:0.75rem; color:#f59e0b; font-weight:600;">
+            <input type="checkbox" id="check-3d-papel" ${this._motor3D.esModoPapel() ? 'checked' : ''}>
+            📄 Modo Plano: Hoja de Papel Técnico (Proyección Ortogonal XY)
+          </label>
         </div>
       </div>
     `;
@@ -127,6 +131,18 @@ export class ControladorOperaciones3D {
     checkParal?.addEventListener('change', (e) => {
       this._valores.mostrarParalelogramo = e.target.checked;
       this.procesarYActualizar();
+    });
+
+    const checkPapel = document.getElementById('check-3d-papel');
+    checkPapel?.addEventListener('change', (e) => {
+      const activo = e.target.checked;
+      this._motor3D.establecerModoPapel(activo);
+      const btnHud = document.getElementById('btn-toggle-modo-papel');
+      if (btnHud) {
+        btnHud.classList.toggle('activo', activo);
+        const span = btnHud.querySelector('.texto-btn-papel');
+        if (span) span.textContent = activo ? 'Vista 3D' : 'Modo Papel';
+      }
     });
   }
 

@@ -199,6 +199,7 @@ class Bootstrap {
         btnProyecciones: document.getElementById('btn-toggle-proyecciones'),
         btnCuadricula: document.getElementById('btn-toggle-cuadricula'),
         btnEjes: document.getElementById('btn-toggle-ejes'),
+        btnModoPapel: document.getElementById('btn-toggle-modo-papel'),
         btnZoomIn: document.getElementById('btn-zoom-in'),
         btnZoomOut: document.getElementById('btn-zoom-out'),
         btnCentrar: document.getElementById('btn-centrar'),
@@ -209,6 +210,7 @@ class Bootstrap {
       estadoApp,
       motor3D
     );
+    hud.actualizarVisibilidadSegunEntorno(estadoApp.obtener().entornoActivo === Configuracion.ENTORNOS_APP.ESPACIO_3D);
 
     // 7. Sincronización Reactiva (Estado -> Motor Gráfico)
     estadoApp.suscribir('*', (nuevoEstado) => {
@@ -228,6 +230,9 @@ class Bootstrap {
       const esModo3D = modo === Configuracion.MODOS_APP.OPERACIONES_3D || modo === Configuracion.MODOS_APP.PUNTOS_3D;
       plano.establecerActivo(!esModo3D);
       motor3D.establecerActivo(esModo3D);
+      if (hud) {
+        hud.actualizarVisibilidadSegunEntorno(esModo3D);
+      }
 
       if (modo === Configuracion.MODOS_APP.CADENA_PUNTOS) {
         ctrls.ctrlCadena.renderizar();

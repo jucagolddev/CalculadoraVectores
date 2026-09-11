@@ -136,6 +136,40 @@ Diseñada con un enfoque de **cero dependencias externas**, explota las capacida
   2. **Vector entre 2 Puntos ($A \to B$) & Cosenos Directores:** Vector relativo $\vec{AB} = B - A$, norma tridimensional, cosenos directores con los tres ejes coordenados, verificación de la identidad $\sum \cos^2 = 1$ y vector unitario director $\hat{u}$.
 - **HUD Dinámico Adaptativo:** Coordenadas angulares de cámara en tiempo real (`Yaw: X°, Pitch: Y° | Zoom: Zpx/u`) y alternancia de capas 3D.
 
+### 11. Modo Plano: Hoja de Papel Técnico (ℝ² ⊂ ℝ³)
+- **Proyección Ortogonal Plana Sin Distorsión:** Transforma el espacio tridimensional en una vista de ingeniería sobre el plano coordenado $XY$ ($z = 0$). Elimina la perspectiva cónica y proyecta directamente $px = cx + x \cdot \text{escala}$, $py = cy - y \cdot \text{escala}$, preservando exactamente ángulos y proporciones métricas.
+- **Estética de Folio Técnico y Cuaderno Universitario:**
+  - Lienzo tipo folio técnico milimetrado (`#090d1a`) con sombra proyectada, bordes sutiles y cajetín de especificación formal.
+  - Perforaciones circulares laterales de encuadernación y línea roja de margen vertical estándar.
+  - Cuadrícula milimetrada dual con subdivisiones mayor ($1\text{ u}$) y menor ($0.2\text{ u}$).
+- **Notación Física Universal de Vectores Perpendiculares:**
+  - Representación del eje normal $Z$ en el origen mediante el símbolo $\odot$ (saliendo hacia el observador).
+  - Componente ortogonal en vectores espaciales indicada mediante cotas de elevación `(z = ±k)`.
+  - Vectores directores normales representados con círculo y punto $\odot$ (cota positiva, hacia afuera) o aspa $\otimes$ (cota negativa, hacia dentro de la hoja).
+- **Conmutación In Situ y Bidireccional:**
+  - Botón integrado en el HUD flotante `[📄 Modo Papel]` / `[🧊 Vista 3D]` con acento pergamino ámbar.
+  - Checkbox sincronizado en los paneles de control de *Operaciones 3D* y *Puntos 3D*.
+  - Desplazamiento por arrastre de ratón (Pan) y zoom métrico suave con rueda.
+
+---
+
+## 📸 Galería Visual de la Suite
+
+| Módulo | Captura de Pantalla |
+| :--- | :--- |
+| **Cadena Vectorial de Puntos** | ![Cadena Vectorial](docs/img/01_cadena_vectorial.png) |
+| **Operaciones & Paralelogramo** | ![Operaciones con Vectores](docs/img/02_operaciones_paralelogramo.png) |
+| **Test de Equipolencia** | ![Diagnóstico de Equipolencia](docs/img/03_diagnostico_equipolencia.png) |
+| **Modo Ejercicios con Validación** | ![Modo Ejercicios](docs/img/04_modo_ejercicios.png) |
+| **Solución Analítica Paso a Paso** | ![Solución Detallada](docs/img/05_solucion_paso_a_paso.png) |
+| **Compendio de Fórmulas** | ![Modal de Fórmulas](docs/img/06_compendio_formulas.png) |
+| **Almacén Local de Ejercicios** | ![Almacén de Ejercicios](docs/img/07_almacen_ejercicios.png) |
+| **Guía Teórica Interactiva** | ![Guía Teórica y Lógica](docs/img/08_seccion_teorica.png) |
+| **Popovers de Información In Situ** | ![Popover Contextual](docs/img/09_popover_informacion.png) |
+| **Espacio 3D: Producto Vectorial u × v** | ![Espacio 3D Producto Cruz](docs/img/10_espacio_3d.png) |
+| **Espacio 3D: Vector A→B & Cosenos Directores** | ![Espacio 3D Cosenos Directores](docs/img/11_cosenos_directores_3d.png) |
+| **Espacio 3D: Modo Plano (Hoja de Papel Técnico)** | ![Modo Plano Hoja de Papel](docs/img/12_modo_papel_3d.png) |
+
 ---
 
 ## 🏗️ Arquitectura del Sistema

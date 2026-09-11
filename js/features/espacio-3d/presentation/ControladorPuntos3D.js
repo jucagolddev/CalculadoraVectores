@@ -72,6 +72,14 @@ export class ControladorPuntos3D {
             ${GeneradorInputs.crearCampoNumero({ id: 'input-3d-bz', name: 'bz', etiqueta: 'Bz', valor: this._puntos.bz, clasesExtra: 'input-pt-3d', dataAttrs: 'data-campo="bz"' })}
           </div>
         </div>
+
+        <div class="opciones-union" style="margin-top:0.25rem;">
+          <span style="font-size:0.75rem; font-weight:700; color:var(--color-texto-secundario); text-transform:uppercase;">Visualización Tridimensional:</span>
+          <label class="opcion-radio" style="font-size:0.75rem; color:#f59e0b; font-weight:600;">
+            <input type="checkbox" id="check-3d-papel-pts" ${this._motor3D.esModoPapel() ? 'checked' : ''}>
+            📄 Modo Plano: Hoja de Papel Técnico (Proyección Ortogonal XY)
+          </label>
+        </div>
       </div>
     `;
 
@@ -87,6 +95,18 @@ export class ControladorPuntos3D {
         this._puntos[campo] = Number.isNaN(val) ? 0 : val;
         this.procesarYActualizar();
       });
+    });
+
+    const checkPapel = document.getElementById('check-3d-papel-pts');
+    checkPapel?.addEventListener('change', (e) => {
+      const activo = e.target.checked;
+      this._motor3D.establecerModoPapel(activo);
+      const btnHud = document.getElementById('btn-toggle-modo-papel');
+      if (btnHud) {
+        btnHud.classList.toggle('activo', activo);
+        const span = btnHud.querySelector('.texto-btn-papel');
+        if (span) span.textContent = activo ? 'Vista 3D' : 'Modo Papel';
+      }
     });
   }
 

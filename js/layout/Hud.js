@@ -15,6 +15,7 @@ export class Hud {
    * @param {HTMLButtonElement} [elementosHUD.btnProyecciones]
    * @param {HTMLButtonElement} [elementosHUD.btnCuadricula]
    * @param {HTMLButtonElement} [elementosHUD.btnEjes]
+   * @param {HTMLButtonElement} [elementosHUD.btnModoPapel]
    * @param {HTMLButtonElement} [elementosHUD.btnZoomIn]
    * @param {HTMLButtonElement} [elementosHUD.btnZoomOut]
    * @param {HTMLButtonElement} [elementosHUD.btnCentrar]
@@ -39,7 +40,11 @@ export class Hud {
 
   actualizarCoordenadas3D(info) {
     if (this._elementos.textoCoords && this._es3D()) {
-      this._elementos.textoCoords.textContent = `Yaw: ${info.yaw}°, Pitch: ${info.pitch}° | Zoom: ${info.escala}px/u`;
+      if (info.modoPapel) {
+        this._elementos.textoCoords.textContent = `Plano XY (Papel Técnico) | Zoom: ${info.escala}px/u`;
+      } else {
+        this._elementos.textoCoords.textContent = `Yaw: ${info.yaw}°, Pitch: ${info.pitch}° | Zoom: ${info.escala}px/u`;
+      }
     }
   }
 
@@ -129,6 +134,16 @@ export class Hud {
       });
     }
 
+    // Modo Plano: Hoja de Papel Técnico (Proyección Ortogonal en ℝ³ sobre plano XY)
+    if (this._elementos.btnModoPapel) {
+      this._elementos.btnModoPapel.addEventListener('click', () => {
+        if (!this._motor3D) return;
+        const nuevoEstado = !this._motor3D.esModoPapel();
+        this._motor3D.establecerModoPapel(nuevoEstado);
+        this.actualizarBotonModoPapel(nuevoEstado);
+      });
+    }
+
     // Controles de Cámara y Navegación
     if (this._elementos.btnZoomIn) {
       this._elementos.btnZoomIn.addEventListener('click', () => {
@@ -206,6 +221,40 @@ export class Hud {
     const spanTexto = this._elementos.btnToggleTodo.querySelector('.texto-btn-todo');
     if (spanTexto) {
       spanTexto.textContent = algunElementoVisible ? 'Grafo Completo' : 'Grafo Oculto';
+    }
+  }
+
+  /**
+   * Sincroniza la apariencia del botón del modo papel técnico en el HUD
+   * @param {boolean} esModoPapel
+   */
+  actualizarBotonModoPapel(esModoPapel) {
+    if (!this._elementos.btnModoPapel) return;
+    this._elementos.btnModoPapel.classList.toggle('activo', esModoPapel);
+    const spanTexto = this._elementos.btnModoPapel.querySelector('.texto-btn-papel');
+    if (spanTexto) {
+      spanTexto.textContent = esModoPapel ? 'Vista 3D' : 'Modo Papel';
+    }
+    this._elementos.btnModoPapel.title = esModoPapel
+      ? 'Volver a la Vista 3D Orbital con rotación libre (Yaw/Pitch)'
+      : 'Alternar a Modo Papel Técnico (Proyección plana ortogonal en plano XY)';
+
+    const checkPapelOp = document.getElementById('check-3d-papel');
+    if (checkPapelOp) checkPapelOp.checked = esModoPapel;
+    const checkPapelPts = document.getElementById('check-3d-papel-pts');
+    if (checkPapelPts) checkPapelPts.checked = esModoPapel;
+  }
+
+  /**
+   * Muestra u oculta controles específicos de ℝ³ según el entorno activo
+   * @param {boolean} es3D
+   */
+  actualizarVisibilidadSegunEntorno(es3D) {
+    if (this._elementos.btnModoPapel) {
+      this._elementos.btnModoPapel.style.display = es3D ? 'flex' : 'none';
+      if (es3D && this._motor3D) {
+        this.actualizarBotonModoPapel(this._motor3D.esModoPapel());
+      }
     }
   }
 }

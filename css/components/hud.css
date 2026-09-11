@@ -41,6 +41,28 @@
   box-shadow: 0 0 10px rgba(56, 189, 248, 0.2);
 }
 
+/* Botón Especial de Modo Plano: Hoja de Papel Técnico (ℝ² ⊂ ℝ³) */
+.btn-hud-papel {
+  border: 1px solid rgba(245, 158, 11, 0.3);
+  background: rgba(245, 158, 11, 0.08);
+  color: #f59e0b;
+  font-weight: 600;
+  margin-left: 0.25rem;
+}
+
+.btn-hud-papel:hover {
+  background: rgba(245, 158, 11, 0.18);
+  color: #fbbf24;
+  border-color: rgba(245, 158, 11, 0.5);
+}
+
+.btn-hud-papel.activo {
+  background: linear-gradient(135deg, rgba(245, 158, 11, 0.25), rgba(217, 119, 6, 0.25));
+  border-color: #f59e0b;
+  color: #fef08a;
+  box-shadow: 0 0 12px rgba(245, 158, 11, 0.3);
+}
+
 /* Botones de Navegación y Cámara */
 .btn-camara {
   width: 34px;

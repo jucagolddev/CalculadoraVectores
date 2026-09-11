@@ -42,7 +42,25 @@ export class MotorGrafico3D {
     };
 
     this._activo = false;
+    this._modoPapel = false;
     this._iniciarEventos();
+  }
+
+  establecerModoPapel(activo) {
+    this._modoPapel = Boolean(activo);
+    if (this._modoPapel) {
+      this._panX = 0;
+      this._panY = 0;
+    } else {
+      this._yaw = -0.65;
+      this._pitch = 0.48;
+    }
+    this.renderizar();
+    this._notificarCamara();
+  }
+
+  esModoPapel() {
+    return this._modoPapel;
   }
 
   establecerActivo(activo) {
@@ -79,7 +97,7 @@ export class MotorGrafico3D {
       this._arrastrando = true;
       this._ultimoMouseX = e.clientX;
       this._ultimoMouseY = e.clientY;
-      this._canvas.style.cursor = 'grabbing';
+      this._canvas.style.cursor = this._modoPapel ? 'move' : 'grabbing';
     });
 
     window.addEventListener('mousemove', (e) => {
@@ -87,12 +105,17 @@ export class MotorGrafico3D {
       const dx = e.clientX - this._ultimoMouseX;
       const dy = e.clientY - this._ultimoMouseY;
 
-      this._yaw += dx * 0.008;
-      this._pitch += dy * 0.008;
+      if (this._modoPapel) {
+        this._panX += dx;
+        this._panY += dy;
+      } else {
+        this._yaw += dx * 0.008;
+        this._pitch += dy * 0.008;
 
-      // Limitar pitch para evitar inversión de cámara
-      const limitePitch = Math.PI / 2 - 0.05;
-      this._pitch = Math.max(-limitePitch, Math.min(limitePitch, this._pitch));
+        // Limitar pitch para evitar inversión de cámara
+        const limitePitch = Math.PI / 2 - 0.05;
+        this._pitch = Math.max(-limitePitch, Math.min(limitePitch, this._pitch));
+      }
 
       this._ultimoMouseX = e.clientX;
       this._ultimoMouseY = e.clientY;
@@ -129,20 +152,33 @@ export class MotorGrafico3D {
       this._alCambiarCamara({
         yaw: yawGrados,
         pitch: pitchGrados,
-        escala: Math.round(this._escala)
+        escala: Math.round(this._escala),
+        modoPapel: this._modoPapel
       });
     }
   }
 
   /**
    * Proyecta un punto cartesiano 3D (x, y, z) a coordenadas de pantalla 2D.
-   * Convención física: Z es vertical hacia arriba; X e Y definen el plano horizontal.
+   * En Modo Papel: Proyección ortogonal pura sobre el plano XY de la hoja de trabajo.
+   * En Modo Orbital: Proyección axonométrica esférica 3D con Yaw y Pitch.
    * @param {number} x
    * @param {number} y
    * @param {number} z
    * @returns {{ px: number, py: number, profundidad: number }}
    */
   proyectar(x, y, z) {
+    const cx = this._anchoLogico / 2 + this._panX;
+    const cy = this._altoLogico / 2 + this._panY;
+
+    if (this._modoPapel) {
+      return {
+        px: cx + x * this._escala,
+        py: cy - y * this._escala,
+        profundidad: z
+      };
+    }
+
     // 1. Rotación Yaw alrededor del eje vertical Z
     const cosY = Math.cos(this._yaw);
     const sinY = Math.sin(this._yaw);
@@ -156,10 +192,6 @@ export class MotorGrafico3D {
     const x2 = x1;
     const y2 = y1 * cosP - z1 * sinP;
     const z2 = y1 * sinP + z1 * cosP;
-
-    // 3. Proyección a pantalla centrada en el canvas
-    const cx = this._anchoLogico / 2 + this._panX;
-    const cy = this._altoLogico / 2 + this._panY;
 
     return {
       px: cx + x2 * this._escala,
@@ -226,7 +258,38 @@ export class MotorGrafico3D {
     const ctx = this._ctx;
     ctx.clearRect(0, 0, this._anchoLogico, this._altoLogico);
 
-    // Fondo espacial sutil
+    if (this._modoPapel) {
+      // 1. Hoja de Papel Técnico (Fondo y Folio con Márgenes)
+      this._dibujarHojaPapel();
+
+      // 2. Cuadrícula Milimetrada sobre el Papel
+      if (this._capas.cuadricula) {
+        this._dibujarCuadriculaPapel();
+      }
+
+      // 3. Ejes Coordenados sobre el Papel (+X, +Y y Eje Z perpendicular ⊙)
+      if (this._capas.ejes) {
+        this._dibujarEjesPapel();
+      }
+
+      // 4. Paralelogramo Sustentado en el Plano del Papel
+      if (this._capas.construcciones && this._poligonoParalelogramo && this._poligonoParalelogramo.length >= 4) {
+        this._dibujarParalelogramo3D(this._poligonoParalelogramo);
+      }
+
+      // 5. Vectores Proyectados sobre el Papel (con detección de cota normal)
+      if (this._capas.vectores) {
+        this._dibujarVectoresPapel();
+      }
+
+      // 6. Nodos de Puntos Fijos
+      if (this._capas.puntos) {
+        this._dibujarPuntos3D();
+      }
+      return;
+    }
+
+    // MODO 3D ORBITAL ESTÁNDAR
     this._dibujarFondoGradiente();
 
     // 1. Malla de Suelo XY (z = 0)
@@ -258,6 +321,298 @@ export class MotorGrafico3D {
     if (this._capas.puntos) {
       this._dibujarPuntos3D();
     }
+  }
+
+  _dibujarHojaPapel() {
+    const ctx = this._ctx;
+    const cx = this._anchoLogico / 2 + this._panX;
+    const cy = this._altoLogico / 2 + this._panY;
+
+    // Fondo oscuro de la mesa de trabajo
+    ctx.fillStyle = '#020617';
+    ctx.fillRect(0, 0, this._anchoLogico, this._altoLogico);
+
+    // Dimensiones del folio técnico centrado en (cx, cy)
+    const anchoFolio = Math.max(840, this._escala * 26);
+    const altoFolio = Math.max(640, this._escala * 20);
+    const x0 = cx - anchoFolio / 2;
+    const y0 = cy - altoFolio / 2;
+
+    ctx.save();
+    // Sombra proyectada del folio sobre la mesa
+    ctx.shadowColor = 'rgba(0, 0, 0, 0.7)';
+    ctx.shadowBlur = 30;
+    ctx.shadowOffsetY = 12;
+
+    // Cuerpo de la hoja de papel técnico (azul pizarra oscuro de ingeniería)
+    ctx.fillStyle = '#090d1a';
+    ctx.beginPath();
+    ctx.roundRect(x0, y0, anchoFolio, altoFolio, 8);
+    ctx.fill();
+
+    // Borde sutil de la hoja
+    ctx.shadowBlur = 0;
+    ctx.lineWidth = 1;
+    ctx.strokeStyle = 'rgba(56, 189, 248, 0.28)';
+    ctx.stroke();
+
+    // Línea de margen vertical roja típica de cuaderno / examen de física
+    const xMargen = x0 + 44;
+    ctx.strokeStyle = 'rgba(239, 68, 68, 0.35)';
+    ctx.lineWidth = 1.2;
+    ctx.beginPath();
+    ctx.moveTo(xMargen, y0);
+    ctx.lineTo(xMargen, y0 + altoFolio);
+    ctx.stroke();
+
+    // Perforaciones circulares de libreta en el borde izquierdo
+    const separacionHoyo = altoFolio / 4;
+    ctx.fillStyle = '#020617';
+    ctx.strokeStyle = 'rgba(255, 255, 255, 0.12)';
+    for (let i = 1; i <= 3; i++) {
+      ctx.beginPath();
+      ctx.arc(x0 + 20, y0 + separacionHoyo * i, 7, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.stroke();
+    }
+
+    // Cabecera formal del folio
+    ctx.font = 'bold 10px var(--fuente-mono, monospace)';
+    ctx.fillStyle = 'rgba(148, 163, 184, 0.7)';
+    ctx.fillText('HOJA DE TRABAJO VECTORIAL: PLANO CARTESIANO ℝ² (z = 0)', x0 + 56, y0 + 24);
+
+    ctx.fillStyle = 'rgba(56, 189, 248, 0.8)';
+    ctx.fillText(`ESCALA: 1 u = ${Math.round(this._escala)} px | EJE Z ⊙ NORMAL`, x0 + anchoFolio - 280, y0 + 24);
+
+    // Cajetín técnico en la esquina inferior derecha
+    const anchoCajetin = 260;
+    const altoCajetin = 42;
+    const xCajetin = x0 + anchoFolio - anchoCajetin - 16;
+    const yCajetin = y0 + altoFolio - altoCajetin - 16;
+    ctx.fillStyle = 'rgba(15, 23, 42, 0.85)';
+    ctx.strokeStyle = 'rgba(56, 189, 248, 0.2)';
+    ctx.beginPath();
+    ctx.roundRect(xCajetin, yCajetin, anchoCajetin, altoCajetin, 4);
+    ctx.fill();
+    ctx.stroke();
+
+    ctx.font = '9px var(--fuente-mono, monospace)';
+    ctx.fillStyle = '#94a3b8';
+    ctx.fillText('PROYECCIÓN PLANA ORTOGONAL', xCajetin + 10, yCajetin + 16);
+    ctx.fillStyle = '#38bdf8';
+    ctx.fillText('MODO PAPEL TÉCNICO ℝ² ⊂ ℝ³', xCajetin + 10, yCajetin + 32);
+
+    ctx.restore();
+  }
+
+  _dibujarCuadriculaPapel() {
+    const ctx = this._ctx;
+    const cx = this._anchoLogico / 2 + this._panX;
+    const cy = this._altoLogico / 2 + this._panY;
+
+    const anchoFolio = Math.max(840, this._escala * 26);
+    const altoFolio = Math.max(640, this._escala * 20);
+    const x0 = cx - anchoFolio / 2;
+    const y0 = cy - altoFolio / 2;
+
+    ctx.save();
+    ctx.beginPath();
+    ctx.rect(x0, y0, anchoFolio, altoFolio);
+    ctx.clip();
+
+    const pasoMayor = this._escala;
+    const pasoMenor = this._escala / 5;
+
+    if (pasoMenor >= 4) {
+      ctx.strokeStyle = 'rgba(56, 189, 248, 0.04)';
+      ctx.lineWidth = 1;
+      ctx.beginPath();
+      for (let x = cx % pasoMenor; x <= x0 + anchoFolio; x += pasoMenor) {
+        if (x >= x0) {
+          ctx.moveTo(x, y0);
+          ctx.lineTo(x, y0 + altoFolio);
+        }
+      }
+      for (let y = cy % pasoMenor; y <= y0 + altoFolio; y += pasoMenor) {
+        if (y >= y0) {
+          ctx.moveTo(x0, y);
+          ctx.lineTo(x0 + anchoFolio, y);
+        }
+      }
+      ctx.stroke();
+    }
+
+    ctx.strokeStyle = 'rgba(56, 189, 248, 0.12)';
+    ctx.lineWidth = 1;
+    ctx.beginPath();
+    for (let x = cx % pasoMayor; x <= x0 + anchoFolio; x += pasoMayor) {
+      if (x >= x0) {
+        ctx.moveTo(x, y0);
+        ctx.lineTo(x, y0 + altoFolio);
+      }
+    }
+    for (let y = cy % pasoMayor; y <= y0 + altoFolio; y += pasoMayor) {
+      if (y >= y0) {
+        ctx.moveTo(x0, y);
+        ctx.lineTo(x0 + anchoFolio, y);
+      }
+    }
+    ctx.stroke();
+    ctx.restore();
+  }
+
+  _dibujarEjesPapel() {
+    const ctx = this._ctx;
+    const cx = this._anchoLogico / 2 + this._panX;
+    const cy = this._altoLogico / 2 + this._panY;
+
+    const anchoFolio = Math.max(840, this._escala * 26);
+    const altoFolio = Math.max(640, this._escala * 20);
+    const x0 = cx - anchoFolio / 2;
+    const y0 = cy - altoFolio / 2;
+
+    ctx.save();
+    ctx.beginPath();
+    ctx.rect(x0, y0, anchoFolio, altoFolio);
+    ctx.clip();
+
+    // Eje X Positivo (Rojo)
+    ctx.lineWidth = 2.2;
+    ctx.strokeStyle = '#ef4444';
+    ctx.beginPath();
+    ctx.moveTo(cx, cy);
+    ctx.lineTo(x0 + anchoFolio - 25, cy);
+    ctx.stroke();
+    this._dibujarPuntaFlecha2D(cx, cy, x0 + anchoFolio - 25, cy, '#ef4444', 9);
+
+    // Eje X Negativo (Discontinuo)
+    ctx.setLineDash([3, 4]);
+    ctx.strokeStyle = 'rgba(239, 68, 68, 0.35)';
+    ctx.beginPath();
+    ctx.moveTo(cx, cy);
+    ctx.lineTo(x0 + 44, cy);
+    ctx.stroke();
+    ctx.setLineDash([]);
+
+    // Eje Y Positivo (Verde)
+    ctx.strokeStyle = '#10b981';
+    ctx.beginPath();
+    ctx.moveTo(cx, cy);
+    ctx.lineTo(cx, y0 + 35);
+    ctx.stroke();
+    this._dibujarPuntaFlecha2D(cx, cy, cx, y0 + 35, '#10b981', 9);
+
+    // Eje Y Negativo (Discontinuo)
+    ctx.setLineDash([3, 4]);
+    ctx.strokeStyle = 'rgba(16, 185, 129, 0.35)';
+    ctx.beginPath();
+    ctx.moveTo(cx, cy);
+    ctx.lineTo(cx, y0 + altoFolio - 25);
+    ctx.stroke();
+    ctx.setLineDash([]);
+
+    // Etiquetas de los ejes
+    if (this._capas.etiquetas) {
+      ctx.font = 'bold 11px Inter, sans-serif';
+      ctx.fillStyle = '#ef4444';
+      ctx.fillText('Eje X (+i)', x0 + anchoFolio - 70, cy - 8);
+
+      ctx.fillStyle = '#10b981';
+      ctx.fillText('Eje Y (+j)', cx + 10, y0 + 45);
+
+      // Eje Z en el origen (Símbolo de física perpendicular al papel)
+      ctx.fillStyle = 'rgba(139, 92, 246, 0.2)';
+      ctx.strokeStyle = '#8b5cf6';
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      ctx.arc(cx, cy, 11, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.stroke();
+
+      // Punto central ⊙
+      ctx.fillStyle = '#8b5cf6';
+      ctx.beginPath();
+      ctx.arc(cx, cy, 2.5, 0, Math.PI * 2);
+      ctx.fill();
+
+      ctx.font = 'bold 10px Inter, sans-serif';
+      ctx.fillText('Eje Z ⊙ (+k)', cx + 14, cy + 18);
+    }
+
+    ctx.restore();
+  }
+
+  _dibujarVectoresPapel() {
+    const ctx = this._ctx;
+
+    this._vectores.forEach(v => {
+      const orig = this.proyectar(v.origen.x, v.origen.y, 0);
+      const ext = this.proyectar(v.extremo.x, v.extremo.y, 0);
+      const esProductoCruz = v.etiqueta.includes('×');
+      const dist2D = Math.hypot(ext.px - orig.px, ext.py - orig.py);
+
+      ctx.save();
+      ctx.lineWidth = esProductoCruz ? 3.5 : 2.6;
+      ctx.strokeStyle = v.color;
+      ctx.fillStyle = v.color;
+      ctx.shadowColor = v.color;
+      ctx.shadowBlur = esProductoCruz ? 12 : 6;
+
+      if (dist2D < 2) {
+        // Vector puramente perpendicular al papel (como u × v en el plano XY)
+        ctx.shadowBlur = 0;
+        const radio = 14;
+        ctx.lineWidth = 2.5;
+        ctx.beginPath();
+        ctx.arc(orig.px, orig.py, radio, 0, Math.PI * 2);
+        ctx.stroke();
+
+        ctx.fillStyle = v.color;
+        if (v.z >= 0) {
+          // ⊙ Saliendo del papel
+          ctx.beginPath();
+          ctx.arc(orig.px, orig.py, 3.5, 0, Math.PI * 2);
+          ctx.fill();
+        } else {
+          // ⊗ Entrando al papel
+          const d = 8;
+          ctx.beginPath();
+          ctx.moveTo(orig.px - d, orig.py - d);
+          ctx.lineTo(orig.px + d, orig.py + d);
+          ctx.moveTo(orig.px + d, orig.py - d);
+          ctx.lineTo(orig.px - d, orig.py + d);
+          ctx.stroke();
+        }
+
+        if (this._capas.etiquetas) {
+          const sentido = v.z >= 0 ? '⊙ Hacia afuera' : '⊗ Hacia adentro';
+          this._dibujarInsigniaEtiqueta(
+            `${v.etiqueta}: z=${v.z} (${sentido})`,
+            orig.px + 18, orig.py - 14, v.color
+          );
+        }
+      } else {
+        // Vector con proyección sobre el papel
+        ctx.beginPath();
+        ctx.moveTo(orig.px, orig.py);
+        ctx.lineTo(ext.px, ext.py);
+        ctx.stroke();
+
+        ctx.shadowBlur = 0;
+        this._dibujarPuntaFlecha2D(orig.px, orig.py, ext.px, ext.py, v.color, esProductoCruz ? 12 : 10);
+
+        if (this._capas.etiquetas) {
+          const midX = (orig.px + ext.px) / 2;
+          const midY = (orig.py + ext.py) / 2;
+          const infoCota = v.z !== 0 ? ` (z=${v.z > 0 ? '+' : ''}${v.z})` : '';
+          this._dibujarInsigniaEtiqueta(
+            `${v.etiqueta}: (${v.x}, ${v.y})${infoCota}`,
+            midX + 10, midY - 10, v.color
+          );
+        }
+      }
+      ctx.restore();
+    });
   }
 
   _dibujarFondoGradiente() {
