@@ -216,7 +216,7 @@ class Bootstrap {
         alCambiarEntorno: cambiarEntorno,
         alAbrirFormulas: () => ctrls.ctrlFormulas.abrir(),
         alAbrirSolucion: () => ctrls.ctrlSolucion.abrir(null),
-        alAbrirTeoria: () => ctrls.ctrlTeoria.abrir(),
+        alAbrirTeoria: () => ctrls.ctrlTeoria.abrir(null, estadoApp.obtener().espacioActivo),
         alPonerACero: ponerACero,
         alNuevoReto: generarNuevoReto,
         alGuardarEjercicio: () => ctrls.ctrlAlmacenamiento.guardarEjercicioActual(),

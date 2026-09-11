@@ -323,10 +323,23 @@
               <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" style="color:var(--color-violeta);">
                 <path d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/>
               </svg>
-              Guía Teórica y Lógica Matemática en ℝ²
+              Guía Teórica y Lógica Matemática (ℝ² y ℝ³)
             </h2>
             <p style="font-size:0.78rem; color:var(--color-texto-tenue); margin:0.15rem 0 0 0;">Aprende, repasa y prueba conceptos directamente en el simulador interactivo.</p>
           </div>
+
+          <!-- Selector de Dimensión Teórica con Botones Dedicados R2 vs R3 -->
+          <div class="selector-dimension-teoria" role="tablist" aria-label="Dimensión de la teoría">
+            <button id="btn-teoria-2d" class="btn-dimension-teoria activo" data-dimension="2d" type="button" title="Fundamentos y deducciones vectoriales en el plano cartesiano ℝ²">
+              <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M3 3v18h18"/><path d="M7 15l5-5 4 4 5-5"/></svg>
+              Plano ℝ²
+            </button>
+            <button id="btn-teoria-3d" class="btn-dimension-teoria" data-dimension="3d" type="button" title="Álgebra espacial, cosenos directores, producto vectorial y mixto en el espacio ℝ³">
+              <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>
+              Espacio ℝ³
+            </button>
+          </div>
+
           <div class="buscador-teoria-caja">
             <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
               <circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/>
@@ -395,6 +408,6 @@
   </div>
 
   <!-- Scripts ES6 Modulares con Arquitectura Limpia -->
-  <script type="module" src="js/main.js?v=clean5"></script>
+  <script type="module" src="js/main.js?v=clean7"></script>
 </body>
 </html>

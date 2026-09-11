@@ -11,6 +11,7 @@ export class RepositorioTeoria {
       {
         id: 'fundamentos',
         numero: 1,
+        dimension: '2d',
         categoria: 'Introducción',
         titulo: 'Fundamentos: Escalares vs. Vectores en ℝ²',
         resumen: 'Diferencia entre magnitudes puramente numéricas y entidades orientadas en el espacio.',
@@ -33,6 +34,7 @@ export class RepositorioTeoria {
           resultado: 'Vector v = (4, 3) con módulo ||v|| = 5',
           simulacion: {
             modo: 'dos-puntos',
+            espacio: '2d',
             datos: {
               puntos: [
                 { id: 'A', x: 0, y: 0 },
@@ -45,6 +47,7 @@ export class RepositorioTeoria {
       {
         id: 'componentes',
         numero: 2,
+        dimension: '2d',
         categoria: 'Geometría Cartesiana',
         titulo: 'Cálculo de Componentes: Extremo menos Origen',
         resumen: '¿Por qué restamos las coordenadas del extremo menos las del punto inicial?',
@@ -65,6 +68,7 @@ Restamos B - A porque estamos midiendo "cuánto tuvimos que movernos desde A par
           resultado: 'Vector AB = (5, 4)',
           simulacion: {
             modo: 'dos-puntos',
+            espacio: '2d',
             datos: {
               puntos: [
                 { id: 'A', x: 2, y: 1 },
@@ -77,6 +81,7 @@ Restamos B - A porque estamos midiendo "cuánto tuvimos que movernos desde A par
       {
         id: 'modulo-pitagoras',
         numero: 3,
+        dimension: '2d',
         categoria: 'Trigonometría y Norma',
         titulo: 'Módulo y Teorema de Pitágoras en ℝ²',
         resumen: 'Deducción de la longitud de un vector a través del triángulo rectángulo de proyecciones.',
@@ -102,6 +107,7 @@ Por el Teorema de Pitágoras: Hipotenusa² = Cateto₁² + Cateto₂²
           resultado: '||v|| = 10 unidades',
           simulacion: {
             modo: 'dos-puntos',
+            espacio: '2d',
             datos: {
               puntos: [
                 { id: 'A', x: 1, y: 1 },
@@ -114,6 +120,7 @@ Por el Teorema de Pitágoras: Hipotenusa² = Cateto₁² + Cateto₂²
       {
         id: 'unitario',
         numero: 4,
+        dimension: '2d',
         categoria: 'Normalización',
         titulo: 'Vector Unitario Normalizado: Dirección Pura',
         resumen: '¿Por qué normalizamos vectores y cómo se aísla la orientación de la escala?',
@@ -136,6 +143,7 @@ Al normalizar, eliminamos la magnitud pero preservamos intactas la dirección y 
           resultado: 'u = (0.6, 0.8) con ||u|| = 1',
           simulacion: {
             modo: 'dos-puntos',
+            espacio: '2d',
             datos: {
               puntos: [
                 { id: 'A', x: 0, y: 0 },
@@ -148,6 +156,7 @@ Al normalizar, eliminamos la magnitud pero preservamos intactas la dirección y 
       {
         id: 'algebra-paralelogramo',
         numero: 5,
+        dimension: '2d',
         categoria: 'Álgebra Vectorial',
         titulo: 'Suma Vectorial: Regla del Paralelogramo y Punta-Cola',
         resumen: 'Construcciones geométricas para la adición y resta de vectores en el plano.',
@@ -175,6 +184,7 @@ Equivale a sumar a u el vector opuesto de v: u - v = u + (-v). Representa el vec
           resultado: 'u + v = (2, 5)',
           simulacion: {
             modo: 'operaciones',
+            espacio: '2d',
             datos: {
               ux: 4, uy: 2, vx: -2, vy: 3, k: 2
             },
@@ -185,6 +195,7 @@ Equivale a sumar a u el vector opuesto de v: u - v = u + (-v). Representa el vec
       {
         id: 'producto-escalar',
         numero: 6,
+        dimension: '2d',
         categoria: 'Álgebra y Proyecciones',
         titulo: 'Producto Escalar y Criterio de Ortogonalidad',
         resumen: 'Multiplicación escalar, proyección geométrica y determinación del ángulo entre vectores.',
@@ -211,6 +222,7 @@ Mide cuánto apunta un vector en la misma dirección que el otro. Representa la 
           resultado: 'u y v son ortogonales (perpendiculares, θ = 90°)',
           simulacion: {
             modo: 'operaciones',
+            espacio: '2d',
             datos: {
               ux: 3, uy: 2, vx: -2, vy: 3, k: 1
             },
@@ -221,6 +233,7 @@ Mide cuánto apunta un vector en la misma dirección que el otro. Representa la 
       {
         id: 'equipolencia',
         numero: 7,
+        dimension: '2d',
         categoria: 'Relaciones de Equivalencia',
         titulo: 'Equipolencia de Vectores y Vectores Libres',
         resumen: '¿Cuándo dos vectores en diferentes posiciones espaciales representan el mismo vector libre?',
@@ -247,6 +260,7 @@ Un **vector libre** es el conjunto de todos los vectores fijos equipolentes entr
           resultado: 'SÍ: Son vectores equipolentes',
           simulacion: {
             modo: 'equipolencia',
+            espacio: '2d',
             datos: {
               Ax: 1, Ay: 1, Bx: 4, By: 5, Cx: -2, Cy: -1, Dx: 1, Dy: 3
             }
@@ -256,6 +270,7 @@ Un **vector libre** es el conjunto de todos los vectores fijos equipolentes entr
       {
         id: 'cadenas-resultante',
         numero: 8,
+        dimension: '2d',
         categoria: 'Cinemática y Trayectorias',
         titulo: 'Cadenas Vectoriales y Vector Resultante Neto',
         resumen: 'Principio de superposición y desplazamiento total en rutas multipunto.',
@@ -285,6 +300,7 @@ El vector desplazamiento neto depende **exclusivamente del punto inicial y del p
           resultado: 'R = (8, 1) con ||R|| ≈ 8.06',
           simulacion: {
             modo: 'dos-puntos',
+            espacio: '2d',
             datos: {
               puntos: [
                 { id: 'A', x: 1, y: 2 },
@@ -297,10 +313,11 @@ El vector desplazamiento neto depende **exclusivamente del punto inicial y del p
       },
       {
         id: 'teoria-3d-cartesiana',
-        numero: '9',
+        numero: 9,
+        dimension: '3d',
+        categoria: 'Álgebra Espacial 3D',
         titulo: 'Expresión Cartesiana y Cosenos Directores en ℝ³',
-        categoria: 'Álgebra Vectorial 3D',
-        descripcion: 'Representación tridimensional en la base canónica i, j, k y orientación angular espacial.',
+        resumen: 'Representación tridimensional en la base canónica i, j, k y orientación angular espacial.',
         explicacion: `En un sistema cartesiano tridimensional ℝ³, un vector queda especificado mediante sus proyecciones sobre los tres ejes ortogonales X, Y y Z:
 
 **u = ux·i + uy·j + uz·k = (ux, uy, uz)**
@@ -335,6 +352,7 @@ Esto demuestra que las componentes del **vector unitario director** û son preci
           resultado: '||u|| = 3,  cos=(0.333, 0.667, 0.667),  û=(1/3, 2/3, 2/3)',
           simulacion: {
             entorno: 'espacio-3d',
+            espacio: '3d',
             modo: 'puntos-3d',
             datos: { ax: 0, ay: 0, az: 0, bx: 1, by: 2, bz: 2 }
           }
@@ -342,10 +360,11 @@ Esto demuestra que las componentes del **vector unitario director** û son preci
       },
       {
         id: 'teoria-3d-producto-vectorial',
-        numero: '10',
+        numero: 10,
+        dimension: '3d',
+        categoria: 'Álgebra Espacial 3D',
         titulo: 'Producto Vectorial (u × v) y Área del Paralelogramo en ℝ³',
-        categoria: 'Álgebra Vectorial 3D',
-        descripcion: 'Definición mediante determinante de Laplace, regla del tornillo y significado geométrico del módulo.',
+        resumen: 'Definición mediante determinante de Laplace, regla del tornillo y significado geométrico del módulo.',
         explicacion: `A diferencia del producto escalar (que produce un número real), el **producto vectorial** o producto cruz entre dos vectores de ℝ³ genera **un nuevo vector** w = u × v con propiedades extraordinarias:
 
 **1. Dirección:** Es estrictamente perpendicular (ortogonal) al plano que contienen a u y v:
@@ -381,8 +400,93 @@ Si el producto vectorial es el vector nulo (0, 0, 0), los vectores u y v son col
           resultado: 'u × v = (-5, -5, 10),  Área = 12.25 u²',
           simulacion: {
             entorno: 'espacio-3d',
+            espacio: '3d',
             modo: 'operaciones-3d',
             datos: { ux: 3, uy: 1, uz: 2, vx: -1, vy: 3, vz: 1, k: 1 }
+          }
+        }
+      },
+      {
+        id: 'teoria-3d-producto-mixto',
+        numero: 11,
+        dimension: '3d',
+        categoria: 'Geometría Espacial 3D',
+        titulo: 'Producto Mixto [u, v, w] y Volumen del Paralelepípedo',
+        resumen: 'Operación combinada escalar-vectorial para medir volúmenes espaciales y test de coplanaridad.',
+        explicacion: `El **producto mixto** (o triple producto escalar) de tres vectores u, v, w ∈ ℝ³ combina el producto escalar con el producto vectorial:
+**[u, v, w] = u · (v × w)**
+
+**Cálculo Matricial Compacto:**
+Se calcula directamente mediante el determinante de la matriz formada por las componentes cartesianas de los tres vectores en filas:
+[u, v, w] = | ux  uy  uz |
+            | vx  vy  vz | = ux·(vy·wz - vz·wy) - uy·(vx·wz - vz·wx) + uz·(vx·wy - vy·wx)
+            | wx  wy  wz |
+
+**Significado Geométrico Tridimensional:**
+1. **Volumen del Paralelepípedo:** El valor absoluto del producto mixto es idéntico al volumen del paralelepípedo cuyas tres aristas concurrentes son u, v y w:
+   **Volumen = |u · (v × w)|**
+2. **Volumen del Tetraedro:** El tetraedro formado por dichos vectores tiene un volumen igual a una sexta parte:
+   **V_tetraedro = |u · (v × w)| / 6**
+3. **Criterio Fundamental de Coplanaridad:**
+   Tres vectores u, v, w son **coplanares** (están en el mismo plano y son linealmente dependientes) si y sólo si su producto mixto es exactamente cero:
+   **u · (v × w) = 0**`,
+        formula: 'Volumen = |u · (v × w)| = |det([u; v; w])|',
+        formulaNota: 'Si el determinante es estrictamente positivo, la terna {u, v, w} es dextrógira (mano derecha); si es negativo, es levógira.',
+        notaPedagogica: 'En ingeniería estructural y mecánica de fluidos computacional (CFD), el producto mixto se utiliza continuamente para calcular los volúmenes de las mallas tetraédricas de elementos finitos.',
+        ejemplo: {
+          enunciado: 'Calcular el producto mixto y volumen del paralelepípedo con aristas u=(2, 1, 0), v=(0, 3, 1) y w=(1, 2, 3).',
+          pasos: [
+            { paso: 'Producto vectorial v × w', calculo: 'v × w = (3·3 - 1·2, -(0·3 - 1·1), 0·2 - 3·1) = (7, 1, -3)' },
+            { paso: 'Producto escalar u · (v × w)', calculo: 'u · (v × w) = (2)(7) + (1)(1) + (0)(-3) = 14 + 1 + 0 = 15' },
+            { paso: 'Determinante directo', calculo: '|det| = |15| = 15 u³' },
+            { paso: 'Volumen tetraedro', calculo: 'V_tetraedro = 15 / 6 = 2.5 u³' }
+          ],
+          resultado: 'Producto mixto [u, v, w] = 15,  Volumen Paralelepípedo = 15 u³',
+          simulacion: {
+            entorno: 'espacio-3d',
+            espacio: '3d',
+            modo: 'operaciones-3d',
+            datos: { ux: 2, uy: 1, uz: 0, vx: 0, vy: 3, vz: 1, k: 1 }
+          }
+        }
+      },
+      {
+        id: 'teoria-3d-proyeccion-papel',
+        numero: 12,
+        dimension: '3d',
+        categoria: 'Sistemas de Representación',
+        titulo: 'Proyección Ortogonal Plana y Modo Papel Técnico (ℝ² ⊂ ℝ³)',
+        resumen: 'Paso de la visualización tridimensional al dibujo diédrico y cota z de elevación.',
+        explicacion: `En ingeniería, arquitectura y física experimental, las entidades tridimensionales deben representarse e inspeccionarse con frecuencia sobre planos bidimensionales de dibujo técnico o modo papel milimetrado.
+
+Cualquier vector tridimensional **v = (vx, vy, vz)** puede descomponerse en:
+1. **Componente proyectada en el plano base XY (z = 0):**
+   **Proy_XY(v) = (vx, vy, 0)**
+   Esta sombra proyectada obedece rigurosamente todas las reglas algebraicas y geométricas del plano ℝ².
+2. **Cota de elevación vertical (Eje Z):**
+   **Cota = vz**
+   Mide la altura perpendicular estricta a la que se suspende el vector sobre la cuadrícula plana.
+
+**El Modo Papel Técnico de Ingeniería:**
+En VectorLab, el **Modo Papel** proyecta las aristas del vector directamente sobre la retícula plana de trabajo, dibujando líneas de trazo discontinuo y cotas de altura para permitir al usuario verificar cómo las leyes de ℝ² conviven como un subespacio de ℝ³ (ℝ² ⊂ ℝ³).`,
+        formula: 'v = (vx, vy, vz)  ==>  Proy_XY(v) = (vx, vy, 0),  Cota = vz',
+        formulaNota: 'La distancia euclídea del vector se descompone en longitud planar √(vx² + vy²) y cota vz: ||v|| = √(Longitud_Planar² + vz²).',
+        notaPedagogica: 'Es la base del sistema diédrico de Monge: una vista en planta superior (proyección horizontal) complementada con la cota de alzado.',
+        ejemplo: {
+          enunciado: 'Analizar la proyección sobre el plano XY y la cota vertical del vector del punto A(1, 1, 0) al punto B(4, 5, 3).',
+          pasos: [
+            { paso: 'Vector espacial AB', calculo: 'AB = (4 - 1, 5 - 1, 3 - 0) = (3, 4, 3)' },
+            { paso: 'Sombra proyectada en el plano XY', calculo: 'Proy_XY(AB) = (3, 4, 0)' },
+            { paso: 'Longitud en el plano (ℝ²)', calculo: 'L_plano = √(3² + 4²) = √25 = 5 unidades' },
+            { paso: 'Cota de elevación z', calculo: 'Δz = 3 unidades' },
+            { paso: 'Módulo espacial total', calculo: '||AB|| = √(5² + 3²) = √(25 + 9) = √34 ≈ 5.83 unidades' }
+          ],
+          resultado: 'Proyección XY = (3, 4, 0) con longitud 5,  Cota z = 3,  Módulo ℝ³ = 5.83',
+          simulacion: {
+            entorno: 'espacio-3d',
+            espacio: '3d',
+            modo: 'puntos-3d',
+            datos: { ax: 1, ay: 1, az: 0, bx: 4, by: 5, bz: 3 }
           }
         }
       }
@@ -390,16 +494,28 @@ Si el producto vectorial es el vector nulo (0, 0, 0), los vectores u y v son col
   }
 
   /**
-   * Busca temas que coincidan con un término de búsqueda.
-   * @param {string} termino
+   * Retorna los temas filtrados por dimensión ('2d' o '3d').
+   * @param {'2d'|'3d'} dimension
    * @returns {Array<Object>}
    */
-  static buscar(termino) {
+  static obtenerTemasPorDimension(dimension) {
+    if (!dimension) return this.obtenerTemas();
+    return this.obtenerTemas().filter(t => t.dimension === dimension);
+  }
+
+  /**
+   * Busca temas que coincidan con un término de búsqueda, opcionalmente acotado por dimensión.
+   * @param {string} termino
+   * @param {'2d'|'3d'|null} [dimension=null]
+   * @returns {Array<Object>}
+   */
+  static buscar(termino, dimension = null) {
+    const listaBase = dimension ? this.obtenerTemasPorDimension(dimension) : this.obtenerTemas();
     if (!termino || typeof termino !== 'string' || !termino.trim()) {
-      return this.obtenerTemas();
+      return listaBase;
     }
     const clean = termino.toLowerCase().trim();
-    return this.obtenerTemas().filter(t =>
+    return listaBase.filter(t =>
       t.titulo.toLowerCase().includes(clean) ||
       t.resumen.toLowerCase().includes(clean) ||
       t.categoria.toLowerCase().includes(clean) ||

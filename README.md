@@ -99,21 +99,27 @@ Diseñada con un enfoque de **cero dependencias externas**, explota las capacida
 - Carga instantánea que conmuta el simulador al modo ejercicio con los datos restaurados.
 - Eliminación individual o vaciado completo de la base de datos local del navegador.
 
-### 8. Guía Teórica y Lógica Matemática Interactiva en ℝ²
-- Módulo pedagógico integrado con 10 bloques temáticos rigurosos:
-  1. **Escalares vs. Vectores:** Magnitudes con dirección y sentido vs. valores unidimensionales.
-  2. **Componentes Cartesianas:** Deducción del vector $\vec{AB} = B - A$ (extremo menos origen).
-  3. **Módulo y Pitágoras:** Demostración analítica de la norma euclídea $\|\vec{v}\| = \sqrt{v_x^2 + v_y^2}$.
-  4. **Vector Unitario y Normalización:** Extracción de la dirección pura $\hat{u} = \vec{v} / \|\vec{v}\|$.
-  5. **Álgebra Concurrente:** Reglas del paralelogramo y punta-cola para suma y resta geométrica.
-  6. **Producto Escalar y Ortogonalidad:** Proyección ortogonal y criterio de perpendicularidad ($\vec{u} \cdot \vec{v} = 0$).
-  7. **Equipolencia y Vectores Libres:** Relación de equivalencia y traslación rígida en el plano.
-  8. **Cadenas Vectoriales y Desplazamiento:** Suma secuencial y equivalencia cinemática del desplazamiento directo.
-  9. **Expresión Cartesiana y Cosenos Directores en ℝ³:** Base canónica $\{\vec{i}, \vec{j}, \vec{k}\}$, ángulos directores $\alpha, \beta, \gamma$ e identidad pitagórica $\cos^2\alpha + \cos^2\beta + \cos^2\gamma = 1$.
-  10. **Producto Vectorial (u × v) y Área del Paralelogramo en ℝ³:** Determinante de Laplace, vector ortogonal resultante, regla del sacacorchos y área euclídea $\|\vec{u} \times \vec{v}\|$.
-- **Buscador conceptual en tiempo real:** Filtrado instantáneo por términos clave.
-- **Acciones interactivas en un clic:**
-  - `🚀 Probar en el Simulador`: Inyecta las coordenadas del tema teórico directamente en el canvas con trazado geométrico y centrado de vista.
+### 8. Guía Teórica y Lógica Matemática Interactiva (ℝ² y ℝ³)
+- **Selector de Dimensión con Botones Dedicados:**
+  - `[📐 Plano ℝ²]`: Filtra y expone los fundamentos, deducciones y álgebra vectorial en el plano bidimensional.
+  - `[🧊 Espacio ℝ³]`: Filtra y expone el álgebra espacial tridimensional, cosenos directores, producto vectorial, producto mixto y sistemas de proyección técnica.
+- **Compendio Exhaustivo de 12 Módulos Temáticos de Dominio:**
+  1. **Escalares vs. Vectores (ℝ²):** Magnitudes con dirección y sentido vs. valores unidimensionales.
+  2. **Componentes Cartesianas (ℝ²):** Deducción del vector $\vec{AB} = B - A$ (extremo menos origen).
+  3. **Módulo y Pitágoras (ℝ²):** Demostración analítica de la norma euclídea $\|\vec{v}\| = \sqrt{v_x^2 + v_y^2}$.
+  4. **Vector Unitario y Normalización (ℝ²):** Extracción de la dirección pura $\hat{u} = \vec{v} / \|\vec{v}\|$.
+  5. **Álgebra Concurrente (ℝ²):** Reglas del paralelogramo y punta-cola para suma y resta geométrica.
+  6. **Producto Escalar y Ortogonalidad (ℝ²):** Proyección ortogonal y criterio de perpendicularidad ($\vec{u} \cdot \vec{v} = 0$).
+  7. **Equipolencia y Vectores Libres (ℝ²):** Relación de equivalencia y traslación rígida en el plano.
+  8. **Cadenas Vectoriales y Desplazamiento (ℝ²):** Suma secuencial y equivalencia cinemática del desplazamiento directo.
+  9. **Expresión Cartesiana y Cosenos Directores (ℝ³):** Base canónica $\{\vec{i}, \vec{j}, \vec{k}\}$, ángulos directores $\alpha, \beta, \gamma$ e identidad pitagórica $\cos^2\alpha + \cos^2\beta + \cos^2\gamma = 1$.
+  10. **Producto Vectorial (u × v) y Área del Paralelogramo (ℝ³):** Determinante de Laplace, vector ortogonal resultante, regla de la mano derecha y área euclídea $\|\vec{u} \times \vec{v}\|$.
+  11. **Producto Mixto [u, v, w] y Volumen del Paralelepípedo (ℝ³):** Operación combinada $\vec{u} \cdot (\vec{v} \times \vec{w})$, cálculo mediante determinante $3 \times 3$, volumen del prisma y condición de coplanaridad.
+  12. **Proyección Ortogonal Plana y Modo Papel Técnico (ℝ² ⊂ ℝ³):** Reducción dimensional con $z=0$, trazas proyectantes, cotas de altura y visualización diédrica de ingeniería.
+- **Buscador conceptual en tiempo real:** Filtrado instantáneo por términos clave dentro de la dimensión activa o transversalmente.
+- **Acciones interactivas con sincronización dimensional automática:**
+  - `🚀 Probar en el Simulador`: Inyecta las coordenadas del tema teórico directamente en el simulador (Plano ℝ² o Espacio ℝ³) con trazado geométrico, ajuste de cámara y resumen analítico.
+  - `🎯 Practicar este Reto`: Conmuta automáticamente al modo ejercicios con respuestas ocultas para poner a prueba los conceptos estudiados.
 
 ### 9. Botones de Información Contextual ("ℹ") y Popovers In Situ
 - Indicadores interactivos colocados estratégicamente al lado de:

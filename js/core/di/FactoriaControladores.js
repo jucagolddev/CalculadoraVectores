@@ -116,16 +116,21 @@ export class FactoriaControladores {
     // 6. Controlador de la Sección Teórica Interactiva
     const ctrlTeoria = new ControladorTeoria(
       domElements.modalTeoria,
-      ({ modo, datos, construccion, entorno }) => {
-        const es3D = entorno === Configuracion.ENTORNOS_APP.ESPACIO_3D;
+      ({ modo, datos, construccion, entorno, espacio }) => {
+        const es3D = espacio === '3d' || entorno === Configuracion.ENTORNOS_APP.ESPACIO_3D || modo === Configuracion.MODOS_APP.OPERACIONES_3D || modo === Configuracion.MODOS_APP.PUNTOS_3D;
         plano.establecerActivo(!es3D);
         if (motor3D) motor3D.establecerActivo(es3D);
 
+        const nuevoEspacio = es3D ? Configuracion.ESPACIOS_APP.ESPACIO_3D : Configuracion.ESPACIOS_APP.PLANO_2D;
+        const nuevoFlujo = entorno === 'ejercicio' ? Configuracion.FLUJOS_APP.EJERCICIOS : Configuracion.FLUJOS_APP.CALCULADORA;
+
         estadoApp.actualizar({
+          espacioActivo: nuevoEspacio,
+          flujoActivo: nuevoFlujo,
           entornoActivo: entorno,
           modoActivo: modo,
           dimensionActiva: es3D ? '3d' : '2d',
-          respuestasVisibles: entorno === 'calculadora' || entorno === 'espacio-3d',
+          respuestasVisibles: entorno !== 'ejercicio',
           construccionGeometrica: construccion || 'paralelogramo'
         });
 
@@ -143,8 +148,12 @@ export class FactoriaControladores {
           plano.autoAjustarVista();
         } else if (modo === Configuracion.MODOS_APP.OPERACIONES_3D) {
           ctrlOperaciones3D.cargarEjercicio(datos);
+          ctrlSolucion.renderizarFormularioComprobacion(modo);
+          if (motor3D) motor3D.autoAjustar();
         } else if (modo === Configuracion.MODOS_APP.PUNTOS_3D) {
           ctrlPuntos3D.cargarEjercicio(datos);
+          ctrlSolucion.renderizarFormularioComprobacion(modo);
+          if (motor3D) motor3D.autoAjustar();
         }
       }
     );
