@@ -64,13 +64,16 @@ Diseñada con un enfoque de **cero dependencias externas**, explota las capacida
   2. **Misma Dirección:** Pendientes idénticas o paralelismo estricto.
   3. **Mismo Sentido:** Coincidencia en el vector unitario director $\hat{u}_{AB} = \hat{u}_{CD}$.
 
-### 4. Modo Práctica / Autoevaluación a Ciegas
-- Permite al usuario entrenar resolviendo ejercicios sin ver los resultados directos.
-- Formulario de comprobación para introducir:
-  - Coordenadas calculadas $(v_x, v_y)$.
-  - Módulo / longitud $\|\vec{v}\|$.
-  - Ángulo director $\theta$ (°).
-- Retroalimentación inmediata con badges de estado (Correcto / Incorrecto), indicación del error absoluto y opción de desvelar el solucionario.
+### 4. Modo Práctica y Retos con Autoevaluación a Ciegas (2D y 3D)
+- Arquitectura de navegación jerárquica:
+  - **Selector de Flujo:** Alternancia directa entre **Modo Calculadora** (tiempo real, valores visibles) y **Modo Ejercicios** (problemas con soluciones ocultas).
+  - **Selector de Espacio:** Conmutación entre **Plano 2D (ℝ²)** y **Espacio 3D (ℝ³)**.
+- En **Plano ℝ²**: Genera retos aleatorios de cadenas vectoriales, álgebra de operaciones y test de equipolencia.
+- En **Espacio ℝ³**: Genera retos tridimensionales de producto vectorial $\vec{u} \times \vec{v}$, producto escalar, módulo y cosenos directores con puntos espaciales.
+- Formulario de comprobación dinámica:
+  - Comparación numérica con tolerancia estricta ($\varepsilon = 0.05$).
+  - Badges de estado (*Válido* / *Discrepancia detectada*) con indicación del error y retroalimentación pedagógica.
+  - Opción de desvelar el solucionario algebraico completo con sustitución paso a paso.
 
 ### 5. Control Multicapa del Grafo Cartesiano (HUD)
 - **Interruptor Maestro (`#btn-toggle-todo`):** Oculta o visibiliza de forma global todos los elementos geométricos con un solo clic.
@@ -172,6 +175,8 @@ Diseñada con un enfoque de **cero dependencias externas**, explota las capacida
 | **Espacio 3D: Producto Vectorial u × v** | ![Espacio 3D Producto Cruz](docs/img/10_espacio_3d.png) |
 | **Espacio 3D: Vector A→B & Cosenos Directores** | ![Espacio 3D Cosenos Directores](docs/img/11_cosenos_directores_3d.png) |
 | **Espacio 3D: Modo Plano (Hoja de Papel Técnico)** | ![Modo Plano Hoja de Papel](docs/img/12_modo_papel_3d.png) |
+| **Espacio 3D: Modo Calculadora Interactiva** | ![Calculadora 3D](docs/img/13_calculadora_3d.png) |
+| **Espacio 3D: Modo Ejercicios & Autoevaluación** | ![Ejercicios 3D](docs/img/14_ejercicios_3d.png) |
 
 ---
 

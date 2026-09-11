@@ -33,9 +33,19 @@ export const Configuracion = Object.freeze({
     PUNTOS_3D: 'puntos-3d'
   }),
 
+  FLUJOS_APP: Object.freeze({
+    CALCULADORA: 'calculadora',
+    EJERCICIOS: 'ejercicios'
+  }),
+
+  ESPACIOS_APP: Object.freeze({
+    PLANO_2D: '2d',
+    ESPACIO_3D: '3d'
+  }),
+
   ENTORNOS_APP: Object.freeze({
     CALCULADORA: 'calculadora',
-    EJERCICIO: 'ejercicio',
+    EJERCICIO: 'ejercicios',
     ESPACIO_3D: 'espacio-3d'
   })
 });

@@ -121,6 +121,8 @@ export class ControladorAlmacenamiento {
 
     this._estadoApp.actualizar({
       modoActivo: item.modo,
+      flujoActivo: Configuracion.FLUJOS_APP.EJERCICIOS,
+      espacioActivo: es3D ? Configuracion.ESPACIOS_APP.ESPACIO_3D : Configuracion.ESPACIOS_APP.PLANO_2D,
       entornoActivo: es3D ? Configuracion.ENTORNOS_APP.ESPACIO_3D : Configuracion.ENTORNOS_APP.EJERCICIO,
       dimensionActiva: es3D ? '3d' : '2d',
       respuestasVisibles: false

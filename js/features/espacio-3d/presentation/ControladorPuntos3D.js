@@ -116,17 +116,35 @@ export class ControladorPuntos3D {
 
     const resultado = this._casoDeUso.ejecutar(puntoA, puntoB);
 
-    this._motor3D.actualizarElementos([resultado.vectorAB], [puntoA, puntoB], null);
+    const estado = this._estadoApp.obtener();
+    const esEjercicioOculto = (estado.flujoActivo === 'ejercicios' || estado.entornoActivo === 'ejercicios') && !estado.respuestasVisibles;
+
+    const vectoresADibujar = esEjercicioOculto ? [] : [resultado.vectorAB];
+    this._motor3D.actualizarElementos(vectoresADibujar, [puntoA, puntoB], null);
 
     this._estadoApp.actualizar({
       ultimoResultado: resultado,
       dimensionActiva: '3d'
     });
 
-    this._renderizarResumen(resultado);
+    this._renderizarResumen(resultado, esEjercicioOculto);
   }
 
-  _renderizarResumen(resultado) {
+  _renderizarResumen(resultado, esEjercicioOculto = false) {
+    if (esEjercicioOculto) {
+      this._contenedorResumen.innerHTML = `
+        <div class="item-resumen" style="grid-column: span 2; text-align: center; padding: 1rem 0.5rem;">
+          <span class="badge-tag" style="background: rgba(245, 158, 11, 0.15); color: #f59e0b; border: 1px solid rgba(245, 158, 11, 0.3); margin-bottom: 0.5rem; display: inline-block;">
+            🎯 RETO 3D ACTIVO: VECTOR ENTRE DOS PUNTOS
+          </span>
+          <div style="font-size:0.8rem; color:var(--color-texto-secundario); line-height: 1.4;">
+            Componentes del vector AB, módulo ||AB|| y cosenos directores ocultos. Resta las coordenadas (B - A), halla la norma euclídea e introduce tus respuestas en el panel inferior.
+          </div>
+        </div>
+      `;
+      return;
+    }
+
     const c = resultado.cosenos;
     const u = resultado.unitario;
 

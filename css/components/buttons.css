@@ -1,8 +1,90 @@
 /**
- * Componente: Botones y Selectores de Modo / Entorno
+ * Componente: Botones y Selectores de Flujo, Espacio y Modo
  */
 
-/* Selector de Entorno (Calculadora vs Modo Ejercicios) */
+/* Selector Principal de Flujo: Calculadora vs Modo Ejercicios */
+.selector-flujo {
+  display: flex;
+  background: rgba(15, 23, 42, 0.8);
+  border: 1px solid rgba(56, 189, 248, 0.25);
+  border-radius: var(--radio-lg);
+  padding: 0.22rem;
+  gap: 0.25rem;
+}
+
+.btn-flujo {
+  background: transparent;
+  border: none;
+  color: var(--color-texto-secundario);
+  font-family: var(--fuente-principal);
+  font-size: 0.82rem;
+  font-weight: 600;
+  padding: 0.42rem 0.85rem;
+  border-radius: var(--radio-md);
+  cursor: pointer;
+  transition: var(--transicion-suave);
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+}
+
+.btn-flujo:hover {
+  color: var(--color-texto-principal);
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.btn-flujo.activo[data-flujo="calculadora"] {
+  background: linear-gradient(135deg, #0284c7, #2563eb);
+  color: #ffffff;
+  box-shadow: 0 0 14px rgba(37, 99, 235, 0.4);
+}
+
+.btn-flujo.activo[data-flujo="ejercicios"] {
+  background: linear-gradient(135deg, #059669, #10b981);
+  color: #ffffff;
+  box-shadow: 0 0 14px rgba(16, 185, 129, 0.4);
+}
+
+/* Selector Secundario de Espacio Dimensional: Plano 2D vs Espacio 3D */
+.selector-espacio {
+  display: flex;
+  background: rgba(15, 23, 42, 0.7);
+  border: 1px solid var(--color-borde);
+  border-radius: var(--radio-lg);
+  padding: 0.2rem;
+  gap: 0.2rem;
+}
+
+.btn-espacio {
+  background: transparent;
+  border: none;
+  color: var(--color-texto-secundario);
+  font-family: var(--fuente-principal);
+  font-size: 0.78rem;
+  font-weight: 500;
+  padding: 0.38rem 0.7rem;
+  border-radius: var(--radio-md);
+  cursor: pointer;
+  transition: var(--transicion-suave);
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.btn-espacio:hover {
+  color: var(--color-texto-principal);
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.btn-espacio.activo {
+  background: linear-gradient(135deg, rgba(56, 189, 248, 0.2), rgba(168, 85, 247, 0.25));
+  color: #38bdf8;
+  border: 1px solid rgba(56, 189, 248, 0.45);
+  box-shadow: 0 0 10px rgba(56, 189, 248, 0.25);
+  font-weight: 600;
+}
+
+/* Alias de compatibilidad previa para selector-entorno */
 .selector-entorno {
   display: flex;
   background: rgba(15, 23, 42, 0.75);
@@ -26,11 +108,6 @@
   display: flex;
   align-items: center;
   gap: 0.35rem;
-}
-
-.btn-entorno:hover {
-  color: var(--color-texto-principal);
-  background: rgba(255, 255, 255, 0.05);
 }
 
 .btn-entorno.activo {

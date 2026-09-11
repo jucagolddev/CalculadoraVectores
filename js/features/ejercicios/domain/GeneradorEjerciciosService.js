@@ -115,4 +115,55 @@ export class GeneradorEjerciciosService {
       equipolentesEsperados: sonEquipolentes
     };
   }
+
+  /**
+   * Genera dos vectores tridimensionales u y v no nulos y no colineales, más un escalar k.
+   * @returns {{ux: number, uy: number, uz: number, vx: number, vy: number, vz: number, k: number}}
+   */
+  static generarOperaciones3D() {
+    let ux, uy, uz, vx, vy, vz;
+
+    // Vector u no nulo
+    do {
+      ux = this.enteroAleatorio(-4, 4);
+      uy = this.enteroAleatorio(-4, 4);
+      uz = this.enteroAleatorio(-4, 4);
+    } while (ux === 0 && uy === 0 && uz === 0);
+
+    // Vector v no nulo y no paralelo/colineal con u (cruz != 0)
+    let cruzX, cruzY, cruzZ;
+    do {
+      vx = this.enteroAleatorio(-4, 4);
+      vy = this.enteroAleatorio(-4, 4);
+      vz = this.enteroAleatorio(-4, 4);
+
+      cruzX = uy * vz - uz * vy;
+      cruzY = uz * vx - ux * vz;
+      cruzZ = ux * vy - uy * vx;
+    } while ((vx === 0 && vy === 0 && vz === 0) || (cruzX === 0 && cruzY === 0 && cruzZ === 0));
+
+    const factoresEscalares = [-2, 2, 3, 0.5, 1.5, 2.5];
+    const k = factoresEscalares[Math.floor(Math.random() * factoresEscalares.length)];
+
+    return { ux, uy, uz, vx, vy, vz, k };
+  }
+
+  /**
+   * Genera dos puntos en el espacio tridimensional A y B no coincidentes.
+   * @returns {{ax: number, ay: number, az: number, bx: number, by: number, bz: number}}
+   */
+  static generarPuntos3D() {
+    const ax = this.enteroAleatorio(-5, 5);
+    const ay = this.enteroAleatorio(-5, 5);
+    const az = this.enteroAleatorio(-5, 5);
+
+    let bx, by, bz;
+    do {
+      bx = this.enteroAleatorio(-5, 5);
+      by = this.enteroAleatorio(-5, 5);
+      bz = this.enteroAleatorio(-5, 5);
+    } while (bx === ax && by === ay && bz === az);
+
+    return { ax, ay, az, bx, by, bz };
+  }
 }

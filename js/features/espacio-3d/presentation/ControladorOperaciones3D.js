@@ -153,14 +153,19 @@ export class ControladorOperaciones3D {
 
     const resultado = this._casoDeUso.ejecutar(u, v, this._valores.k);
 
+    const estado = this._estadoApp.obtener();
+    const esEjercicioOculto = (estado.flujoActivo === 'ejercicios' || estado.entornoActivo === 'ejercicios') && !estado.respuestasVisibles;
+
     const vectoresADibujar = [u, v];
-    if (this._valores.mostrarCruz) {
-      vectoresADibujar.push(resultado.productoCruz);
+    if (!esEjercicioOculto) {
+      if (this._valores.mostrarCruz) {
+        vectoresADibujar.push(resultado.productoCruz);
+      }
+      vectoresADibujar.push(resultado.suma);
     }
-    vectoresADibujar.push(resultado.suma);
 
     let poligono = null;
-    if (this._valores.mostrarParalelogramo) {
+    if (!esEjercicioOculto && this._valores.mostrarParalelogramo) {
       poligono = [
         o,
         u.extremo,
@@ -176,10 +181,24 @@ export class ControladorOperaciones3D {
       dimensionActiva: '3d'
     });
 
-    this._renderizarResumen(resultado);
+    this._renderizarResumen(resultado, esEjercicioOculto);
   }
 
-  _renderizarResumen(resultado) {
+  _renderizarResumen(resultado, esEjercicioOculto = false) {
+    if (esEjercicioOculto) {
+      this._contenedorResumen.innerHTML = `
+        <div class="item-resumen" style="grid-column: span 2; text-align: center; padding: 1rem 0.5rem;">
+          <span class="badge-tag" style="background: rgba(245, 158, 11, 0.15); color: #f59e0b; border: 1px solid rgba(245, 158, 11, 0.3); margin-bottom: 0.5rem; display: inline-block;">
+            🎯 RETO 3D ACTIVO: PRODUCTO VECTORIAL
+          </span>
+          <div style="font-size:0.8rem; color:var(--color-texto-secundario); line-height: 1.4;">
+            Producto vectorial u × v y producto escalar u·v ocultos. Calcula sus componentes en tu cuaderno e introduce tus respuestas en el panel inferior para comprobarlas.
+          </div>
+        </div>
+      `;
+      return;
+    }
+
     this._contenedorResumen.innerHTML = `
       <div class="item-resumen">
         <div class="etiqueta">

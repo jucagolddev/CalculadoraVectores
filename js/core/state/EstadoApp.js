@@ -8,7 +8,10 @@ export class EstadoApp {
   constructor() {
     this._estado = {
       modoActivo: Configuracion.MODOS_APP.CADENA_PUNTOS,
+      flujoActivo: Configuracion.FLUJOS_APP.CALCULADORA,
+      espacioActivo: Configuracion.ESPACIOS_APP.PLANO_2D,
       entornoActivo: Configuracion.ENTORNOS_APP.CALCULADORA,
+      dimensionActiva: '2d',
       respuestasVisibles: true,
       construccionGeometrica: 'paralelogramo',
       mostrarProyecciones: true,

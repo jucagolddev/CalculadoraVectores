@@ -86,60 +86,71 @@ class Bootstrap {
     const generarNuevoReto = () => {
       const modo = estadoApp.obtener().modoActivo;
       estadoApp.actualizar({
+        flujoActivo: Configuracion.FLUJOS_APP.EJERCICIOS,
         entornoActivo: Configuracion.ENTORNOS_APP.EJERCICIO,
         respuestasVisibles: false
       });
+
+      if (domControladores.contenedorComprobacion) {
+        domControladores.contenedorComprobacion.style.display = 'flex';
+      }
 
       if (modo === Configuracion.MODOS_APP.CADENA_PUNTOS) {
         const puntos = GeneradorEjerciciosService.generarPuntosCadena(2);
         ctrls.ctrlCadena.cargarEjercicio(puntos);
         ctrls.ctrlSolucion.renderizarFormularioComprobacion(modo, ctrls.ctrlCadena.puntos);
+        plano.autoAjustarVista();
       } else if (modo === Configuracion.MODOS_APP.OPERACIONES) {
         const ops = GeneradorEjerciciosService.generarOperaciones();
         ctrls.ctrlOperaciones.cargarEjercicio(ops);
         ctrls.ctrlSolucion.renderizarFormularioComprobacion(modo);
+        plano.autoAjustarVista();
       } else if (modo === Configuracion.MODOS_APP.EQUIPOLENCIA) {
         const eq = GeneradorEjerciciosService.generarEquipolencia();
         ctrls.ctrlEquipolencia.cargarEjercicio(eq);
         ctrls.ctrlSolucion.renderizarFormularioComprobacion(modo);
+        plano.autoAjustarVista();
       } else if (modo === Configuracion.MODOS_APP.OPERACIONES_3D) {
-        const ops3D = {
-          ux: Math.floor(Math.random() * 7) - 3,
-          uy: Math.floor(Math.random() * 7) - 3,
-          uz: Math.floor(Math.random() * 7) - 3,
-          vx: Math.floor(Math.random() * 7) - 3,
-          vy: Math.floor(Math.random() * 7) - 3,
-          vz: Math.floor(Math.random() * 7) - 3,
-          k: (Math.floor(Math.random() * 4) + 1) * 0.5
-        };
+        const ops3D = GeneradorEjerciciosService.generarOperaciones3D();
         ctrls.ctrlOperaciones3D.cargarEjercicio(ops3D);
         ctrls.ctrlSolucion.renderizarFormularioComprobacion(modo);
         motor3D.autoAjustar();
       } else if (modo === Configuracion.MODOS_APP.PUNTOS_3D) {
-        const pts3D = {
-          ax: Math.floor(Math.random() * 7) - 3,
-          ay: Math.floor(Math.random() * 7) - 3,
-          az: Math.floor(Math.random() * 7) - 3,
-          bx: Math.floor(Math.random() * 7) - 3,
-          by: Math.floor(Math.random() * 7) - 3,
-          bz: Math.floor(Math.random() * 7) - 3
-        };
+        const pts3D = GeneradorEjerciciosService.generarPuntos3D();
         ctrls.ctrlPuntos3D.cargarEjercicio(pts3D);
         ctrls.ctrlSolucion.renderizarFormularioComprobacion(modo);
         motor3D.autoAjustar();
       }
+    };
 
-      if (modo !== Configuracion.MODOS_APP.OPERACIONES_3D && modo !== Configuracion.MODOS_APP.PUNTOS_3D) {
-        plano.autoAjustarVista();
+    const cambiarFlujo = (nuevoFlujo) => {
+      const esEjercicio = nuevoFlujo === Configuracion.FLUJOS_APP.EJERCICIOS;
+
+      if (domControladores.contenedorComprobacion) {
+        domControladores.contenedorComprobacion.style.display = esEjercicio ? 'flex' : 'none';
+      }
+
+      estadoApp.actualizar({
+        flujoActivo: nuevoFlujo,
+        entornoActivo: esEjercicio ? Configuracion.ENTORNOS_APP.EJERCICIO : Configuracion.ENTORNOS_APP.CALCULADORA,
+        respuestasVisibles: !esEjercicio
+      });
+
+      if (esEjercicio) {
+        generarNuevoReto();
+      } else {
+        reejecutarControladorActivo();
       }
     };
 
-    const cambiarEntorno = (nuevoEntorno) => {
-      const esEjercicio = nuevoEntorno === Configuracion.ENTORNOS_APP.EJERCICIO;
-      const es3D = nuevoEntorno === Configuracion.ENTORNOS_APP.ESPACIO_3D;
+    const cambiarEspacio = (nuevoEspacio) => {
+      const es3D = nuevoEspacio === Configuracion.ESPACIOS_APP.ESPACIO_3D;
 
       plano.establecerActivo(!es3D);
       motor3D.establecerActivo(es3D);
+      if (hud) {
+        hud.actualizarVisibilidadSegunEntorno(es3D);
+      }
 
       let nuevoModo = estadoApp.obtener().modoActivo;
       if (es3D) {
@@ -153,18 +164,34 @@ class Bootstrap {
       }
 
       estadoApp.actualizar({
-        entornoActivo: nuevoEntorno,
-        modoActivo: nuevoModo,
+        espacioActivo: nuevoEspacio,
         dimensionActiva: es3D ? '3d' : '2d',
-        respuestasVisibles: !esEjercicio
+        modoActivo: nuevoModo
       });
 
       activarModo(nuevoModo);
+
+      if (estadoApp.obtener().flujoActivo === Configuracion.FLUJOS_APP.EJERCICIOS) {
+        generarNuevoReto();
+      }
+    };
+
+    // Compatibilidad previa con cambiarEntorno
+    const cambiarEntorno = (nuevoEntorno) => {
+      if (nuevoEntorno === 'espacio-3d') {
+        cambiarEspacio(Configuracion.ESPACIOS_APP.ESPACIO_3D);
+      } else if (nuevoEntorno === 'ejercicio') {
+        cambiarFlujo(Configuracion.FLUJOS_APP.EJERCICIOS);
+      } else {
+        cambiarFlujo(Configuracion.FLUJOS_APP.CALCULADORA);
+      }
     };
 
     // 6. Componentes Estructurales de Layout y HUD
-    new Navbar(
+    const navbar = new Navbar(
       {
+        botonesFlujo: document.querySelectorAll('.btn-flujo'),
+        botonesEspacio: document.querySelectorAll('.btn-espacio'),
         botonesModo: document.querySelectorAll('.boton-modo'),
         botonesEntorno: document.querySelectorAll('.btn-entorno'),
         btnPonerACero: document.getElementById('btn-poner-a-cero'),
@@ -177,12 +204,21 @@ class Bootstrap {
       },
       estadoApp,
       {
+        alCambiarFlujo: cambiarFlujo,
+        alCambiarEspacio: cambiarEspacio,
+        alCambiarModo: (modo) => {
+          estadoApp.actualizar({ modoActivo: modo });
+          activarModo(modo);
+          if (estadoApp.obtener().flujoActivo === Configuracion.FLUJOS_APP.EJERCICIOS) {
+            generarNuevoReto();
+          }
+        },
+        alCambiarEntorno: cambiarEntorno,
         alAbrirFormulas: () => ctrls.ctrlFormulas.abrir(),
         alAbrirSolucion: () => ctrls.ctrlSolucion.abrir(null),
         alAbrirTeoria: () => ctrls.ctrlTeoria.abrir(),
         alPonerACero: ponerACero,
         alNuevoReto: generarNuevoReto,
-        alCambiarEntorno: cambiarEntorno,
         alGuardarEjercicio: () => ctrls.ctrlAlmacenamiento.guardarEjercicioActual(),
         alAbrirAlmacen: () => ctrls.ctrlAlmacenamiento.abrir()
       }
@@ -210,7 +246,7 @@ class Bootstrap {
       estadoApp,
       motor3D
     );
-    hud.actualizarVisibilidadSegunEntorno(estadoApp.obtener().entornoActivo === Configuracion.ENTORNOS_APP.ESPACIO_3D);
+    hud.actualizarVisibilidadSegunEntorno(false);
 
     // 7. Sincronización Reactiva (Estado -> Motor Gráfico)
     estadoApp.suscribir('*', (nuevoEstado) => {
@@ -233,6 +269,9 @@ class Bootstrap {
       if (hud) {
         hud.actualizarVisibilidadSegunEntorno(esModo3D);
       }
+
+      navbar.establecerEspacioActivo(esModo3D ? '3d' : '2d');
+      navbar.establecerModoActivo(modo);
 
       if (modo === Configuracion.MODOS_APP.CADENA_PUNTOS) {
         ctrls.ctrlCadena.renderizar();
@@ -271,6 +310,14 @@ class Bootstrap {
         ctrls.popoverInfo.cerrar();
       }
     });
+
+    // Ocultar panel de comprobación inicialmente (Modo Calculadora por defecto)
+    if (domControladores.contenedorComprobacion) {
+      domControladores.contenedorComprobacion.style.display = 'none';
+    }
+    if (document.getElementById('btn-nuevo-reto')) {
+      document.getElementById('btn-nuevo-reto').style.display = 'none';
+    }
 
     // Inicialización del modo inicial
     activarModo(Configuracion.MODOS_APP.CADENA_PUNTOS);
