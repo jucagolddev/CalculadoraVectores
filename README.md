@@ -103,6 +103,13 @@ Diseñada con un enfoque de **cero dependencias externas**, explota las capacida
 - **Selector de Dimensión con Botones Dedicados:**
   - `[📐 Plano ℝ²]`: Filtra y expone los fundamentos, deducciones y álgebra vectorial en el plano bidimensional.
   - `[🧊 Espacio ℝ³]`: Filtra y expone el álgebra espacial tridimensional, cosenos directores, producto vectorial, producto mixto y sistemas de proyección técnica.
+- **Estructura Pedagógica de 6 Tarjetas por Módulo:**
+  - **Fundamento Teórico y Significado Físico:** Definición rigurosa (¿Qué es?), utilidad en ingeniería/robótica (¿Para qué sirve?) e interpretación geométrica/física.
+  - **Simbología y Variables Matemáticas:** Tabla tipográfica con badges estilizados para cada término algebraico.
+  - **Expresiones Matemáticas y Determinantes 3×3 Visuales:** Matrices y determinantes con barras reales y base canónica $(\vec{i}, \vec{j}, \vec{k})$ coloreada con reglas de signos de Laplace.
+  - **Algoritmo de Resolución Paso a Paso (A Mano):** Secuencia metódica numerada para que el usuario aprenda a calcular analíticamente cada operación con papel y lápiz.
+  - **Errores Típicos y Trampas a Evitar:** Alerta pedagógica con diagnóstico de la causa raíz del fallo y la regla analítica para prevenirlo.
+  - **Cómo Usar e Interpretar este Concepto en VectorLab:** Guía práctica que explica exactamente qué inputs rellenar y qué observar en el canvas gráfico.
 - **Compendio Exhaustivo de 12 Módulos Temáticos de Dominio:**
   1. **Escalares vs. Vectores (ℝ²):** Magnitudes con dirección y sentido vs. valores unidimensionales.
   2. **Componentes Cartesianas (ℝ²):** Deducción del vector $\vec{AB} = B - A$ (extremo menos origen).
@@ -120,6 +127,7 @@ Diseñada con un enfoque de **cero dependencias externas**, explota las capacida
 - **Acciones interactivas con sincronización dimensional automática:**
   - `🚀 Probar en el Simulador`: Inyecta las coordenadas del tema teórico directamente en el simulador (Plano ℝ² o Espacio ℝ³) con trazado geométrico, ajuste de cámara y resumen analítico.
   - `🎯 Practicar este Reto`: Conmuta automáticamente al modo ejercicios con respuestas ocultas para poner a prueba los conceptos estudiados.
+
 
 ### 9. Botones de Información Contextual ("ℹ") y Popovers In Situ
 - Indicadores interactivos colocados estratégicamente al lado de:

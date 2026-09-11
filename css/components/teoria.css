@@ -397,6 +397,241 @@
   transform: translateY(-1px);
 }
 
+/* Secciones estructuradas del visor de contenido */
+.tarjeta-seccion-teoria {
+  background: linear-gradient(145deg, rgba(15, 23, 42, 0.8), rgba(30, 41, 59, 0.45));
+  border: 1px solid var(--color-borde);
+  border-radius: var(--radio-lg);
+  padding: 1.25rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25);
+}
+
+.titulo-seccion-teoria {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: #ffffff;
+}
+
+.titulo-seccion-teoria svg {
+  flex-shrink: 0;
+}
+
+/* Glosario y Tabla de Variables y Simbología */
+.tabla-variables-simbologia {
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+  background: rgba(10, 15, 30, 0.6);
+  border-radius: var(--radio-md);
+  padding: 0.85rem 1.1rem;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.variable-fila-item {
+  display: grid;
+  grid-template-columns: 140px 1fr;
+  align-items: baseline;
+  gap: 0.85rem;
+  padding: 0.35rem 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+}
+
+.variable-fila-item:last-child {
+  border-bottom: none;
+}
+
+.variable-simbolo-badge {
+  display: inline-block;
+  font-family: var(--fuente-mono);
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--color-cian);
+  background: rgba(56, 189, 248, 0.12);
+  padding: 0.2rem 0.5rem;
+  border-radius: 4px;
+  border: 1px solid rgba(56, 189, 248, 0.25);
+  text-align: center;
+}
+
+.variable-desc-texto {
+  font-size: 0.86rem;
+  color: var(--color-texto-principal);
+  line-height: 1.45;
+}
+
+.variable-desc-texto strong {
+  color: #f1f5f9;
+}
+
+/* Timeline y Lista de Pasos Metódicos de Resolución a Mano */
+.timeline-pasos-resolucion {
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+  position: relative;
+  padding-left: 0.5rem;
+}
+
+.paso-metodico-item {
+  display: flex;
+  gap: 1rem;
+  align-items: flex-start;
+}
+
+.paso-numero-badge-grande {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #0284c7, #38bdf8);
+  color: #070c18;
+  font-family: var(--fuente-mono);
+  font-size: 0.95rem;
+  font-weight: 800;
+  flex-shrink: 0;
+  box-shadow: 0 0 10px rgba(56, 189, 248, 0.35);
+  margin-top: 0.1rem;
+}
+
+.paso-contenido-box {
+  flex: 1;
+  background: rgba(15, 23, 42, 0.6);
+  border: 1px solid rgba(148, 163, 184, 0.15);
+  border-radius: var(--radio-md);
+  padding: 0.75rem 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.paso-titulo-texto {
+  font-size: 0.92rem;
+  font-weight: 700;
+  color: #f8fafc;
+}
+
+.paso-detalle-texto {
+  font-size: 0.85rem;
+  color: var(--color-texto-secundario);
+  line-height: 1.5;
+}
+
+/* Alertas Pedagógicas y Prevención de Errores Típicos */
+.caja-alerta-pedagogica {
+  background: rgba(245, 158, 11, 0.08);
+  border: 1px solid rgba(245, 158, 11, 0.3);
+  border-left: 4px solid var(--color-ambar);
+  border-radius: var(--radio-md);
+  padding: 1rem 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.caja-alerta-pedagogica .titulo-alerta {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--color-ambar);
+}
+
+.item-error-frecuente {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  font-size: 0.85rem;
+  line-height: 1.45;
+  padding: 0.4rem 0;
+  border-bottom: 1px solid rgba(245, 158, 11, 0.15);
+}
+
+.item-error-frecuente:last-child {
+  border-bottom: none;
+}
+
+.item-error-frecuente .error-nombre {
+  color: #fde68a;
+  font-weight: 600;
+}
+
+.item-error-frecuente .error-solucion {
+  color: #a7f3d0;
+}
+
+/* Guía de Uso Rápido en VectorLab (Cómo interactuar con el simulador) */
+.caja-guia-simulador {
+  background: rgba(16, 185, 129, 0.08);
+  border: 1px solid rgba(16, 185, 129, 0.3);
+  border-left: 4px solid var(--color-esmeralda);
+  border-radius: var(--radio-md);
+  padding: 1rem 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.caja-guia-simulador .titulo-guia {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--color-esmeralda);
+}
+
+.paso-guia-simulador-item {
+  display: flex;
+  gap: 0.75rem;
+  font-size: 0.85rem;
+  line-height: 1.45;
+  color: #e2e8f0;
+}
+
+.paso-guia-simulador-item .numero-guia {
+  font-weight: 800;
+  color: var(--color-esmeralda);
+  font-family: var(--fuente-mono);
+}
+
+/* Renderizado Visual de Matrices y Determinantes 3x3 */
+.matriz-determinante-visual {
+  display: inline-flex;
+  align-items: center;
+  background: rgba(15, 23, 42, 0.9);
+  border-left: 3px solid var(--color-cian);
+  border-right: 3px solid var(--color-cian);
+  border-radius: 2px;
+  padding: 0.5rem 1rem;
+  margin: 0.4rem 0;
+  box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.5);
+}
+
+.matriz-grid-celdas {
+  display: grid;
+  grid-template-columns: repeat(3, 48px);
+  row-gap: 0.4rem;
+  column-gap: 0.75rem;
+  text-align: center;
+  font-family: var(--fuente-mono);
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #ffffff;
+}
+
+.matriz-grid-celdas .celda-canonica-i { color: #f87171; font-weight: 700; }
+.matriz-grid-celdas .celda-canonica-j { color: #4ade80; font-weight: 700; }
+.matriz-grid-celdas .celda-canonica-k { color: #c084fc; font-weight: 700; }
+
 /* Botón en la cabecera */
 .btn-teoria {
   background: rgba(168, 85, 247, 0.15);
@@ -433,4 +668,13 @@
   .buscador-teoria-caja {
     width: 180px;
   }
+  .variable-fila-item {
+    grid-template-columns: 1fr;
+    gap: 0.25rem;
+  }
+  .matriz-grid-celdas {
+    grid-template-columns: repeat(3, 38px);
+    font-size: 0.85rem;
+  }
 }
+
