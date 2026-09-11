@@ -1,4 +1,4 @@
-import { Punto2D } from '../../../core/models/Punto2D.js';
+import { Punto2D } from '../../../core/models/Punto2D.js?v=flechas18';
 
 /**
  * Servicio de dominio para la generación algorítmica de retos y ejercicios vectoriales.
@@ -96,22 +96,38 @@ export class GeneradorEjerciciosService {
       Cy = this.enteroAleatorio(-4, 4);
     } while (Cx === Ax && Cy === Ay);
 
-    const sonEquipolentes = Math.random() < 0.5;
+    const Dx = Cx + dx;
+    const Dy = Cy + dy;
 
-    let Dx, Dy;
-    if (sonEquipolentes) {
-      Dx = Cx + dx;
-      Dy = Cy + dy;
-    } else {
+    // 45% de probabilidad de generar un reto de despeje de incógnitas (B y D desconocidos dado u)
+    const esRetoIncognitas = Math.random() < 0.45;
+    if (esRetoIncognitas) {
+      return {
+        Ax, Ay,
+        Bx: '?', By: '?',
+        Cx, Cy,
+        Dx: '?', Dy: '?',
+        ux: dx, uy: dy,
+        esRetoIncognitas: true,
+        solucionBx: Bx, solucionBy: By,
+        solucionDx: Dx, solucionDy: Dy,
+        equipolentesEsperados: true
+      };
+    }
+
+    const sonEquipolentes = Math.random() < 0.5;
+    let finalDx = Dx;
+    let finalDy = Dy;
+    if (!sonEquipolentes) {
       // Perturbación aleatoria de al menos una componente
       const perturbacionX = this.enteroAleatorio(-2, 2, [0]);
-      Dx = Cx + dx + perturbacionX;
-      Dy = Cy + dy;
+      finalDx = Cx + dx + perturbacionX;
     }
 
     return {
       Ax, Ay, Bx, By,
-      Cx, Cy, Dx, Dy,
+      Cx, Cy, Dx: finalDx, Dy: finalDy,
+      esRetoIncognitas: false,
       equipolentesEsperados: sonEquipolentes
     };
   }

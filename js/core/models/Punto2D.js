@@ -6,11 +6,13 @@ export class Punto2D {
    * @param {number} x - Coordenada en el eje de las abscisas.
    * @param {number} y - Coordenada en el eje de las ordenadas.
    * @param {string} [etiqueta=''] - Identificador alfanumérico del punto (ej. 'A', 'B').
+   * @param {boolean} [esIncognitaResuelta=false] - Indica si el punto fue hallado analíticamente a partir de una incógnita '?'.
    */
-  constructor(x, y, etiqueta = '') {
+  constructor(x, y, etiqueta = '', esIncognitaResuelta = false) {
     this._x = Number(x);
     this._y = Number(y);
     this._etiqueta = String(etiqueta);
+    this._esIncognitaResuelta = Boolean(esIncognitaResuelta);
     Object.freeze(this);
   }
 
@@ -24,6 +26,10 @@ export class Punto2D {
 
   get etiqueta() {
     return this._etiqueta;
+  }
+
+  get esIncognitaResuelta() {
+    return this._esIncognitaResuelta;
   }
 
   /**

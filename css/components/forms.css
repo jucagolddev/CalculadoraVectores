@@ -183,3 +183,98 @@ input[type="number"] {
   accent-color: var(--color-cian);
   cursor: pointer;
 }
+
+/* Botón toggle de incógnita (?) dentro del input */
+.btn-toggle-incognita {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(245, 158, 11, 0.12);
+  border: none;
+  border-left: 1px solid var(--color-borde);
+  color: #f59e0b;
+  font-family: var(--fuente-mono);
+  font-size: 0.85rem;
+  font-weight: 800;
+  width: 2rem;
+  cursor: pointer;
+  transition: var(--transicion-suave);
+  user-select: none;
+}
+
+.btn-toggle-incognita:hover {
+  background: rgba(245, 158, 11, 0.25);
+  color: #fbbf24;
+}
+
+.btn-toggle-incognita.activo {
+  background: #f59e0b;
+  color: #0f172a;
+}
+
+/* Estado cuando el contenedor o el input es incógnita */
+.input-con-icono.tiene-incognita {
+  border-color: rgba(245, 158, 11, 0.7);
+  background: rgba(245, 158, 11, 0.08);
+  box-shadow: 0 0 0 2px rgba(245, 158, 11, 0.2), inset 0 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+.input-con-icono.tiene-incognita span {
+  background: rgba(245, 158, 11, 0.2);
+  color: #fbbf24;
+  border-right-color: rgba(245, 158, 11, 0.35);
+}
+
+.input-con-icono .input-numero.es-incognita {
+  color: #fbbf24;
+  font-weight: 800;
+  font-size: 1.05rem;
+  letter-spacing: 0.05em;
+}
+
+/* Pestañas de modo de Equipolencia (4 Puntos vs Vector u + Orígenes) */
+.selector-modo-equipolencia {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.35rem;
+  background: rgba(15, 23, 42, 0.85);
+  padding: 0.25rem;
+  border-radius: var(--radio-md);
+  border: 1px solid var(--color-borde);
+  margin-bottom: 0.75rem;
+}
+
+.btn-tab-equipolencia {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  padding: 0.45rem 0.5rem;
+  font-size: 0.76rem;
+  font-weight: 600;
+  color: var(--color-texto-secundario);
+  background: transparent;
+  border: none;
+  border-radius: var(--radio-sm);
+  cursor: pointer;
+  transition: var(--transicion-suave);
+}
+
+.btn-tab-equipolencia:hover {
+  color: #ffffff;
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.btn-tab-equipolencia.activo {
+  background: var(--color-primario);
+  color: #ffffff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.seccion-vector-guia-u {
+  background: rgba(30, 41, 59, 0.4);
+  border: 1px dashed rgba(56, 189, 248, 0.4);
+  border-radius: var(--radio-md);
+  padding: 0.65rem;
+  margin-bottom: 0.75rem;
+}

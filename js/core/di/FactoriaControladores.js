@@ -1,24 +1,25 @@
-import { Configuracion } from '../constants/Configuracion.js';
+import { Configuracion } from '../constants/Configuracion.js?v=flechas18';
 
 // Casos de Uso (Application Layer)
-import { CalcularCadenaUseCase } from '../../features/cadena-vectores/application/CalcularCadenaUseCase.js?v=flechas15';
-import { CalcularOperacionesUseCase } from '../../features/operaciones/application/CalcularOperacionesUseCase.js?v=flechas15';
-import { EvaluarEquipolenciaUseCase } from '../../features/equipolencia/application/EvaluarEquipolenciaUseCase.js?v=flechas15';
-import { VerificarRespuestaUseCase } from '../../features/solucionador/application/VerificarRespuestaUseCase.js?v=flechas15';
-import { CalcularOperaciones3DUseCase } from '../../features/espacio-3d/application/CalcularOperaciones3DUseCase.js?v=flechas15';
-import { CalcularPuntos3DUseCase } from '../../features/espacio-3d/application/CalcularPuntos3DUseCase.js?v=flechas15';
+import { CalcularCadenaUseCase } from '../../features/cadena-vectores/application/CalcularCadenaUseCase.js?v=flechas18';
+import { CalcularOperacionesUseCase } from '../../features/operaciones/application/CalcularOperacionesUseCase.js?v=flechas18';
+import { EvaluarEquipolenciaUseCase } from '../../features/equipolencia/application/EvaluarEquipolenciaUseCase.js?v=flechas18';
+import { ResolverEquipolenciaConIncognitasUseCase } from '../../features/equipolencia/application/ResolverEquipolenciaConIncognitasUseCase.js?v=flechas18';
+import { VerificarRespuestaUseCase } from '../../features/solucionador/application/VerificarRespuestaUseCase.js?v=flechas18';
+import { CalcularOperaciones3DUseCase } from '../../features/espacio-3d/application/CalcularOperaciones3DUseCase.js?v=flechas18';
+import { CalcularPuntos3DUseCase } from '../../features/espacio-3d/application/CalcularPuntos3DUseCase.js?v=flechas18';
 
 // Controladores de Presentación (Presentation Layer)
-import { ControladorCadena } from '../../features/cadena-vectores/presentation/ControladorCadena.js?v=flechas15';
-import { ControladorOperaciones } from '../../features/operaciones/presentation/ControladorOperaciones.js?v=flechas15';
-import { ControladorEquipolencia } from '../../features/equipolencia/presentation/ControladorEquipolencia.js?v=flechas15';
-import { ControladorSolucion } from '../../features/solucionador/presentation/ControladorSolucion.js?v=flechas15';
-import { ControladorFormulas } from '../../features/formulas/presentation/ControladorFormulas.js?v=flechas15';
-import { ControladorAlmacenamiento } from '../../features/ejercicios/presentation/ControladorAlmacenamiento.js?v=flechas15';
-import { ControladorTeoria } from '../../features/teoria/presentation/ControladorTeoria.js?v=flechas15';
-import { PopoverInfoContextual } from '../../features/teoria/presentation/PopoverInfoContextual.js?v=flechas15';
-import { ControladorOperaciones3D } from '../../features/espacio-3d/presentation/ControladorOperaciones3D.js?v=flechas15';
-import { ControladorPuntos3D } from '../../features/espacio-3d/presentation/ControladorPuntos3D.js?v=flechas15';
+import { ControladorCadena } from '../../features/cadena-vectores/presentation/ControladorCadena.js?v=flechas18';
+import { ControladorOperaciones } from '../../features/operaciones/presentation/ControladorOperaciones.js?v=flechas18';
+import { ControladorEquipolencia } from '../../features/equipolencia/presentation/ControladorEquipolencia.js?v=flechas18';
+import { ControladorSolucion } from '../../features/solucionador/presentation/ControladorSolucion.js?v=flechas18';
+import { ControladorFormulas } from '../../features/formulas/presentation/ControladorFormulas.js?v=flechas18';
+import { ControladorAlmacenamiento } from '../../features/ejercicios/presentation/ControladorAlmacenamiento.js?v=flechas18';
+import { ControladorTeoria } from '../../features/teoria/presentation/ControladorTeoria.js?v=flechas18';
+import { PopoverInfoContextual } from '../../features/teoria/presentation/PopoverInfoContextual.js?v=flechas18';
+import { ControladorOperaciones3D } from '../../features/espacio-3d/presentation/ControladorOperaciones3D.js?v=flechas18';
+import { ControladorPuntos3D } from '../../features/espacio-3d/presentation/ControladorPuntos3D.js?v=flechas18';
 
 /**
  * Contenedor de Inversión de Control (IoC) y Factoría de Controladores.
@@ -37,7 +38,7 @@ export class FactoriaControladores {
     // 1. Instanciación de Casos de Uso (Capa de Aplicación)
     const cadenaUseCase = new CalcularCadenaUseCase();
     const operacionesUseCase = new CalcularOperacionesUseCase();
-    const equipolenciaUseCase = new EvaluarEquipolenciaUseCase();
+    const equipolenciaUseCase = new ResolverEquipolenciaConIncognitasUseCase();
     const verificarUseCase = new VerificarRespuestaUseCase();
     const operaciones3DUseCase = new CalcularOperaciones3DUseCase();
     const puntos3DUseCase = new CalcularPuntos3DUseCase();

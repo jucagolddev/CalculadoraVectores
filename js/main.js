@@ -1,10 +1,10 @@
-import { EstadoApp } from './core/state/EstadoApp.js';
-import { Configuracion } from './core/constants/Configuracion.js';
-import { PlanoCartesiano } from './shared/canvas/PlanoCartesiano.js?v=flechas15';
-import { MotorGrafico3D } from './shared/canvas/MotorGrafico3D.js?v=flechas15';
-import { FactoriaControladores } from './core/di/FactoriaControladores.js?v=flechas15';
-import { GeneradorEjerciciosService } from './features/ejercicios/domain/GeneradorEjerciciosService.js';
-import { GeneradorInputs } from './shared/utils/GeneradorInputs.js';
+import { EstadoApp } from './core/state/EstadoApp.js?v=flechas18';
+import { Configuracion } from './core/constants/Configuracion.js?v=flechas18';
+import { PlanoCartesiano } from './shared/canvas/PlanoCartesiano.js?v=flechas18';
+import { MotorGrafico3D } from './shared/canvas/MotorGrafico3D.js?v=flechas18';
+import { FactoriaControladores } from './core/di/FactoriaControladores.js?v=flechas18';
+import { GeneradorEjerciciosService } from './features/ejercicios/domain/GeneradorEjerciciosService.js?v=flechas18';
+import { GeneradorInputs } from './shared/utils/GeneradorInputs.js?v=flechas18';
 import { Navbar } from './layout/Navbar.js';
 import { Hud } from './layout/Hud.js';
 

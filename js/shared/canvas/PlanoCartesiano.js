@@ -393,11 +393,27 @@ export class PlanoCartesiano {
   }
 
   _dibujarPunto(punto) {
+    if (!punto || punto.x === null || punto.y === null || Number.isNaN(punto.x) || Number.isNaN(punto.y)) return;
     const { px, py } = this.mundoAPantalla(punto.x, punto.y);
     this._ctx.save();
-    this._ctx.shadowColor = '#38bdf8';
-    this._ctx.shadowBlur = 8;
-    this._ctx.fillStyle = '#38bdf8';
+
+    const esIncognitaResuelta = Boolean(punto.esIncognitaResuelta);
+    const colorPunto = esIncognitaResuelta ? '#f59e0b' : '#38bdf8';
+
+    if (esIncognitaResuelta) {
+      // Anillo exterior decorativo para puntos hallados analíticamente
+      this._ctx.beginPath();
+      this._ctx.arc(px, py, 9, 0, 2 * Math.PI);
+      this._ctx.strokeStyle = 'rgba(245, 158, 11, 0.6)';
+      this._ctx.lineWidth = 2;
+      this._ctx.setLineDash([2, 2]);
+      this._ctx.stroke();
+      this._ctx.setLineDash([]);
+    }
+
+    this._ctx.shadowColor = colorPunto;
+    this._ctx.shadowBlur = esIncognitaResuelta ? 12 : 8;
+    this._ctx.fillStyle = colorPunto;
     this._ctx.beginPath();
     this._ctx.arc(px, py, 5, 0, 2 * Math.PI);
     this._ctx.fill();
@@ -409,10 +425,11 @@ export class PlanoCartesiano {
 
     if (this._mostrarEtiquetas) {
       this._ctx.font = 'bold 12px "JetBrains Mono", monospace';
-      this._ctx.fillStyle = '#f8fafc';
+      this._ctx.fillStyle = esIncognitaResuelta ? '#fde68a' : '#f8fafc';
       this._ctx.textAlign = 'left';
       this._ctx.textBaseline = 'bottom';
-      this._ctx.fillText(` ${punto.aCadena()}`, px + 6, py - 4);
+      const sufijo = esIncognitaResuelta ? ' [Hallado]' : '';
+      this._ctx.fillText(` ${punto.aCadena()}${sufijo}`, px + 6, py - 4);
     }
     this._ctx.restore();
   }

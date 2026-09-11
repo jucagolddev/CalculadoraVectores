@@ -1,4 +1,4 @@
-import { Punto2D } from './Punto2D.js';
+import { Punto2D } from './Punto2D.js?v=flechas18';
 import { Configuracion } from '../constants/Configuracion.js';
 
 /**

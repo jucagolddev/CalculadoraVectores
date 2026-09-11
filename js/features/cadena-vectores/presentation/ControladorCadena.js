@@ -1,8 +1,8 @@
-import { Punto2D } from '../../../core/models/Punto2D.js';
+import { Punto2D } from '../../../core/models/Punto2D.js?v=flechas18';
 import { Configuracion } from '../../../core/constants/Configuracion.js';
-import { FormateadorMatematico } from '../../../shared/utils/FormateadorMatematico.js?v=flechas15';
-import { GeneradorInputs } from '../../../shared/utils/GeneradorInputs.js';
-import { CatalogoInfoContextual } from '../../teoria/domain/CatalogoInfoContextual.js';
+import { FormateadorMatematico } from '../../../shared/utils/FormateadorMatematico.js?v=flechas18';
+import { GeneradorInputs } from '../../../shared/utils/GeneradorInputs.js?v=flechas18';
+import { CatalogoInfoContextual } from '../../teoria/domain/CatalogoInfoContextual.js?v=flechas18';
 
 /**
  * Controlador de presentación para la gestión de puntos de unión y cadena vectorial.

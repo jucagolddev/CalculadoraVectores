@@ -86,17 +86,39 @@ export class ControladorSolucion {
         </button>
       `;
     } else if (modo === Configuracion.MODOS_APP.EQUIPOLENCIA) {
-      this._contenedorComprobacion.innerHTML = `
-        <h3><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg> Comprueba tu Solución ${CatalogoInfoContextual.htmlBotonInfo('equipolencia')}</h3>
-        <p class="texto-ayuda">¿Son equipolentes los vectores AB y CD?:</p>
-        <div style="display:flex; gap:1rem; align-items:center; margin: 0.35rem 0;">
-          <label class="opcion-radio"><input type="radio" name="test-equipolente" value="si"> SÍ son equipolentes</label>
-          <label class="opcion-radio"><input type="radio" name="test-equipolente" value="no"> NO son equipolentes</label>
-        </div>
-        <button id="btn-validar-usuario" class="btn-comprobar-usuario" type="button">
-          Comprobar y Corregir
-        </button>
-      `;
+      const estado = this._estadoApp.obtener();
+      const resultado = estado.ultimoResultado;
+      const tieneIncognitas = resultado && resultado.totalIncognitas > 0;
+
+      if (tieneIncognitas) {
+        this._contenedorComprobacion.innerHTML = `
+          <h3><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg> Comprueba tus Incógnitas Despejadas ${CatalogoInfoContextual.htmlBotonInfo('equipolencia')}</h3>
+          <p class="texto-ayuda">Introduce las coordenadas de los extremos hallados (B y D) a partir de la condición de equipolencia:</p>
+          <div class="inputs-par">
+            ${GeneradorInputs.crearCampoNumero({ id: 'test-eq-bx', etiqueta: 'Bx', placeholder: 'Ax + ux' })}
+            ${GeneradorInputs.crearCampoNumero({ id: 'test-eq-by', etiqueta: 'By', placeholder: 'Ay + uy' })}
+          </div>
+          <div class="inputs-par" style="margin-top:0.35rem;">
+            ${GeneradorInputs.crearCampoNumero({ id: 'test-eq-dx', etiqueta: 'Dx', placeholder: 'Cx + ux' })}
+            ${GeneradorInputs.crearCampoNumero({ id: 'test-eq-dy', etiqueta: 'Dy', placeholder: 'Cy + uy' })}
+          </div>
+          <button id="btn-validar-usuario" class="btn-comprobar-usuario" type="button">
+            Comprobar y Corregir
+          </button>
+        `;
+      } else {
+        this._contenedorComprobacion.innerHTML = `
+          <h3><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg> Comprueba tu Solución ${CatalogoInfoContextual.htmlBotonInfo('equipolencia')}</h3>
+          <p class="texto-ayuda">¿Son equipolentes los vectores AB y CD?:</p>
+          <div style="display:flex; gap:1rem; align-items:center; margin: 0.35rem 0;">
+            <label class="opcion-radio"><input type="radio" name="test-equipolente" value="si"> SÍ son equipolentes</label>
+            <label class="opcion-radio"><input type="radio" name="test-equipolente" value="no"> NO son equipolentes</label>
+          </div>
+          <button id="btn-validar-usuario" class="btn-comprobar-usuario" type="button">
+            Comprobar y Corregir
+          </button>
+        `;
+      }
     } else if (modo === Configuracion.MODOS_APP.OPERACIONES_3D) {
       this._contenedorComprobacion.innerHTML = `
         <h3><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg> Comprueba tu Solución ${CatalogoInfoContextual.htmlBotonInfo('producto-vectorial')}</h3>
@@ -228,21 +250,44 @@ export class ControladorSolucion {
       correcciones = this._casoDeUso.ejecutar(respuestas, esperados);
 
     } else if (estado.modoActivo === Configuracion.MODOS_APP.EQUIPOLENCIA) {
-      const seleccion = document.querySelector('input[name="test-equipolente"]:checked')?.value;
-      const correcto = (seleccion === 'si' && resultado.sonEquipolentes) ||
-                       (seleccion === 'no' && !resultado.sonEquipolentes);
+      if (resultado.totalIncognitas > 0) {
+        const bx = document.getElementById('test-eq-bx')?.value;
+        const by = document.getElementById('test-eq-by')?.value;
+        const dx = document.getElementById('test-eq-dx')?.value;
+        const dy = document.getElementById('test-eq-dy')?.value;
 
-      correcciones = [
-        {
-          campo: 'Diagnóstico de Equipolencia',
-          correcto: correcto,
-          esperado: resultado.sonEquipolentes ? 'SÍ son equipolentes' : 'NO son equipolentes',
-          recibido: seleccion ? (seleccion === 'si' ? 'SÍ son equipolentes' : 'NO son equipolentes') : 'Sin responder',
-          mensaje: correcto
-            ? '¡Correcto! Has deducido adecuadamente la relación de equipolencia.'
-            : 'Tu deducción no coincide. Recuerda que para ser equipolentes deben coincidir en dx y dy.'
-        }
-      ];
+        respuestas = {
+          'Coordenada Bx': bx,
+          'Coordenada By': by,
+          'Coordenada Dx': dx,
+          'Coordenada Dy': dy
+        };
+
+        esperados = {
+          'Coordenada Bx': resultado.puntoB.x,
+          'Coordenada By': resultado.puntoB.y,
+          'Coordenada Dx': resultado.puntoD.x,
+          'Coordenada Dy': resultado.puntoD.y
+        };
+
+        correcciones = this._casoDeUso.ejecutar(respuestas, esperados);
+      } else {
+        const seleccion = document.querySelector('input[name="test-equipolente"]:checked')?.value;
+        const correcto = (seleccion === 'si' && resultado.sonEquipolentes) ||
+                         (seleccion === 'no' && !resultado.sonEquipolentes);
+
+        correcciones = [
+          {
+            campo: 'Diagnóstico de Equipolencia',
+            correcto: correcto,
+            esperado: resultado.sonEquipolentes ? 'SÍ son equipolentes' : 'NO son equipolentes',
+            recibido: seleccion ? (seleccion === 'si' ? 'SÍ son equipolentes' : 'NO son equipolentes') : 'Sin responder',
+            mensaje: correcto
+              ? '¡Correcto! Has deducido adecuadamente la relación de equipolencia.'
+              : 'Tu deducción no coincide. Recuerda que para ser equipolentes deben coincidir en dx y dy.'
+          }
+        ];
+      }
     }
 
     this._estadoApp.actualizar({ respuestasVisibles: true });
