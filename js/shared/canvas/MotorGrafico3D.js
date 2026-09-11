@@ -496,6 +496,55 @@ export class MotorGrafico3D {
     ctx.stroke();
     ctx.setLineDash([]);
 
+    // Graduación métrica y marcas numéricas de escala
+    const pasoPapel = this._escala >= 26 ? 1 : (this._escala >= 14 ? 2 : 5);
+    ctx.font = '9px var(--fuente-mono, monospace)';
+
+    // Marcas numéricas en Eje X
+    const limIzqX = Math.floor((x0 - cx) / this._escala);
+    const limDerX = Math.ceil((x0 + anchoFolio - cx) / this._escala);
+    for (let k = limIzqX; k <= limDerX; k++) {
+      if (k === 0 || k % pasoPapel !== 0) continue;
+      const px = cx + k * this._escala;
+      if (px < x0 + 18 || px > x0 + anchoFolio - 35) continue;
+
+      ctx.lineWidth = 1;
+      ctx.strokeStyle = k > 0 ? '#ef4444' : 'rgba(239, 68, 68, 0.45)';
+      ctx.beginPath();
+      ctx.moveTo(px, cy - 3.5);
+      ctx.lineTo(px, cy + 3.5);
+      ctx.stroke();
+
+      ctx.textAlign = 'center';
+      ctx.fillStyle = k > 0 ? '#fca5a5' : 'rgba(248, 113, 113, 0.6)';
+      ctx.fillText(k.toString(), px, cy + 12);
+    }
+
+    // Marcas numéricas en Eje Y
+    const limInfY = Math.floor((cy - (y0 + altoFolio)) / this._escala);
+    const limSupY = Math.ceil((cy - y0) / this._escala);
+    for (let k = limInfY; k <= limSupY; k++) {
+      if (k === 0 || k % pasoPapel !== 0) continue;
+      const py = cy - k * this._escala;
+      if (py < y0 + 35 || py > y0 + altoFolio - 18) continue;
+
+      ctx.lineWidth = 1;
+      ctx.strokeStyle = k > 0 ? '#10b981' : 'rgba(16, 185, 129, 0.45)';
+      ctx.beginPath();
+      ctx.moveTo(cx - 3.5, py);
+      ctx.lineTo(cx + 3.5, py);
+      ctx.stroke();
+
+      ctx.textAlign = 'right';
+      ctx.fillStyle = k > 0 ? '#6ee7b7' : 'rgba(52, 211, 153, 0.6)';
+      ctx.fillText(k.toString(), cx - 6, py + 3);
+    }
+
+    // Origen 0
+    ctx.textAlign = 'right';
+    ctx.fillStyle = 'rgba(148, 163, 184, 0.7)';
+    ctx.fillText('0', cx - 6, cy + 12);
+
     // Etiquetas de los ejes
     if (this._capas.etiquetas) {
       ctx.font = 'bold 11px Inter, sans-serif';
@@ -570,9 +619,11 @@ export class MotorGrafico3D {
         }
 
         if (this._capas.etiquetas) {
+          const mod = Math.hypot(v.x, v.y, v.z);
+          const modStr = Number.isInteger(mod) ? mod.toString() : mod.toFixed(2);
           const sentido = v.z >= 0 ? '⊙ Hacia afuera' : '⊗ Hacia adentro';
           this._dibujarInsigniaEtiqueta(
-            `${v.etiqueta}: z=${v.z} (${sentido})`,
+            `${v.etiqueta}: z=${v.z} (${sentido}) | |${v.etiqueta}| = ${modStr} u`,
             orig.px + 18, orig.py - 14, v.color
           );
         }
@@ -589,9 +640,11 @@ export class MotorGrafico3D {
         if (this._capas.etiquetas) {
           const midX = (orig.px + ext.px) / 2;
           const midY = (orig.py + ext.py) / 2;
+          const mod = Math.hypot(v.x, v.y, v.z);
+          const modStr = Number.isInteger(mod) ? mod.toString() : mod.toFixed(2);
           const infoCota = v.z !== 0 ? ` (z=${v.z > 0 ? '+' : ''}${v.z})` : '';
           this._dibujarInsigniaEtiqueta(
-            `${v.etiqueta}: (${v.x}, ${v.y})${infoCota}`,
+            `${v.etiqueta}: (${v.x}, ${v.y})${infoCota} | |${v.etiqueta}| = ${modStr} u`,
             midX + 10, midY - 10, v.color
           );
         }
@@ -645,29 +698,48 @@ export class MotorGrafico3D {
     const o = this.proyectar(0, 0, 0);
 
     const ejes = [
-      { id: 'X', fin: this.proyectar(lEje, 0, 0), color: '#ef4444', unitario: this.proyectar(1, 0, 0), etiqueta: 'Eje X (+i)' },
-      { id: 'Y', fin: this.proyectar(0, lEje, 0), color: '#10b981', unitario: this.proyectar(0, 1, 0), etiqueta: 'Eje Y (+j)' },
-      { id: 'Z', fin: this.proyectar(0, 0, lEje), color: '#8b5cf6', unitario: this.proyectar(0, 0, 1), etiqueta: 'Eje Z (+k)' }
+      { id: 'X', fin: this.proyectar(lEje, 0, 0), color: '#ef4444', colorTexto: '#fca5a5', dir: { x: 1, y: 0, z: 0 }, etiqueta: 'Eje X (+i)' },
+      { id: 'Y', fin: this.proyectar(0, lEje, 0), color: '#10b981', colorTexto: '#6ee7b7', dir: { x: 0, y: 1, z: 0 }, etiqueta: 'Eje Y (+j)' },
+      { id: 'Z', fin: this.proyectar(0, 0, lEje), color: '#8b5cf6', colorTexto: '#c4b5fd', dir: { x: 0, y: 0, z: 1 }, etiqueta: 'Eje Z (+k)' }
     ];
 
-    // Ejes negativos discontinuos
+    const paso = this._escala >= 26 ? 1 : (this._escala >= 14 ? 2 : 5);
+
+    // Ejes negativos discontinuos con marcas métricas sutiles
     ctx.save();
     ctx.lineWidth = 1;
     ctx.setLineDash([3, 4]);
-    ctx.strokeStyle = 'rgba(255, 255, 255, 0.15)';
+    ctx.strokeStyle = 'rgba(255, 255, 255, 0.18)';
     [
-      this.proyectar(-lEje, 0, 0),
-      this.proyectar(0, -lEje, 0),
-      this.proyectar(0, 0, -lEje)
-    ].forEach(pNeg => {
+      { id: '-X', dir: { x: -1, y: 0, z: 0 } },
+      { id: '-Y', dir: { x: 0, y: -1, z: 0 } },
+      { id: '-Z', dir: { x: 0, y: 0, z: -1 } }
+    ].forEach(ejeNeg => {
+      const pNeg = this.proyectar(ejeNeg.dir.x * lEje, ejeNeg.dir.y * lEje, ejeNeg.dir.z * lEje);
       ctx.beginPath();
       ctx.moveTo(o.px, o.py);
       ctx.lineTo(pNeg.px, pNeg.py);
       ctx.stroke();
+
+      const dx = pNeg.px - o.px;
+      const dy = pNeg.py - o.py;
+      const len = Math.hypot(dx, dy);
+      if (len > 0.001) {
+        const nx = -dy / len;
+        const ny = dx / len;
+        ctx.strokeStyle = 'rgba(255, 255, 255, 0.25)';
+        for (let k = paso; k <= lEje - 1; k += paso) {
+          const pk = this.proyectar(ejeNeg.dir.x * k, ejeNeg.dir.y * k, ejeNeg.dir.z * k);
+          ctx.beginPath();
+          ctx.moveTo(pk.px - 2.5 * nx, pk.py - 2.5 * ny);
+          ctx.lineTo(pk.px + 2.5 * nx, pk.py + 2.5 * ny);
+          ctx.stroke();
+        }
+      }
     });
     ctx.restore();
 
-    // Ejes positivos sólidos
+    // Ejes positivos sólidos con graduación métrica y etiquetas numéricas
     ejes.forEach(eje => {
       ctx.save();
       ctx.lineWidth = 2.2;
@@ -683,13 +755,57 @@ export class MotorGrafico3D {
       // Flecha terminal del eje
       this._dibujarPuntaFlecha2D(o.px, o.py, eje.fin.px, eje.fin.py, eje.color, 9);
 
-      // Etiqueta del eje
+      // Vector normal unitario en pantalla para trazar ticks ortogonales
+      const dx = eje.fin.px - o.px;
+      const dy = eje.fin.py - o.py;
+      const len = Math.hypot(dx, dy);
+      const nx = len > 0.001 ? -dy / len : 0;
+      const ny = len > 0.001 ? dx / len : 0;
+
+      // Graduación métrica (Ticks numéricos de unidad)
+      ctx.font = '9px var(--fuente-mono, monospace)';
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+
+      for (let k = paso; k <= lEje - 1; k += paso) {
+        const pk = this.proyectar(eje.dir.x * k, eje.dir.y * k, eje.dir.z * k);
+
+        // Tick perpendicular a la proyección del eje
+        ctx.lineWidth = 1.3;
+        ctx.strokeStyle = eje.color;
+        ctx.beginPath();
+        ctx.moveTo(pk.px - 3.5 * nx, pk.py - 3.5 * ny);
+        ctx.lineTo(pk.px + 3.5 * nx, pk.py + 3.5 * ny);
+        ctx.stroke();
+
+        // Número de la medida
+        if (this._capas.etiquetas) {
+          ctx.fillStyle = eje.colorTexto;
+          const posTextoX = pk.px + 9 * nx;
+          const posTextoY = pk.py + 9 * ny;
+          ctx.fillText(k.toString(), posTextoX, posTextoY);
+        }
+      }
+
+      // Etiqueta formal del eje (+X, +Y, +Z)
       if (this._capas.etiquetas) {
         ctx.font = 'bold 11px Inter, sans-serif';
-        ctx.fillText(eje.id, eje.fin.px + 8, eje.fin.py - 6);
+        ctx.fillStyle = eje.color;
+        const normDx = len > 0.001 ? dx / len : 1;
+        const normDy = len > 0.001 ? dy / len : 0;
+        ctx.fillText(eje.etiqueta, eje.fin.px + 12 * normDx, eje.fin.py + 12 * normDy);
       }
       ctx.restore();
     });
+
+    // Origen 0 en pantalla
+    if (this._capas.etiquetas) {
+      ctx.save();
+      ctx.font = '9px var(--fuente-mono, monospace)';
+      ctx.fillStyle = 'rgba(255, 255, 255, 0.45)';
+      ctx.fillText('0', o.px - 7, o.py + 9);
+      ctx.restore();
+    }
   }
 
   _dibujarParalelogramo3D(pts) {
@@ -711,6 +827,29 @@ export class MotorGrafico3D {
     ctx.lineWidth = 1.5;
     ctx.strokeStyle = 'rgba(192, 132, 252, 0.75)';
     ctx.stroke();
+
+    // Medida del área superficial en el centroide del paralelogramo
+    if (this._capas.etiquetas && pts.length >= 4) {
+      const p0 = pts[0];
+      const p1 = pts[1];
+      const p3 = pts[3];
+      const v1 = { x: p1.x - p0.x, y: p1.y - p0.y, z: p1.z - p0.z };
+      const v2 = { x: p3.x - p0.x, y: p3.y - p0.y, z: p3.z - p0.z };
+      const cruzX = v1.y * v2.z - v1.z * v2.y;
+      const cruzY = v1.z * v2.x - v1.x * v2.z;
+      const cruzZ = v1.x * v2.y - v1.y * v2.x;
+      const area = Math.hypot(cruzX, cruzY, cruzZ);
+
+      if (area > 0.05) {
+        const centroide = this.proyectar(
+          (pts[0].x + pts[1].x + pts[2].x + pts[3].x) / 4,
+          (pts[0].y + pts[1].y + pts[2].y + pts[3].y) / 4,
+          (pts[0].z + pts[1].z + pts[2].z + pts[3].z) / 4
+        );
+        const areaStr = Number.isInteger(area) ? area.toString() : area.toFixed(2);
+        this._dibujarInsigniaEtiqueta(`Área = ${areaStr} u²`, centroide.px, centroide.py, '#c084fc');
+      }
+    }
     ctx.restore();
   }
 
@@ -749,6 +888,17 @@ export class MotorGrafico3D {
       ctx.moveTo(pExt.px, pExt.py);
       ctx.lineTo(pZ.px, pZ.py);
       ctx.stroke();
+
+      // Cotas de medida espacial
+      if (this._capas.etiquetas && Math.abs(ext.z) >= 0.5) {
+        ctx.save();
+        ctx.font = '8px var(--fuente-mono, monospace)';
+        ctx.fillStyle = '#c4b5fd';
+        const midVertX = (pExt.px + pSuelo.px) / 2;
+        const midVertY = (pExt.py + pSuelo.py) / 2;
+        ctx.fillText(`z=${ext.z > 0 ? '+' : ''}${ext.z}`, midVertX + 4, midVertY);
+        ctx.restore();
+      }
     });
 
     ctx.restore();
@@ -781,12 +931,14 @@ export class MotorGrafico3D {
       ctx.shadowBlur = 0;
       this._dibujarPuntaFlecha2D(orig.px, orig.py, ext.px, ext.py, v.color, esProductoCruz ? 12 : 10);
 
-      // Etiqueta del vector
+      // Etiqueta del vector con coordenadas y medida de la norma euclídea
       if (this._capas.etiquetas) {
         const midX = (orig.px + ext.px) / 2;
         const midY = (orig.py + ext.py) / 2;
+        const mod = Math.hypot(v.x, v.y, v.z);
+        const modStr = Number.isInteger(mod) ? mod.toString() : mod.toFixed(2);
         this._dibujarInsigniaEtiqueta(
-          `${v.etiqueta}: (${v.x}, ${v.y}, ${v.z})`,
+          `${v.etiqueta}: (${v.x}, ${v.y}, ${v.z}) | |${v.etiqueta}| = ${modStr} u`,
           midX + 10, midY - 10, v.color
         );
       }

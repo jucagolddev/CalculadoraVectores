@@ -130,14 +130,18 @@ Diseñada con un enfoque de **cero dependencias externas**, explota las capacida
   - Control orbital continuo con ratón: **Yaw** (rotación horizontal) y **Pitch** (elevación vertical con bloqueo de cardán a $\pm 87^\circ$).
   - Zoom focal interactivo con rueda de ratón o botones del HUD.
   - Sistema de referencia dextrógiro: Eje $X$ (rojo), Eje $Y$ (verde) y Eje vertical $Z$ (violeta, apuntando hacia arriba según la convención física).
-  - Malla base horizontal en plano $XY$ ($z=0$) y líneas discontinuas de proyección ortogonal al suelo.
+  - **Graduación Métrica Completa en Ejes:** Marcas numéricas de unidad (ticks ortogonales y valores $1, 2, 3, 4, 5...$) en los semiejes positivos y marcas sutiles en los negativos.
+  - **Medida Directa de Módulos (Norma Euclídea):** Las insignias flotantes de cada vector incluyen automáticamente su módulo calculado: `u: (ux, uy, uz) | |u| = X.XX u`.
+  - Malla base horizontal en plano $XY$ ($z=0$), cotas de elevación vertical $z$ en las trazas y líneas discontinuas de proyección ortogonal al suelo.
 - **Modos Tridimensionales Especializados:**
-  1. **Operaciones & Producto Vectorial ($\vec{u} \times \vec{v}$):** Cálculo del determinante $3 \times 3$, vector perpendicular resultante, suma tridimensional, producto escalar, ángulo espacial y superficie del paralelogramo sustentado con sombreado volumétrico.
+  1. **Operaciones & Producto Vectorial ($\vec{u} \times \vec{v}$):** Cálculo del determinante $3 \times 3$, vector perpendicular resultante, suma tridimensional, producto escalar, ángulo espacial y superficie del paralelogramo sustentado con sombreado volumétrico y medida explícita del área `Área = X.XX u²`.
   2. **Vector entre 2 Puntos ($A \to B$) & Cosenos Directores:** Vector relativo $\vec{AB} = B - A$, norma tridimensional, cosenos directores con los tres ejes coordenados, verificación de la identidad $\sum \cos^2 = 1$ y vector unitario director $\hat{u}$.
 - **HUD Dinámico Adaptativo:** Coordenadas angulares de cámara en tiempo real (`Yaw: X°, Pitch: Y° | Zoom: Zpx/u`) y alternancia de capas 3D.
 
 ### 11. Modo Plano: Hoja de Papel Técnico (ℝ² ⊂ ℝ³)
 - **Proyección Ortogonal Plana Sin Distorsión:** Transforma el espacio tridimensional en una vista de ingeniería sobre el plano coordenado $XY$ ($z = 0$). Elimina la perspectiva cónica y proyecta directamente $px = cx + x \cdot \text{escala}$, $py = cy - y \cdot \text{escala}$, preservando exactamente ángulos y proporciones métricas.
+- **Graduación Numérica Integral:** Regla graduada continua sobre los ejes $X$ e $Y$ con ticks y valores numéricos adaptativos (... -3, -2, -1, 0, 1, 2, 3 ...) y origen etiquetado.
+- **Medidas en Etiquetas Vectoriales:** Cada vector proyectado rotula sus componentes, cota normal de cota vertical `(z = ±k)` y su medida real euclídea `|v| = X.XX u`.
 - **Estética de Folio Técnico y Plano de Ingeniería:**
   - Lienzo tipo folio técnico milimetrado (`#090d1a`) con sombra proyectada, marco perimetral y cajetín de especificación formal.
   - Cuadrícula milimetrada dual con subdivisiones mayor ($1\text{ u}$) y menor ($0.2\text{ u}$).
