@@ -1,4 +1,5 @@
 import { CatalogoInfoContextual } from '../domain/CatalogoInfoContextual.js';
+import { RenderizadorMatematico } from '../../../shared/math/RenderizadorMatematico.js';
 
 /**
  * Controlador de presentación para el Popover de Información Contextual.
@@ -116,6 +117,9 @@ export class PopoverInfoContextual {
 
     document.body.appendChild(popover);
     this._elementoPopover = popover;
+
+    // Compilar fórmulas matemáticas con KaTeX
+    RenderizadorMatematico.renderizarElemento(popover);
 
     this._posicionar(boton, popover);
   }

@@ -1,6 +1,7 @@
 import { Configuracion } from '../../../core/constants/Configuracion.js';
 import { GeneradorInputs } from '../../../shared/utils/GeneradorInputs.js';
 import { CatalogoInfoContextual } from '../../teoria/domain/CatalogoInfoContextual.js';
+import { RenderizadorMatematico } from '../../../shared/math/RenderizadorMatematico.js';
 
 /**
  * Controlador de presentación para el cajón de resolución paso a paso y evaluación formativa.
@@ -279,6 +280,18 @@ export class ControladorSolucion {
       `;
     }
 
+    const formatearBloque = (texto) => {
+      if (!texto) return '';
+      const str = String(texto).trim();
+      if (str.startsWith('$$') || str.startsWith('$') || str.startsWith('\\(') || str.startsWith('\\[')) {
+        return str;
+      }
+      if (str.includes('\\') || str.includes('^') || str.includes('_')) {
+        return `$$${str}$$`;
+      }
+      return str;
+    };
+
     const htmlPasos = resultado.pasos.map(paso => `
       <div class="paso-matematico">
         <div class="paso-titulo">
@@ -287,13 +300,14 @@ export class ControladorSolucion {
           </svg>
           ${paso.titulo}
         </div>
-        <div class="bloque-formula">Fórmula teórica: ${paso.formula}</div>
-        <div class="bloque-sustitucion">Sustitución de datos: ${paso.sustitucion}</div>
-        <div class="bloque-resultado">${paso.resultado}</div>
+        <div class="bloque-formula"><span style="font-weight:600; color:var(--color-primario);">Fórmula teórica:</span> ${formatearBloque(paso.formula)}</div>
+        <div class="bloque-sustitucion"><span style="font-weight:600; color:#38bdf8;">Sustitución de datos:</span> ${formatearBloque(paso.sustitucion)}</div>
+        <div class="bloque-resultado">${formatearBloque(paso.resultado)}</div>
       </div>
     `).join('');
 
     this._cuerpoSolucion.innerHTML = htmlEvaluacion + htmlPasos;
+    RenderizadorMatematico.renderizarElemento(this._cuerpoSolucion);
     this._cajonSolucion.classList.add('abierto');
   }
 

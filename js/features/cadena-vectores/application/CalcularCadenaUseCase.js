@@ -32,10 +32,10 @@ export class CalcularCadenaUseCase {
       longitudTotal += mod;
 
       pasos.push({
-        titulo: `Vector de Unión ${i + 1}: ${etiqueta} (${pOrigen.etiqueta} → ${pDestino.etiqueta})`,
-        formula: `${etiqueta} = ${pDestino.etiqueta} - ${pOrigen.etiqueta} = (${pDestino.etiqueta}x - ${pOrigen.etiqueta}x, ${pDestino.etiqueta}y - ${pOrigen.etiqueta}y)`,
-        sustitucion: `${etiqueta} = (${pDestino.x} - (${pOrigen.x}), ${pDestino.y} - (${pOrigen.y}))`,
-        resultado: `${etiqueta} = (${v.x}, ${v.y}) | ||${etiqueta}|| = ${mod.toFixed(4)} u | θ = ${v.direccionGrados().toFixed(2)}°`
+        titulo: `Vector de Unión ${i + 1}: \\vec{${etiqueta}} (${pOrigen.etiqueta} \\to ${pDestino.etiqueta})`,
+        formula: `$$\\vec{${etiqueta}} = ${pDestino.etiqueta} - ${pOrigen.etiqueta} = (${pDestino.etiqueta}_x - ${pOrigen.etiqueta}_x, \\; ${pDestino.etiqueta}_y - ${pOrigen.etiqueta}_y)$$`,
+        sustitucion: `$$\\vec{${etiqueta}} = (${pDestino.x} - (${pOrigen.x}), \\; ${pDestino.y} - (${pOrigen.y}))$$`,
+        resultado: `$$\\vec{${etiqueta}} = (${v.x}, \\; ${v.y}) \\quad \\big| \\quad \\|\\vec{${etiqueta}}\\| = ${mod.toFixed(4)} \\text{ u} \\quad \\big| \\quad \\theta = ${v.direccionGrados().toFixed(2)}^\\circ$$`
       });
     }
 
@@ -54,10 +54,10 @@ export class CalcularCadenaUseCase {
       const sumatoriaY = vectores.map(v => v.y >= 0 ? `+${v.y}` : `${v.y}`).join(' ').replace(/^\+/, '');
 
       pasos.push({
-        titulo: `Vector Resultante Total: R (${pInicial.etiqueta} → ${pFinal.etiqueta})`,
-        formula: 'R = v_1 + v_2 + ... = (Suma dx_i, Suma dy_i) = P_final - P_inicial',
-        sustitucion: `Rx = ${sumatoriaX} = ${vectorResultante.x} | Ry = ${sumatoriaY} = ${vectorResultante.y}`,
-        resultado: `R = (${vectorResultante.x}, ${vectorResultante.y}) | ||R|| = ${modResultante.toFixed(4)} u | θ = ${vectorResultante.direccionGrados().toFixed(2)}°`
+        titulo: `Vector Resultante Total: \\vec{R} (${pInicial.etiqueta} \\to ${pFinal.etiqueta})`,
+        formula: '$$\\vec{R} = \\sum_{i=1}^{n} \\vec{v}_i = \\left(\\sum v_{ix}, \\; \\sum v_{iy}\\right) = P_{\\text{final}} - P_{\\text{inicial}}$$',
+        sustitucion: `$$R_x = ${sumatoriaX} = ${vectorResultante.x} \\quad \\big| \\quad R_y = ${sumatoriaY} = ${vectorResultante.y}$$`,
+        resultado: `$$\\vec{R} = (${vectorResultante.x}, \\; ${vectorResultante.y}) \\quad \\big| \\quad \\|\\vec{R}\\| = ${modResultante.toFixed(4)} \\text{ u} \\quad \\big| \\quad \\theta = ${vectorResultante.direccionGrados().toFixed(2)}^\\circ$$`
       });
 
       pasos.push({

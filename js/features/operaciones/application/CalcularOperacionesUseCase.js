@@ -18,47 +18,47 @@ export class CalcularOperacionesUseCase {
 
     const pasosSuma = [
       {
-        titulo: 'Suma de Vectores: u + v',
-        formula: 'u + v = (ux + vx, uy + vy)',
-        sustitucion: `u + v = (${u.x} + (${v.x}), ${u.y} + (${v.y}))`,
-        resultado: `u + v = (${suma.x}, ${suma.y}) | Módulo: ${suma.modulo().toFixed(4)}`
+        titulo: 'Suma de Vectores: \\vec{u} + \\vec{v}',
+        formula: '$$\\vec{u} + \\vec{v} = (u_x + v_x, \\; u_y + v_y)$$',
+        sustitucion: `$$\\vec{u} + \\vec{v} = (${u.x} + (${v.x}), \\; ${u.y} + (${v.y}))$$`,
+        resultado: `$$\\vec{u} + \\vec{v} = (${suma.x}, \\; ${suma.y}) \\quad \\big| \\quad \\|\\vec{u} + \\vec{v}\\| = ${suma.modulo().toFixed(4)} \\text{ u}$$`
       }
     ];
 
     const pasosResta = [
       {
-        titulo: 'Resta de Vectores: u - v',
-        formula: 'u - v = (ux - vx, uy - vy)',
-        sustitucion: `u - v = (${u.x} - (${v.x}), ${u.y} - (${v.y}))`,
-        resultado: `u - v = (${resta.x}, ${resta.y}) | Módulo: ${resta.modulo().toFixed(4)}`
+        titulo: 'Resta de Vectores: \\vec{u} - \\vec{v}',
+        formula: '$$\\vec{u} - \\vec{v} = (u_x - v_x, \\; u_y - v_y)$$',
+        sustitucion: `$$\\vec{u} - \\vec{v} = (${u.x} - (${v.x}), \\; ${u.y} - (${v.y}))$$`,
+        resultado: `$$\\vec{u} - \\vec{v} = (${resta.x}, \\; ${resta.y}) \\quad \\big| \\quad \\|\\vec{u} - \\vec{v}\\| = ${resta.modulo().toFixed(4)} \\text{ u}$$`
       }
     ];
 
     const pasosEscalar = [
       {
-        titulo: `Multiplicación por Escalar: ${k} · u`,
-        formula: 'k · u = (k · ux, k · uy)',
-        sustitucion: `${k} · (${u.x}, ${u.y}) = (${k} · ${u.x}, ${k} · ${u.y})`,
-        resultado: `${k}·u = (${ponderadoU.x}, ${ponderadoU.y}) | Módulo: ${ponderadoU.modulo().toFixed(4)}`
+        titulo: `Multiplicación por Escalar: ${k} \\cdot \\vec{u}`,
+        formula: '$$k \\cdot \\vec{u} = (k \\cdot u_x, \\; k \\cdot u_y)$$',
+        sustitucion: `$$${k} \\cdot (${u.x}, \\; ${u.y}) = (${k} \\cdot ${u.x}, \\; ${k} \\cdot ${u.y})$$`,
+        resultado: `$$${k}\\vec{u} = (${ponderadoU.x}, \\; ${ponderadoU.y}) \\quad \\big| \\quad \\|${k}\\vec{u}\\| = ${ponderadoU.modulo().toFixed(4)} \\text{ u}$$`
       }
     ];
 
     const pasosProductoPunto = [
       {
-        titulo: 'Producto Escalar (Producto Punto): u · v',
-        formula: 'u · v = (ux · vx) + (uy · vy)',
-        sustitucion: `u · v = (${u.x} · ${v.x}) + (${u.y} · ${v.y}) = ${u.x * v.x} + ${u.y * v.y}`,
-        resultado: `u · v = ${productoPunto}`
+        titulo: 'Producto Escalar (Producto Punto): \\vec{u} \\cdot \\vec{v}',
+        formula: '$$\\vec{u} \\cdot \\vec{v} = u_x v_x + u_y v_y$$',
+        sustitucion: `$$\\vec{u} \\cdot \\vec{v} = (${u.x})(${v.x}) + (${u.y})(${v.y}) = ${u.x * v.x} + ${u.y * v.y}$$`,
+        resultado: `$$\\vec{u} \\cdot \\vec{v} = ${productoPunto}$$`
       },
       {
-        titulo: 'Ángulo Convexo entre u y v',
-        formula: 'cos(θ) = (u · v) / (||u|| · ||v||)',
+        titulo: 'Ángulo Convexo entre \\vec{u} y \\vec{v}',
+        formula: '$$\\cos(\\theta) = \\frac{\\vec{u} \\cdot \\vec{v}}{\\|\\vec{u}\\| \\cdot \\|\\vec{v}\\|}$$',
         sustitucion: (u.modulo() === 0 || v.modulo() === 0)
           ? 'Al menos uno de los vectores es el vector nulo (0, 0), por lo que carece de dirección definida.'
-          : `cos(θ) = ${productoPunto} / (${u.modulo().toFixed(4)} · ${v.modulo().toFixed(4)})`,
+          : `$$\\cos(\\theta) = \\frac{${productoPunto}}{${u.modulo().toFixed(4)} \\cdot ${v.modulo().toFixed(4)}}$$`,
         resultado: (u.modulo() === 0 || v.modulo() === 0)
-          ? 'θ = 0.00° (Indeterminado por vector nulo)'
-          : `θ = ${angulo.toFixed(2)}° (${((angulo * Math.PI) / 180).toFixed(4)} rad)`
+          ? '$$\\theta = 0.00^\\circ \\quad \\text{(Indeterminado por vector nulo)}$$'
+          : `$$\\theta = ${angulo.toFixed(2)}^\\circ \\quad (${((angulo * Math.PI) / 180).toFixed(4)} \\text{ rad})$$`
       }
     ];
 

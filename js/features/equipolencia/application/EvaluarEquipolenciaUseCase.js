@@ -23,21 +23,21 @@ export class EvaluarEquipolenciaUseCase {
 
     const pasos = [
       {
-        titulo: '1. Cálculo del Vector AB',
-        formula: 'Vector AB = (xB - xA, yB - yA)',
-        sustitucion: `Vector AB = (${puntoB.x} - (${puntoA.x}), ${puntoB.y} - (${puntoA.y}))`,
-        resultado: `Vector AB = (${vectorAB.x}, ${vectorAB.y}) | ||AB|| = ${modAB.toFixed(4)} | θ = ${angAB.toFixed(2)}°`
+        titulo: '1. Cálculo del Vector \\vec{AB}',
+        formula: '$$\\vec{AB} = (x_B - x_A, \\; y_B - y_A)$$',
+        sustitucion: `$$\\vec{AB} = (${puntoB.x} - (${puntoA.x}), \\; ${puntoB.y} - (${puntoA.y}))$$`,
+        resultado: `$$\\vec{AB} = (${vectorAB.x}, \\; ${vectorAB.y}) \\quad \\big| \\quad \\|\\vec{AB}\\| = ${modAB.toFixed(4)} \\text{ u} \\quad \\big| \\quad \\theta = ${angAB.toFixed(2)}^\\circ$$`
       },
       {
-        titulo: '2. Cálculo del Vector CD',
-        formula: 'Vector CD = (xD - xC, yD - yC)',
-        sustitucion: `Vector CD = (${puntoD.x} - (${puntoC.x}), ${puntoD.y} - (${puntoC.y}))`,
-        resultado: `Vector CD = (${vectorCD.x}, ${vectorCD.y}) | ||CD|| = ${modCD.toFixed(4)} | θ = ${angCD.toFixed(2)}°`
+        titulo: '2. Cálculo del Vector \\vec{CD}',
+        formula: '$$\\vec{CD} = (x_D - x_C, \\; y_D - y_C)$$',
+        sustitucion: `$$\\vec{CD} = (${puntoD.x} - (${puntoC.x}), \\; ${puntoD.y} - (${puntoC.y}))$$`,
+        resultado: `$$\\vec{CD} = (${vectorCD.x}, \\; ${vectorCD.y}) \\quad \\big| \\quad \\|\\vec{CD}\\| = ${modCD.toFixed(4)} \\text{ u} \\quad \\big| \\quad \\theta = ${angCD.toFixed(2)}^\\circ$$`
       },
       {
         titulo: '3. Comprobación de Condiciones de Equipolencia',
-        formula: 'Dos vectores son equipolentes <=> tienen idéntico módulo, misma dirección y mismo sentido (mismas componentes cartesianas).',
-        sustitucion: `Componente X: ${vectorAB.x} = ${vectorCD.x} (${vectorAB.x === vectorCD.x ? 'VERDADERO' : 'FALSO'}) | Componente Y: ${vectorAB.y} = ${vectorCD.y} (${vectorAB.y === vectorCD.y ? 'VERDADERO' : 'FALSO'})`,
+        formula: '$$\\vec{AB} \\equiv \\vec{CD} \\iff (AB_x = CD_x) \\land (AB_y = CD_y) \\land (\\|\\vec{AB}\\| = \\|\\vec{CD}\\|)$$',
+        sustitucion: `$$AB_x = ${vectorAB.x} \\stackrel{?}{=} ${vectorCD.x} = CD_x \\; (${vectorAB.x === vectorCD.x ? '\\text{CUMPLE}' : '\\text{NO CUMPLE}'}) \\quad \\big| \\quad AB_y = ${vectorAB.y} \\stackrel{?}{=} ${vectorCD.y} = CD_y \\; (${vectorAB.y === vectorCD.y ? '\\text{CUMPLE}' : '\\text{NO CUMPLE}'})$$`,
         resultado: sonEquipolentes
           ? 'CONCLUSIÓN: SÍ son equipolentes. Representan el mismo vector libre trasladado en el plano.'
           : 'CONCLUSIÓN: NO son equipolentes. Difieren en magnitud, dirección o sentido.'

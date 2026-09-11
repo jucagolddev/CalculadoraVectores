@@ -494,28 +494,59 @@ export class PlanoCartesiano {
       const medioY = (origenPx.py + destinoPx.py) / 2;
       const normalX = -Math.sin(angulo) * 18;
       const normalY = Math.cos(angulo) * 18;
+      const centroX = medioX + normalX;
+      const centroY = medioY + normalY;
 
-      const textoEtiqueta = `${vector.etiqueta} = ${vector.aCadenaComponentes()}`;
+      const nombre = vector.etiqueta || 'v';
+      const componentes = ` = ${vector.aCadenaComponentes()}`;
 
       this._ctx.font = 'bold 12px Inter, sans-serif';
-      const anchoCaja = this._ctx.measureText(textoEtiqueta).width + 12;
-      const altoCaja = 20;
+      const anchoNombre = this._ctx.measureText(nombre).width;
+      const anchoComponentes = this._ctx.measureText(componentes).width;
+      const anchoTotal = anchoNombre + anchoComponentes;
 
-      const cajaX = medioX + normalX - (anchoCaja / 2);
-      const cajaY = medioY + normalY - (altoCaja / 2);
+      const paddingX = 8;
+      const anchoCaja = anchoTotal + paddingX * 2;
+      const altoCaja = 22;
 
-      this._ctx.fillStyle = 'rgba(15, 23, 42, 0.88)';
+      const cajaX = centroX - (anchoCaja / 2);
+      const cajaY = centroY - (altoCaja / 2);
+
+      // Fondo del recuadro con borde de color del vector
+      this._ctx.fillStyle = 'rgba(15, 23, 42, 0.92)';
       this._ctx.strokeStyle = vector.color;
-      this._ctx.lineWidth = 1;
+      this._ctx.lineWidth = 1.2;
       this._ctx.beginPath();
       this._ctx.roundRect(cajaX, cajaY, anchoCaja, altoCaja, 5);
       this._ctx.fill();
       this._ctx.stroke();
 
-      this._ctx.fillStyle = '#f8fafc';
-      this._ctx.textAlign = 'center';
+      const inicioTextoX = cajaX + paddingX;
+      const textoY = centroY + 2;
+
+      // 1. Nombre del vector con su color de realce
+      this._ctx.fillStyle = vector.color;
+      this._ctx.textAlign = 'left';
       this._ctx.textBaseline = 'middle';
-      this._ctx.fillText(textoEtiqueta, medioX + normalX, medioY + normalY);
+      this._ctx.fillText(nombre, inicioTextoX, textoY);
+
+      // 2. Trazo vectorial de la flecha matemática horizontal encima del nombre
+      const flechaY = textoY - 8;
+      const fX1 = inicioTextoX;
+      const fX2 = inicioTextoX + anchoNombre;
+      this._ctx.strokeStyle = vector.color;
+      this._ctx.lineWidth = 1.2;
+      this._ctx.beginPath();
+      this._ctx.moveTo(fX1, flechaY);
+      this._ctx.lineTo(fX2, flechaY);
+      this._ctx.lineTo(fX2 - 3, flechaY - 2.5);
+      this._ctx.moveTo(fX2, flechaY);
+      this._ctx.lineTo(fX2 - 3, flechaY + 2.5);
+      this._ctx.stroke();
+
+      // 3. Componentes numéricas
+      this._ctx.fillStyle = '#f8fafc';
+      this._ctx.fillText(componentes, inicioTextoX + anchoNombre, textoY);
     }
 
     this._ctx.restore();

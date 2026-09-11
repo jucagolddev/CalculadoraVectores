@@ -1,8 +1,8 @@
 import { EstadoApp } from './core/state/EstadoApp.js';
 import { Configuracion } from './core/constants/Configuracion.js';
-import { PlanoCartesiano } from './shared/canvas/PlanoCartesiano.js';
-import { MotorGrafico3D } from './shared/canvas/MotorGrafico3D.js?v=clean4';
-import { FactoriaControladores } from './core/di/FactoriaControladores.js';
+import { PlanoCartesiano } from './shared/canvas/PlanoCartesiano.js?v=katex13';
+import { MotorGrafico3D } from './shared/canvas/MotorGrafico3D.js?v=katex13';
+import { FactoriaControladores } from './core/di/FactoriaControladores.js?v=katex13';
 import { GeneradorEjerciciosService } from './features/ejercicios/domain/GeneradorEjerciciosService.js';
 import { GeneradorInputs } from './shared/utils/GeneradorInputs.js';
 import { Navbar } from './layout/Navbar.js';

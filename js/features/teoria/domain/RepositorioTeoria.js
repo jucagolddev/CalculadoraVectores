@@ -42,7 +42,7 @@ export class RepositorioTeoria {
           { simbolo: '||v||', nombre: 'Módulo o norma', descripcion: 'Longitud del segmento orientado en el plano. Siempre ||v|| ≥ 0.' },
           { simbolo: 'θ', nombre: 'Ángulo director', descripcion: 'Inclinación angular respecto al semieje coordenado positivo X.' }
         ],
-        formula: 'Vector v = (vx, vy) = vx · i + vy · j ∈ ℝ²',
+        formula: '$$\\vec{v} = (v_x, v_y) = v_x \\mathbf{i} + v_y \\mathbf{j} \\in \\mathbb{R}^2$$',
         formulaNota: 'Los vectores i = (1, 0) y j = (0, 1) constituyen la base ortonormal canónica de ℝ².',
         demostracion: {
           titulo: '¿Por qué un vector no es un punto? Deducción de la invariancia por traslación',
@@ -106,7 +106,7 @@ export class RepositorioTeoria {
           { simbolo: 'vx = x₂ - x₁', nombre: 'Componente X', descripcion: 'Desplazamiento horizontal neto de A hacia B.' },
           { simbolo: 'vy = y₂ - y₁', nombre: 'Componente Y', descripcion: 'Desplazamiento vertical neto de A hacia B.' }
         ],
-        formula: 'v = AB = B - A = (x₂ - x₁, y₂ - y₁)',
+        formula: '$$\\vec{v} = \\vec{AB} = B - A = (x_2 - x_1, \\; y_2 - y_1)$$',
         formulaNota: 'El orden de la resta es sagrado: siempre Extremo (Llegada) menos Origen (Partida).',
         demostracion: {
           titulo: 'Deducción vectorial por suma de vectores de posición',
@@ -169,7 +169,7 @@ export class RepositorioTeoria {
           { simbolo: 'θ', nombre: 'Ángulo director', descripcion: 'Ángulo medido en sentido antihorario desde el eje positivo X hasta el vector.' },
           { simbolo: 'atan2(vy, vx)', nombre: 'Arcotangente de 4 cuadrantes', descripcion: 'Función trigonométrica robusta que resuelve la ambigüedad de signos cuadrantales.' }
         ],
-        formula: '||v|| = √(vx² + vy²) | θ = atan2(vy, vx)',
+        formula: '$$\\|\\vec{v}\\| = \\sqrt{v_x^2 + v_y^2} \\quad \\Big| \\quad \\theta = \\operatorname{atan2}(v_y, v_x)$$',
         formulaNota: 'La norma siempre es un número real positivo o nulo (||v|| ≥ 0). Solo vale cero si v = (0, 0).',
         demostracion: {
           titulo: 'Deducción métrica mediante el Teorema de Pitágoras',
@@ -232,7 +232,7 @@ export class RepositorioTeoria {
           { simbolo: '||û|| = 1', nombre: 'Condición de normalización', descripcion: 'La norma del vector unitario es invariablemente 1.' },
           { simbolo: '(cos θ, sen θ)', nombre: 'Forma trigonométrica', descripcion: 'Componentes del versor expresadas mediante las funciones coseno y seno del ángulo director.' }
         ],
-        formula: 'û = (vx / ||v||, vy / ||v||) = (cos θ, sen θ) con ||û|| = 1',
+        formula: '$$\\hat{u} = \\frac{\\vec{v}}{\\|\\vec{v}\\|} = \\left(\\frac{v_x}{\\|\\vec{v}\\|}, \\; \\frac{v_y}{\\|\\vec{v}\\|}\\right) = (\\cos\\theta, \\; \\sin\\theta) \\quad (\\|\\hat{u}\\| = 1)$$',
         formulaNota: 'El vector nulo (0, 0) no admite normalización pues la división por cero no está definida.',
         demostracion: {
           titulo: 'Demostración de que la norma de û = v / ||v|| es invariablemente 1',
@@ -302,7 +302,7 @@ export class RepositorioTeoria {
           { simbolo: 'u - v', nombre: 'Vector diferencia', descripcion: 'Vector que conecta el extremo de v con el extremo de u (diagonal secundaria).' },
           { simbolo: 'k · u', nombre: 'Multiplicación por escalar', descripcion: 'Escalado que estira (|k| > 1), comprime (|k| < 1) o invierte el sentido (k < 0).' }
         ],
-        formula: 'Suma: u + v = (ux + vx, uy + vy) | Resta: u - v = (ux - vx, uy - vy)',
+        formula: '$$\\vec{u} + \\vec{v} = (u_x + v_x, \\; u_y + v_y) \\quad \\Big| \\quad \\vec{u} - \\vec{v} = (u_x - v_x, \\; u_y - v_y)$$',
         formulaNota: 'La resta u - v equivale algebraicamente a sumar el opuesto: u + (-v).',
         demostracion: {
           titulo: 'Equivalencia entre la Regla del Paralelogramo y el Método Punta-Cola',
@@ -369,7 +369,7 @@ export class RepositorioTeoria {
           { simbolo: 'cos θ', nombre: 'Coseno del ángulo', descripcion: 'Factor de alineación entre los dos vectores.' },
           { simbolo: 'θ = 90° ⟺ u · v = 0', nombre: 'Condición de perpendicularidad', descripcion: 'Dos vectores no nulos son ortogonales si su producto escalar es nulo.' }
         ],
-        formula: 'u · v = ux · vx + uy · vy = ||u|| · ||v|| · cos(θ)',
+        formula: '$$\\vec{u} \\cdot \\vec{v} = u_x v_x + u_y v_y = \\|\\vec{u}\\| \\|\\vec{v}\\| \\cos(\\theta)$$',
         formulaNota: 'El producto escalar es estrictamente conmutativo: u · v = v · u.',
         demostracion: {
           titulo: 'Deducción del Producto Escalar mediante el Teorema del Coseno',
@@ -438,7 +438,7 @@ export class RepositorioTeoria {
           { simbolo: 'comp_v(u)', nombre: 'Componente escalar de la proyección', descripcion: 'Longitud con signo de la proyección: comp_v(u) = (u · v) / ||v||.' },
           { simbolo: 'u⊥ = u - proy_v(u)', nombre: 'Componente ortogonal', descripcion: 'Vector perpendicular a v tal que proy_v(u) + u⊥ = u.' }
         ],
-        formula: 'proy_v(u) = [ (u · v) / ||v||² ] · v | u = proy_v(u) + u⊥',
+        formula: '$$\\operatorname{proy}_{\\vec{v}}(\\vec{u}) = \\left[ \\frac{\\vec{u} \\cdot \\vec{v}}{\\|\\vec{v}\\|^2} \\right] \\vec{v} \\quad \\Big| \\quad \\vec{u} = \\operatorname{proy}_{\\vec{v}}(\\vec{u}) + \\vec{u}_\\perp$$',
         formulaNota: 'El término (u · v) / ||v||² es un número escalar puro que multiplica al vector v.',
         demostracion: {
           titulo: 'Deducción geométrica de la fórmula de proyección ortogonal',
@@ -508,7 +508,7 @@ export class RepositorioTeoria {
           { simbolo: 'det = 0', nombre: 'Condición de dependencia', descripcion: 'Los vectores son paralelos / colineales; no pueden formar base.' },
           { simbolo: 'det ≠ 0', nombre: 'Condición de independencia', descripcion: 'Los vectores forman una base generadora completa de todo ℝ².' }
         ],
-        formula: 'det(u, v) = | ux  uy | / | vx  vy | = ux · vy - uy · vx',
+        formula: '$$\\det\\begin{pmatrix} u_x & v_x \\\\ u_y & v_y \\end{pmatrix} = u_x v_y - u_y v_x \\quad \\Big( \\text{Independientes} \\iff \\det \\neq 0 \\Big)$$',
         formulaNota: 'El valor absoluto |det(u, v)| es exactamente igual al área del paralelogramo formado por u y v en ℝ².',
         demostracion: {
           titulo: 'Deducción de la condición de dependencia lineal v = k · u',
@@ -576,7 +576,7 @@ export class RepositorioTeoria {
           { simbolo: '||AB|| = ||CD||', nombre: 'Primer requisito', descripcion: 'Módulo idéntico entre ambos segmentos dirigidos.' },
           { simbolo: 'û_AB = û_CD', nombre: 'Segundo y tercer requisito', descripcion: 'Dirección y sentido estrictamente idénticos mediante vector unitario director.' }
         ],
-        formula: 'AB ~ CD ⟺ B - A = D - C ⟺ (xB - xA, yB - yA) = (xD - xC, yD - yC)',
+        formula: '$$\\vec{AB} \\sim \\vec{CD} \\iff B - A = D - C \\iff \\begin{cases} x_B - x_A = x_D - x_C \\\\ y_B - y_A = y_D - y_C \\end{cases}$$',
         formulaNota: 'Geométricamente, los cuatro puntos A, B, D, C forman los vértices consecutivos de un paralelogramo.',
         demostracion: {
           titulo: 'Demostración mediante el paralelogramo de equipolencia',
@@ -639,7 +639,7 @@ export class RepositorioTeoria {
           { simbolo: 'R = ∑ vi = Pn - P₁', nombre: 'Vector resultante neto', descripcion: 'Vector directo que conecta el punto de partida inicial con la meta final.' },
           { simbolo: 'R = (0, 0)', nombre: 'Poligonal cerrada', descripcion: 'Si la ruta regresa al punto de partida original, el desplazamiento neto es nulo.' }
         ],
-        formula: 'R = v₁ + v₂ + ... + vn = (∑ v_ix, ∑ v_iy) = P_final - P_inicial',
+        formula: '$$\\vec{R} = \\sum_{i=1}^n \\vec{v}_i = P_{\\text{final}} - P_{\\text{inicial}}$$',
         formulaNota: 'La suma vectorial de una cadena cerrada de vectores (polígono que regresa al origen) es siempre el vector cero (0, 0).',
         demostracion: {
           titulo: 'Demostración de la suma telescópica de la resultante',
@@ -707,7 +707,7 @@ export class RepositorioTeoria {
           { simbolo: 'i, j, k', nombre: 'Base canónica espacial', descripcion: 'Vectores unitarios directores mutuamente perpendiculares: i=(1,0,0), j=(0,1,0), k=(0,0,1).' },
           { simbolo: '||v|| = √(vx² + vy² + vz²)', nombre: 'Módulo espacial 3D', descripcion: 'Diagonal de la caja rectangular paralelepipédica formada por las componentes.' }
         ],
-        formula: 'v = (vx, vy, vz) = vx · i + vy · j + vz · k | ||v|| = √(vx² + vy² + vz²)',
+        formula: '$$\\vec{v} = v_x \\mathbf{i} + v_y \\mathbf{j} + v_z \\mathbf{k} \\quad \\Big| \\quad \\|\\vec{v}\\| = \\sqrt{v_x^2 + v_y^2 + v_z^2}$$',
         formulaNota: 'El sistema cartesiano tridimensional se asume siempre dextrógiro (regla de la mano derecha).',
         demostracion: {
           titulo: 'Deducción del módulo 3D por doble aplicación del Teorema de Pitágoras',
@@ -771,7 +771,7 @@ export class RepositorioTeoria {
           { simbolo: 'cos β = vy / ||v||', nombre: 'Coseno director en Y', descripcion: 'Componente normalizada a lo largo del eje Y.' },
           { simbolo: 'cos γ = vz / ||v||', nombre: 'Coseno director en Z', descripcion: 'Componente normalizada a lo largo del eje Z.' }
         ],
-        formula: 'cos²(α) + cos²(β) + cos²(γ) = 1 | û = (cos α, cos β, cos γ)',
+        formula: '$$\\cos^2(\\alpha) + \\cos^2(\\beta) + \\cos^2(\\gamma) = 1 \\quad \\Big| \\quad \\hat{u} = (\\cos\\alpha, \\; \\cos\\beta, \\; \\cos\\gamma)$$',
         formulaNota: 'La suma de los cuadrados de los tres cosenos directores es invariablemente igual a 1 en cualquier vector no nulo de ℝ³.',
         demostracion: {
           titulo: 'Demostración de la Relación Fundamental cos² α + cos² β + cos² γ = 1',
@@ -835,7 +835,7 @@ export class RepositorioTeoria {
           { simbolo: 'i, j, k', nombre: 'Vectores de la base canónica', descripcion: 'Fila superior del determinante formal de desarrollo de Laplace.' },
           { simbolo: 'u × v = (0, 0, 0)', nombre: 'Vectores colineales', descripcion: 'Si el producto vectorial se anula, los vectores son estrictamente paralelos.' }
         ],
-        formula: 'u × v = (uy·vz - uz·vy)·i - (ux·vz - uz·vx)·j + (ux·vy - uy·vx)·k',
+        formula: '$$\\vec{u} \\times \\vec{v} = \\begin{vmatrix} \\mathbf{i} & \\mathbf{j} & \\mathbf{k} \\\\ u_x & u_y & u_z \\\\ v_x & v_y & v_z \\end{vmatrix} = (u_y v_z - u_z v_y)\\mathbf{i} - (u_x v_z - u_z v_x)\\mathbf{j} + (u_x v_y - u_y v_x)\\mathbf{k}$$',
         formulaMatriz: {
           filas: [
             ['i', 'j', 'k'],
@@ -913,7 +913,7 @@ export class RepositorioTeoria {
           { simbolo: 'V = |[u, v, w]|', nombre: 'Volumen del paralelepípedo', descripcion: 'Volumen del sólido sustentado por los 3 vectores tridimensionales.' },
           { simbolo: '[u, v, w] = 0', nombre: 'Condición de coplanaridad', descripcion: 'Los tres vectores son linealmente dependientes y descansan en el mismo plano.' }
         ],
-        formula: '[u, v, w] = u · (v × w) = det(u, v, w)',
+        formula: '$$[\\vec{u}, \\vec{v}, \\vec{w}] = \\vec{u} \\cdot (\\vec{v} \\times \\vec{w}) = \\begin{vmatrix} u_x & u_y & u_z \\\\ v_x & v_y & v_z \\\\ w_x & w_y & w_z \\end{vmatrix} \\implies \\text{Volumen} = |[\\vec{u}, \\vec{v}, \\vec{w}]|$$',
         formulaMatriz: {
           filas: [
             ['ux', 'uy', 'uz'],
@@ -984,7 +984,7 @@ export class RepositorioTeoria {
           { simbolo: 'P₀(x₀, y₀, z₀)', nombre: 'Punto conocido de paso', descripcion: 'Punto de apoyo fijo perteneciente al plano.' },
           { simbolo: 'D = -(A·x₀ + B·y₀ + C·z₀)', nombre: 'Término independiente', descripcion: 'Constante escalar que fija la distancia del plano al origen de coordenadas.' }
         ],
-        formula: 'n · (P - P₀) = 0 ⟹ A(x - x₀) + B(y - y₀) + C(z - z₀) = 0 ⟹ Ax + By + Cz + D = 0',
+        formula: '$$\\vec{n} \\cdot (P - P_0) = 0 \\implies A(x - x_0) + B(y - y_0) + C(z - z_0) = 0 \\implies Ax + By + Cz + D = 0$$',
         formulaNota: 'Si conoces dos vectores directores u y v contenidos en el plano, el vector normal se obtiene mediante su producto cruz: n = u × v.',
         demostracion: {
           titulo: 'Deducción de la ecuación general del plano a partir del producto escalar nulo',
@@ -1047,7 +1047,7 @@ export class RepositorioTeoria {
           { simbolo: 'v_proy = (vx, vy, 0)', nombre: 'Vector proyectado plano', descripcion: 'Sombra del vector espacial sobre la lámina horizontal.' },
           { simbolo: 'cota z', nombre: 'Cota de altura', descripcion: 'Distancia perpendicular que separa el punto original de su traza proyectada.' }
         ],
-        formula: 'T: ℝ³ → ℝ² | T(vx, vy, vz) = (vx, vy) | ||v_proy|| ≤ ||v_espacial||',
+        formula: '$$\\Pi_{XY}: \\mathbb{R}^3 \\to \\mathbb{R}^2, \\quad \\Pi_{XY}(v_x, v_y, v_z) = (v_x, v_y) \\quad \\Big( \\|\\vec{v}_{\\text{proy}}\\| \\le \\|\\vec{v}\\| \\Big)$$',
         formulaNota: 'La longitud proyectada sobre el plano es siempre menor o igual que la longitud real en el espacio; solo son iguales si el vector es estrictamente horizontal (vz = 0).',
         demostracion: {
           titulo: 'Demostración de que la norma proyectada es acotada superiormente por la norma espacial',

@@ -1,7 +1,8 @@
 # 📐 VectorLab ℝ² — Calculadora y Visualizador Gráfico de Vectores
 
 [![JavaScript](https://img.shields.io/badge/JavaScript-ES6%2B%20Modules-F7DF1E?logo=javascript&logoColor=000)](https://developer.mozilla.org/es/docs/Web/JavaScript)
-[![HTML5 Canvas](https://img.shields.io/badge/HTML5-Canvas%202D-E34F26?logo=html5&logoColor=fff)](https://developer.mozilla.org/es/docs/Web/API/Canvas_API)
+[![HTML5 Canvas](https://img.shields.io/badge/HTML5-Canvas%202D%20%26%203D-E34F26?logo=html5&logoColor=fff)](https://developer.mozilla.org/es/docs/Web/API/Canvas_API)
+[![Math Typesetting](https://img.shields.io/badge/Math%20Typesetting-KaTeX%20Local-007ACC?logo=latex&logoColor=fff)](https://katex.org/)
 [![CSS3](https://img.shields.io/badge/CSS3-Component--Driven%20(7--1)-1572B6?logo=css3&logoColor=fff)](https://developer.mozilla.org/es/docs/Web/CSS)
 [![Architecture](https://img.shields.io/badge/Architecture-Clean%20%2F%20DDD%20%2B%20IoC-brightgreen)](#-arquitectura-del-sistema)
 [![Storage](https://img.shields.io/badge/Storage-LocalStorage%20API-blueviolet)](#-persistencia-local-de-ejercicios)

@@ -1,4 +1,5 @@
 import { RepositorioFormulas } from '../domain/RepositorioFormulas.js';
+import { RenderizadorMatematico } from '../../../shared/math/RenderizadorMatematico.js';
 
 /**
  * Controlador de presentación para el modal con el compendio de fórmulas.
@@ -40,6 +41,8 @@ export class ControladorFormulas {
         <p>${f.descripcion}</p>
       </article>
     `).join('');
+
+    RenderizadorMatematico.renderizarElemento(this._cuerpo);
   }
 
   abrir() {

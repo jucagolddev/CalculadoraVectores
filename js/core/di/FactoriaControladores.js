@@ -1,24 +1,24 @@
 import { Configuracion } from '../constants/Configuracion.js';
 
 // Casos de Uso (Application Layer)
-import { CalcularCadenaUseCase } from '../../features/cadena-vectores/application/CalcularCadenaUseCase.js';
-import { CalcularOperacionesUseCase } from '../../features/operaciones/application/CalcularOperacionesUseCase.js';
-import { EvaluarEquipolenciaUseCase } from '../../features/equipolencia/application/EvaluarEquipolenciaUseCase.js';
-import { VerificarRespuestaUseCase } from '../../features/solucionador/application/VerificarRespuestaUseCase.js';
-import { CalcularOperaciones3DUseCase } from '../../features/espacio-3d/application/CalcularOperaciones3DUseCase.js';
-import { CalcularPuntos3DUseCase } from '../../features/espacio-3d/application/CalcularPuntos3DUseCase.js';
+import { CalcularCadenaUseCase } from '../../features/cadena-vectores/application/CalcularCadenaUseCase.js?v=katex13';
+import { CalcularOperacionesUseCase } from '../../features/operaciones/application/CalcularOperacionesUseCase.js?v=katex13';
+import { EvaluarEquipolenciaUseCase } from '../../features/equipolencia/application/EvaluarEquipolenciaUseCase.js?v=katex13';
+import { VerificarRespuestaUseCase } from '../../features/solucionador/application/VerificarRespuestaUseCase.js?v=katex13';
+import { CalcularOperaciones3DUseCase } from '../../features/espacio-3d/application/CalcularOperaciones3DUseCase.js?v=katex13';
+import { CalcularPuntos3DUseCase } from '../../features/espacio-3d/application/CalcularPuntos3DUseCase.js?v=katex13';
 
 // Controladores de Presentación (Presentation Layer)
-import { ControladorCadena } from '../../features/cadena-vectores/presentation/ControladorCadena.js';
-import { ControladorOperaciones } from '../../features/operaciones/presentation/ControladorOperaciones.js';
-import { ControladorEquipolencia } from '../../features/equipolencia/presentation/ControladorEquipolencia.js';
-import { ControladorSolucion } from '../../features/solucionador/presentation/ControladorSolucion.js';
-import { ControladorFormulas } from '../../features/formulas/presentation/ControladorFormulas.js';
-import { ControladorAlmacenamiento } from '../../features/ejercicios/presentation/ControladorAlmacenamiento.js';
-import { ControladorTeoria } from '../../features/teoria/presentation/ControladorTeoria.js';
-import { PopoverInfoContextual } from '../../features/teoria/presentation/PopoverInfoContextual.js';
-import { ControladorOperaciones3D } from '../../features/espacio-3d/presentation/ControladorOperaciones3D.js';
-import { ControladorPuntos3D } from '../../features/espacio-3d/presentation/ControladorPuntos3D.js';
+import { ControladorCadena } from '../../features/cadena-vectores/presentation/ControladorCadena.js?v=katex13';
+import { ControladorOperaciones } from '../../features/operaciones/presentation/ControladorOperaciones.js?v=katex13';
+import { ControladorEquipolencia } from '../../features/equipolencia/presentation/ControladorEquipolencia.js?v=katex13';
+import { ControladorSolucion } from '../../features/solucionador/presentation/ControladorSolucion.js?v=katex13';
+import { ControladorFormulas } from '../../features/formulas/presentation/ControladorFormulas.js?v=katex13';
+import { ControladorAlmacenamiento } from '../../features/ejercicios/presentation/ControladorAlmacenamiento.js?v=katex13';
+import { ControladorTeoria } from '../../features/teoria/presentation/ControladorTeoria.js?v=katex13';
+import { PopoverInfoContextual } from '../../features/teoria/presentation/PopoverInfoContextual.js?v=katex13';
+import { ControladorOperaciones3D } from '../../features/espacio-3d/presentation/ControladorOperaciones3D.js?v=katex13';
+import { ControladorPuntos3D } from '../../features/espacio-3d/presentation/ControladorPuntos3D.js?v=katex13';
 
 /**
  * Contenedor de Inversión de Control (IoC) y Factoría de Controladores.

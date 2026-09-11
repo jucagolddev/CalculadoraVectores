@@ -255,24 +255,59 @@ export class RenderizadorGeometria3D {
 
   static dibujarInsigniaEtiqueta(ctx, texto, x, y, colorBorde) {
     ctx.save();
-    ctx.font = '10px var(--fuente-mono, monospace)';
-    const metrica = ctx.measureText(texto);
-    const paddingX = 6;
-    const paddingY = 3;
-    const ancho = metrica.width + paddingX * 2;
-    const alto = 16;
+    ctx.font = 'bold 11px Inter, monospace';
 
-    ctx.fillStyle = 'rgba(15, 23, 42, 0.88)';
+    const partes = texto.split(':');
+    const tienePrefijoVector = partes.length > 1 && partes[0].trim().length <= 4;
+    const prefijo = tienePrefijoVector ? partes[0].trim() : '';
+    const resto = tienePrefijoVector ? `:${partes.slice(1).join(':')}` : texto;
+
+    const anchoPrefijo = tienePrefijoVector ? ctx.measureText(prefijo).width : 0;
+    const anchoResto = ctx.measureText(resto).width;
+    const anchoTotal = anchoPrefijo + anchoResto;
+
+    const paddingX = 8;
+    const alto = 20;
+    const ancho = anchoTotal + paddingX * 2;
+    const cajaX = x - paddingX;
+    const cajaY = y - alto + 3;
+
+    ctx.fillStyle = 'rgba(15, 23, 42, 0.92)';
     ctx.strokeStyle = colorBorde;
-    ctx.lineWidth = 1;
+    ctx.lineWidth = 1.2;
 
     ctx.beginPath();
-    ctx.roundRect(x - paddingX, y - alto + paddingY, ancho, alto, 4);
+    ctx.roundRect(cajaX, cajaY, ancho, alto, 5);
     ctx.fill();
     ctx.stroke();
 
-    ctx.fillStyle = '#ffffff';
-    ctx.fillText(texto, x, y - 2);
+    const textoY = y - 3;
+    let cursorX = cajaX + paddingX;
+
+    if (tienePrefijoVector) {
+      // 1. Dibujar nombre del vector con color de realce
+      ctx.fillStyle = colorBorde;
+      ctx.fillText(prefijo, cursorX, textoY);
+
+      // 2. Trazo de flecha vectorial encima del nombre
+      const flechaY = textoY - 9;
+      const fX1 = cursorX;
+      const fX2 = cursorX + anchoPrefijo;
+      ctx.strokeStyle = colorBorde;
+      ctx.lineWidth = 1.2;
+      ctx.beginPath();
+      ctx.moveTo(fX1, flechaY);
+      ctx.lineTo(fX2, flechaY);
+      ctx.lineTo(fX2 - 2.5, flechaY - 2);
+      ctx.moveTo(fX2, flechaY);
+      ctx.lineTo(fX2 - 2.5, flechaY + 2);
+      ctx.stroke();
+
+      cursorX += anchoPrefijo;
+    }
+
+    ctx.fillStyle = '#f8fafc';
+    ctx.fillText(resto, cursorX, textoY);
     ctx.restore();
   }
 }

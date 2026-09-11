@@ -1,5 +1,6 @@
 import { RepositorioTeoria } from '../domain/RepositorioTeoria.js';
 import { MiniLaboratorioTeoria } from './MiniLaboratorioTeoria.js';
+import { RenderizadorMatematico } from '../../../shared/math/RenderizadorMatematico.js';
 
 /**
  * Controlador de presentación para la Sección Teórica Interactiva y Guía Pedagógica.
@@ -514,6 +515,9 @@ export class ControladorTeoria {
         MiniLaboratorioTeoria.renderizar(contenedorMinilab, tema.miniLab.tipo);
       }
     }
+
+    // Renderizar tipografía matemática y vectores con KaTeX
+    RenderizadorMatematico.renderizarElemento(this._visorContenido);
   }
 
   /**
