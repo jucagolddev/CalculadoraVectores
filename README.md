@@ -138,9 +138,8 @@ Diseñada con un enfoque de **cero dependencias externas**, explota las capacida
 
 ### 11. Modo Plano: Hoja de Papel Técnico (ℝ² ⊂ ℝ³)
 - **Proyección Ortogonal Plana Sin Distorsión:** Transforma el espacio tridimensional en una vista de ingeniería sobre el plano coordenado $XY$ ($z = 0$). Elimina la perspectiva cónica y proyecta directamente $px = cx + x \cdot \text{escala}$, $py = cy - y \cdot \text{escala}$, preservando exactamente ángulos y proporciones métricas.
-- **Estética de Folio Técnico y Cuaderno Universitario:**
-  - Lienzo tipo folio técnico milimetrado (`#090d1a`) con sombra proyectada, bordes sutiles y cajetín de especificación formal.
-  - Perforaciones circulares laterales de encuadernación y línea roja de margen vertical estándar.
+- **Estética de Folio Técnico y Plano de Ingeniería:**
+  - Lienzo tipo folio técnico milimetrado (`#090d1a`) con sombra proyectada, marco perimetral y cajetín de especificación formal.
   - Cuadrícula milimetrada dual con subdivisiones mayor ($1\text{ u}$) y menor ($0.2\text{ u}$).
 - **Notación Física Universal de Vectores Perpendiculares:**
   - Representación del eje normal $Z$ en el origen mediante el símbolo $\odot$ (saliendo hacia el observador).

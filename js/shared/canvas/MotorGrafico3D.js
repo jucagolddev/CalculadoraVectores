@@ -350,39 +350,24 @@ export class MotorGrafico3D {
     ctx.roundRect(x0, y0, anchoFolio, altoFolio, 8);
     ctx.fill();
 
-    // Borde sutil de la hoja
+    // Borde exterior técnico de la hoja
     ctx.shadowBlur = 0;
     ctx.lineWidth = 1;
     ctx.strokeStyle = 'rgba(56, 189, 248, 0.28)';
     ctx.stroke();
 
-    // Línea de margen vertical roja típica de cuaderno / examen de física
-    const xMargen = x0 + 44;
-    ctx.strokeStyle = 'rgba(239, 68, 68, 0.35)';
-    ctx.lineWidth = 1.2;
-    ctx.beginPath();
-    ctx.moveTo(xMargen, y0);
-    ctx.lineTo(xMargen, y0 + altoFolio);
-    ctx.stroke();
+    // Marco técnico perimetral interior
+    ctx.strokeStyle = 'rgba(56, 189, 248, 0.12)';
+    ctx.lineWidth = 1;
+    ctx.strokeRect(x0 + 12, y0 + 12, anchoFolio - 24, altoFolio - 24);
 
-    // Perforaciones circulares de libreta en el borde izquierdo
-    const separacionHoyo = altoFolio / 4;
-    ctx.fillStyle = '#020617';
-    ctx.strokeStyle = 'rgba(255, 255, 255, 0.12)';
-    for (let i = 1; i <= 3; i++) {
-      ctx.beginPath();
-      ctx.arc(x0 + 20, y0 + separacionHoyo * i, 7, 0, Math.PI * 2);
-      ctx.fill();
-      ctx.stroke();
-    }
-
-    // Cabecera formal del folio
+    // Cabecera formal del plano técnico
     ctx.font = 'bold 10px var(--fuente-mono, monospace)';
     ctx.fillStyle = 'rgba(148, 163, 184, 0.7)';
-    ctx.fillText('HOJA DE TRABAJO VECTORIAL: PLANO CARTESIANO ℝ² (z = 0)', x0 + 56, y0 + 24);
+    ctx.fillText('HOJA DE TRABAJO TÉCNICA: PLANO CARTESIANO ℝ² (z = 0)', x0 + 24, y0 + 26);
 
     ctx.fillStyle = 'rgba(56, 189, 248, 0.8)';
-    ctx.fillText(`ESCALA: 1 u = ${Math.round(this._escala)} px | EJE Z ⊙ NORMAL`, x0 + anchoFolio - 280, y0 + 24);
+    ctx.fillText(`ESCALA: 1 u = ${Math.round(this._escala)} px | EJE NORMAL Z ⊙`, x0 + anchoFolio - 260, y0 + 26);
 
     // Cajetín técnico en la esquina inferior derecha
     const anchoCajetin = 260;
