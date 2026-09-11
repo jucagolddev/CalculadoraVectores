@@ -99,33 +99,47 @@ Diseñada con un enfoque de **cero dependencias externas**, explota las capacida
 - Carga instantánea que conmuta el simulador al modo ejercicio con los datos restaurados.
 - Eliminación individual o vaciado completo de la base de datos local del navegador.
 
-### 8. Guía Teórica y Lógica Matemática Interactiva (ℝ² y ℝ³)
+### 8. Laboratorio Teórico y Lógica Matemática Interactiva (ℝ² y ℝ³)
+- **Plataforma de Aprendizaje Activo (Estándar 3Blue1Brown / Brilliant):**
+  - Integra teoría deductiva, gráficos dinámicos manipulables, algoritmos de resolución a mano, trampas analíticas y autocomprobación in-situ sin necesidad de recargar la página.
 - **Selector de Dimensión con Botones Dedicados:**
-  - `[📐 Plano ℝ²]`: Filtra y expone los fundamentos, deducciones y álgebra vectorial en el plano bidimensional.
-  - `[🧊 Espacio ℝ³]`: Filtra y expone el álgebra espacial tridimensional, cosenos directores, producto vectorial, producto mixto y sistemas de proyección técnica.
-- **Estructura Pedagógica de 6 Tarjetas por Módulo:**
-  - **Fundamento Teórico y Significado Físico:** Definición rigurosa (¿Qué es?), utilidad en ingeniería/robótica (¿Para qué sirve?) e interpretación geométrica/física.
-  - **Simbología y Variables Matemáticas:** Tabla tipográfica con badges estilizados para cada término algebraico.
-  - **Expresiones Matemáticas y Determinantes 3×3 Visuales:** Matrices y determinantes con barras reales y base canónica $(\vec{i}, \vec{j}, \vec{k})$ coloreada con reglas de signos de Laplace.
-  - **Algoritmo de Resolución Paso a Paso (A Mano):** Secuencia metódica numerada para que el usuario aprenda a calcular analíticamente cada operación con papel y lápiz.
-  - **Errores Típicos y Trampas a Evitar:** Alerta pedagógica con diagnóstico de la causa raíz del fallo y la regla analítica para prevenirlo.
-  - **Cómo Usar e Interpretar este Concepto en VectorLab:** Guía práctica que explica exactamente qué inputs rellenar y qué observar en el canvas gráfico.
-- **Compendio Exhaustivo de 12 Módulos Temáticos de Dominio:**
-  1. **Escalares vs. Vectores (ℝ²):** Magnitudes con dirección y sentido vs. valores unidimensionales.
-  2. **Componentes Cartesianas (ℝ²):** Deducción del vector $\vec{AB} = B - A$ (extremo menos origen).
-  3. **Módulo y Pitágoras (ℝ²):** Demostración analítica de la norma euclídea $\|\vec{v}\| = \sqrt{v_x^2 + v_y^2}$.
-  4. **Vector Unitario y Normalización (ℝ²):** Extracción de la dirección pura $\hat{u} = \vec{v} / \|\vec{v}\|$.
-  5. **Álgebra Concurrente (ℝ²):** Reglas del paralelogramo y punta-cola para suma y resta geométrica.
-  6. **Producto Escalar y Ortogonalidad (ℝ²):** Proyección ortogonal y criterio de perpendicularidad ($\vec{u} \cdot \vec{v} = 0$).
-  7. **Equipolencia y Vectores Libres (ℝ²):** Relación de equivalencia y traslación rígida en el plano.
-  8. **Cadenas Vectoriales y Desplazamiento (ℝ²):** Suma secuencial y equivalencia cinemática del desplazamiento directo.
-  9. **Expresión Cartesiana y Cosenos Directores (ℝ³):** Base canónica $\{\vec{i}, \vec{j}, \vec{k}\}$, ángulos directores $\alpha, \beta, \gamma$ e identidad pitagórica $\cos^2\alpha + \cos^2\beta + \cos^2\gamma = 1$.
-  10. **Producto Vectorial (u × v) y Área del Paralelogramo (ℝ³):** Determinante de Laplace, vector ortogonal resultante, regla de la mano derecha y área euclídea $\|\vec{u} \times \vec{v}\|$.
-  11. **Producto Mixto [u, v, w] y Volumen del Paralelepípedo (ℝ³):** Operación combinada $\vec{u} \cdot (\vec{v} \times \vec{w})$, cálculo mediante determinante $3 \times 3$, volumen del prisma y condición de coplanaridad.
-  12. **Proyección Ortogonal Plana y Modo Papel Técnico (ℝ² ⊂ ℝ³):** Reducción dimensional con $z=0$, trazas proyectantes, cotas de altura y visualización diédrica de ingeniería.
-- **Buscador conceptual en tiempo real:** Filtrado instantáneo por términos clave dentro de la dimensión activa o transversalmente.
-- **Acciones interactivas con sincronización dimensional automática:**
-  - `🚀 Probar en el Simulador`: Inyecta las coordenadas del tema teórico directamente en el simulador (Plano ℝ² o Espacio ℝ³) con trazado geométrico, ajuste de cámara y resumen analítico.
+  - `[📐 Plano ℝ²]`: Filtra y expone los 10 módulos del álgebra vectorial plana.
+  - `[🧊 Espacio ℝ³]`: Filtra y expone los 6 módulos del álgebra espacial tridimensional.
+- **Barra de Sub-Navegación Rápida (`.subnav-pills-teoria`):**
+  - Anclaje instantáneo y desplazamiento fluido con pills: `📖 Concepto`, `⚡ Mini-Lab`, `🔍 Demostración`, `🔢 Algoritmo`, `⚠️ Trampas`, `🧠 Quiz` y `🚀 Práctica`.
+- **6 Mini-Laboratorios Interactivos SVG Embebidos (`MiniLaboratorioTeoria.js`):**
+  1. **Producto Escalar ($u \cdot v$):** Deslizador angular $\theta \in [0^\circ, 180^\circ]$, botones preset ($0^\circ, 60^\circ, 90^\circ, 120^\circ, 180^\circ$), arco de apertura, sombra de proyección ortogonal y badge dinámico de trabajo mecánico (positivo, nulo/perpendicular, negativo).
+  2. **Suma Concurrente:** Conmutador entre regla del paralelogramo y método punta-cola con dibujo de la resultante $R = u + v$.
+  3. **Normalización Unitaria:** Control de norma y ángulo con confinamiento en la circunferencia goniométrica unitaria ($R=1$).
+  4. **Producto Vectorial 3D y Regla de la Mano Derecha:** Conmutador $u \times v$ vs. $v \times u = -(u \times v)$ que invierte físicamente el vector ortogonal 180° hacia abajo, probando la anticonmutatividad.
+  5. **Proyección Ortogonal:** Descomposición en componente paralela y componente perpendicular complementaria.
+  6. **Dependencia Lineal y Determinante:** Deslizador de colinealidad con alerta inmediata cuando $\det = 0$.
+- **Demostraciones Formales Expandibles ("¿Por qué funciona?"):**
+  - Acordeones `<details class="acordeon-demostracion">` con deducción paso a paso de los teoremas pilares (e.g. doble Pitágoras para la métrica euclídea 3D, ley del coseno para el producto punto, etc.).
+- **Micro-Checkpoints de Autoevaluación In-Situ (Mini-Quizzes):**
+  - Preguntas de opción múltiple con evaluación instantánea en cliente.
+  - Estados visuales dinámicos (`.opcion-correcta` en verde esmeralda / `.opcion-incorrecta` en rojo coral) y cajas de retroalimentación pedagógica explicativa.
+- **Compendio Exhaustivo de 16 Módulos Temáticos de Dominio:**
+  - **Plano ℝ² (10 Módulos):**
+    1. Escalares vs. Vectores en ℝ² (Magnitud, Dirección y Sentido)
+    2. Componentes Rectangulares y Forma Polar $(r, \theta)$
+    3. Módulo de un Vector y Métrica Euclídea
+    4. Vector Unitario (Normalización) y Ángulo Director
+    5. Suma Vectorial: Álgebra y Métodos Geométricos (Paralelogramo vs. Punta-Cola)
+    6. Producto Escalar (Punto), Criterio de Ortogonalidad y Trabajo Mecánico
+    7. Proyección Ortogonal y Descomposición Vectorial
+    8. Dependencia e Independencia Lineal, Rango y Determinante 2×2
+    9. Equipolencia de Vectores y Clases de Equivalencia
+    10. Cadenas Vectoriales Abiertas y Resultante Neta Poligonal
+  - **Espacio ℝ³ (6 Módulos):**
+    11. Expresión Cartesiana en Base Canónica $\{i, j, k\}$ en ℝ³
+    12. Cosenos Directores y Relación Fundamental en ℝ³
+    13. Producto Vectorial $(u \times v)$ y Área del Paralelogramo en ℝ³
+    14. Producto Mixto $[u, v, w]$ y Volumen del Paralelepípedo en ℝ³
+    15. Ecuaciones del Plano y Vector Normal en ℝ³
+    16. Proyección Ortogonal Plana y Modo Papel Técnico (ℝ² ⊂ ℝ³)
+- **Acciones Interactivas en 1 Clic:**
+  - `🚀 Probar en el Simulador`: Inyecta directamente las coordenadas en el motor gráfico interactivo.
   - `🎯 Practicar este Reto`: Conmuta automáticamente al modo ejercicios con respuestas ocultas para poner a prueba los conceptos estudiados.
 
 

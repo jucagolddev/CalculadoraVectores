@@ -191,6 +191,10 @@
   gap: 1.5rem;
 }
 
+.visor-contenido-teoria > * {
+  flex-shrink: 0;
+}
+
 /* Cabecera del tema actual */
 .cabecera-tema-actual {
   display: flex;
@@ -676,5 +680,464 @@
     grid-template-columns: repeat(3, 38px);
     font-size: 0.85rem;
   }
+  .minilab-cuerpo-grid {
+    grid-template-columns: 1fr !important;
+  }
 }
+
+/* ==========================================================================
+   SUB-NAVEGACIÓN POR PILLS DE ANCLAJE RÁPIDO
+   ========================================================================== */
+.subnav-pills-teoria {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin-top: 0.85rem;
+  padding-top: 0.75rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.pill-subnav {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: #cbd5e1;
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 0.28rem 0.65rem;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.pill-subnav:hover {
+  background: rgba(56, 189, 248, 0.18);
+  border-color: var(--color-cian);
+  color: #ffffff;
+  transform: translateY(-1px);
+}
+
+/* ==========================================================================
+   ACORDEÓN DE DEMOSTRACIÓN FORMAL ("¿POR QUÉ FUNCIONA?")
+   ========================================================================== */
+.acordeon-demostracion {
+  flex-shrink: 0;
+  background: linear-gradient(135deg, rgba(30, 41, 59, 0.6) 0%, rgba(15, 23, 42, 0.8) 100%);
+  border: 1px solid rgba(148, 163, 184, 0.2);
+  border-radius: var(--radio-lg);
+  margin-bottom: 1.25rem;
+  overflow: hidden;
+  transition: border-color 0.25s ease;
+}
+
+.acordeon-demostracion[open] {
+  border-color: rgba(56, 189, 248, 0.4);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.35);
+}
+
+.cabecera-demostracion {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.85rem 1.15rem;
+  cursor: pointer;
+  user-select: none;
+  background: rgba(255, 255, 255, 0.02);
+  font-size: 0.88rem;
+}
+
+.cabecera-demostracion::-webkit-details-marker {
+  display: none;
+}
+
+.icono-demostracion {
+  font-size: 1.05rem;
+}
+
+.badge-desplegar {
+  font-size: 0.75rem;
+  color: var(--color-cian);
+  background: rgba(56, 189, 248, 0.1);
+  padding: 0.2rem 0.5rem;
+  border-radius: 4px;
+  border: 1px solid rgba(56, 189, 248, 0.25);
+}
+
+.cuerpo-demostracion {
+  padding: 1rem 1.15rem 1.25rem 1.15rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  background: rgba(15, 23, 42, 0.5);
+}
+
+.timeline-demostracion {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.paso-demostracion-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+}
+
+.paso-demostracion-badge {
+  min-width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: rgba(56, 189, 248, 0.2);
+  border: 1px solid var(--color-cian);
+  color: var(--color-cian);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.75rem;
+  font-weight: 700;
+}
+
+/* ==========================================================================
+   MINI-LABORATORIOS INTERACTIVOS SVG EMBEBIDOS
+   ========================================================================== */
+.minilab-tarjeta {
+  background: linear-gradient(135deg, rgba(15, 23, 42, 0.95) 0%, rgba(30, 41, 59, 0.85) 100%);
+  border: 1px solid rgba(56, 189, 248, 0.25);
+  border-radius: var(--radio-lg);
+  padding: 1.15rem;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+}
+
+.minilab-cabecera {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+}
+
+.minilab-icono {
+  font-size: 1.4rem;
+  line-height: 1;
+}
+
+.minilab-titulo {
+  font-size: 1rem;
+  color: #ffffff;
+  margin: 0 0 0.2rem 0;
+}
+
+.minilab-descripcion {
+  font-size: 0.82rem;
+  color: var(--color-texto-tenue);
+  margin: 0;
+}
+
+.minilab-cuerpo-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.25rem;
+  align-items: center;
+}
+
+.minilab-svg-caja {
+  background: rgba(2, 6, 23, 0.75);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: var(--radio-md);
+  padding: 0.5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.minilab-svg {
+  width: 100%;
+  height: auto;
+  max-height: 220px;
+  overflow: visible;
+}
+
+.minilab-panel-control {
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+}
+
+.minilab-control-grupo {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.minilab-etiqueta-slider {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.82rem;
+  color: #cbd5e1;
+}
+
+.minilab-valor-resaltado {
+  color: var(--color-cian);
+  font-family: var(--fuente-mono);
+}
+
+.minilab-slider {
+  width: 100%;
+  accent-color: var(--color-cian);
+  cursor: pointer;
+}
+
+.minilab-botones-preset {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+}
+
+.btn-preset-dot, .btn-metodo {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: #cbd5e1;
+  font-size: 0.73rem;
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-preset-dot:hover, .btn-metodo:hover {
+  background: rgba(56, 189, 248, 0.18);
+  border-color: var(--color-cian);
+  color: #ffffff;
+}
+
+.btn-metodo.activo {
+  background: rgba(56, 189, 248, 0.25);
+  border-color: var(--color-cian);
+  color: #ffffff;
+  font-weight: 700;
+  box-shadow: 0 0 10px rgba(56, 189, 248, 0.3);
+}
+
+.minilab-metricas-caja {
+  background: rgba(15, 23, 42, 0.8);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: var(--radio-sm);
+  padding: 0.65rem 0.85rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.metrica-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.82rem;
+}
+
+.metrica-lbl {
+  color: var(--color-texto-tenue);
+}
+
+.metrica-val {
+  font-family: var(--fuente-mono);
+  font-weight: 600;
+}
+
+.metrica-val-grande {
+  font-size: 1rem;
+}
+
+.minilab-badge-estado {
+  font-size: 0.76rem;
+  padding: 0.35rem 0.6rem;
+  border-radius: 4px;
+  margin-top: 0.3rem;
+  font-weight: 600;
+  text-align: center;
+}
+
+.badge-positivo {
+  background: rgba(16, 185, 129, 0.15);
+  color: #34d399;
+  border: 1px solid rgba(16, 185, 129, 0.3);
+}
+
+.badge-neutro {
+  background: rgba(245, 158, 11, 0.15);
+  color: #fbbf24;
+  border: 1px solid rgba(245, 158, 11, 0.3);
+  box-shadow: 0 0 10px rgba(245, 158, 11, 0.2);
+}
+
+.badge-negativo {
+  background: rgba(168, 85, 247, 0.15);
+  color: #d8b4fe;
+  border: 1px solid rgba(168, 85, 247, 0.3);
+}
+
+.minilab-selector-metodo {
+  display: flex;
+  gap: 0.4rem;
+}
+
+.minilab-caja-explicativa {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  padding: 0.6rem 0.75rem;
+  border-radius: var(--radio-sm);
+  font-size: 0.8rem;
+  line-height: 1.45;
+  color: #94a3b8;
+}
+
+.minilab-checkbox-label {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.82rem;
+  color: #cbd5e1;
+  cursor: pointer;
+}
+
+/* ==========================================================================
+   MICRO-CHECKPOINTS DE AUTOEVALUACIÓN (MINI-QUIZ INTERACTIVO)
+   ========================================================================== */
+.tarjeta-checkpoint {
+  background: linear-gradient(135deg, rgba(30, 27, 75, 0.8) 0%, rgba(15, 23, 42, 0.95) 100%);
+  border: 1px solid rgba(168, 85, 247, 0.35);
+  border-radius: var(--radio-lg);
+  padding: 1.15rem;
+  margin-bottom: 1.25rem;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.35);
+}
+
+.cabecera-checkpoint {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  margin-bottom: 0.75rem;
+}
+
+.icono-checkpoint {
+  font-size: 1.4rem;
+}
+
+.titulo-checkpoint {
+  font-size: 1rem;
+  color: #ffffff;
+  margin: 0 0 0.2rem 0;
+}
+
+.desc-checkpoint {
+  font-size: 0.8rem;
+  color: #cbd5e1;
+  margin: 0;
+}
+
+.pregunta-checkpoint-texto {
+  font-size: 0.92rem;
+  font-weight: 600;
+  color: #f8fafc;
+  background: rgba(255, 255, 255, 0.04);
+  padding: 0.75rem 1rem;
+  border-radius: var(--radio-sm);
+  border-left: 3px solid var(--color-violeta);
+  margin-bottom: 0.85rem;
+  line-height: 1.45;
+}
+
+.opciones-checkpoint-lista {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.btn-opcion-checkpoint {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.65rem 0.9rem;
+  background: rgba(15, 23, 42, 0.7);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: var(--radio-md);
+  color: #e2e8f0;
+  cursor: pointer;
+  font-size: 0.85rem;
+  text-align: left;
+  transition: all 0.2s ease;
+  width: 100%;
+}
+
+.btn-opcion-checkpoint:hover {
+  background: rgba(168, 85, 247, 0.15);
+  border-color: var(--color-violeta);
+  transform: translateX(3px);
+}
+
+.letra-opcion {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.1);
+  font-weight: 700;
+  font-size: 0.75rem;
+  color: #ffffff;
+  flex-shrink: 0;
+}
+
+.btn-opcion-checkpoint.opcion-correcta {
+  background: rgba(16, 185, 129, 0.2);
+  border-color: #10b981;
+  color: #ffffff;
+  box-shadow: 0 0 15px rgba(16, 185, 129, 0.25);
+}
+
+.btn-opcion-checkpoint.opcion-correcta .letra-opcion {
+  background: #10b981;
+  color: #022c22;
+}
+
+.btn-opcion-checkpoint.opcion-incorrecta {
+  background: rgba(239, 68, 68, 0.2);
+  border-color: #ef4444;
+  color: #fca5a5;
+}
+
+.btn-opcion-checkpoint.opcion-incorrecta .letra-opcion {
+  background: #ef4444;
+  color: #ffffff;
+}
+
+.feedback-checkpoint-box {
+  margin-top: 0.85rem;
+  padding: 0.75rem 1rem;
+  border-radius: var(--radio-md);
+  font-size: 0.85rem;
+  animation: fadeIn 0.3s ease;
+}
+
+.feedback-exito {
+  background: rgba(16, 185, 129, 0.15);
+  border: 1px solid rgba(16, 185, 129, 0.35);
+  color: #34d399;
+}
+
+.feedback-fallo {
+  background: rgba(245, 158, 11, 0.15);
+  border: 1px solid rgba(245, 158, 11, 0.35);
+  color: #fde68a;
+}
+
+/* ==========================================================================
+   UTILIDADES DE COLOR Y TIPOGRAFÍA
+   ========================================================================== */
+.text-cian { color: var(--color-cian) !important; }
+.text-ambar { color: #f59e0b !important; }
+.text-esmeralda { color: var(--color-esmeralda) !important; }
+.text-violeta { color: var(--color-violeta) !important; }
+.text-coral { color: #f87171 !important; }
+
 
